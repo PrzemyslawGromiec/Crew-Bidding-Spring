@@ -59,7 +59,7 @@ public class FlightController {
 * Body
 * Status
 *
-*REST API - backent zorientowany na zasoby
+*REST API - backend zorientowany na zasoby
 *
 * Przykład:
 * Path: localhost:8080\hello
