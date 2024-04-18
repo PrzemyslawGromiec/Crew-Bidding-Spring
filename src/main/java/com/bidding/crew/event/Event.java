@@ -13,8 +13,8 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private LocalDateTime start;
-    private LocalDateTime end;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private int priority;
     private String description;
     private boolean reoccuring = false;
@@ -22,19 +22,26 @@ public class Event {
     public Event() {
     }
 
-    public Event(LocalDateTime start, LocalDateTime end, int priority, String description) {
-        this.start = start;
-        this.end = end;
+    public Event(LocalDateTime startTime, LocalDateTime endTime, int priority, String description) {
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.priority = priority;
         this.description = description;
     }
 
-    public LocalDateTime getStart() {
-        return start;
+    public Event(EventDto eventDto) {
+        startTime = eventDto.getStart();
+        endTime = eventDto.getEnd();
+        priority = eventDto.getPriority();
+        description = eventDto.getDescription();
     }
 
-    public LocalDateTime getEnd() {
-        return end;
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 
     public int getPriority() {

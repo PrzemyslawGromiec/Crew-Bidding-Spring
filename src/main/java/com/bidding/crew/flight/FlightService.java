@@ -17,6 +17,7 @@ public class FlightService {
         System.out.println("flight service");
     }
 
+    //todo:poprawic
     public void saveFlight(FlightDto flightDto) {
         flightRepository.save(new Flight(flightDto.getFlightNumber(), flightDto.getAirportCode(),
                 flightDto.getReportTime(),flightDto.getClearTime()));
