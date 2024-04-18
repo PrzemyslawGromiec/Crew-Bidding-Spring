@@ -2,6 +2,7 @@ package com.bidding.crew.flight;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 //@Controller // zwraca widoki (html)
@@ -16,7 +17,7 @@ public class FlightController {
 
     @GetMapping("/api/v0/flights/1")
     public FlightDto getFlight() {
-        return new FlightDto("BER", "123");
+        return new FlightDto("BER", "123", LocalDateTime.MIN,LocalDateTime.MAX);
     }
 
     @GetMapping("/hello")
@@ -29,9 +30,10 @@ public class FlightController {
         System.out.println("airportCode: " + airportCode + " flightNumber: " + flightNumber);
     }*/
 
+
     @PostMapping("/api/v0/flights")
-    public void addFlight(@RequestBody FlightDto flightDto) {
-        flightService.saveFlight(flightDto);
+    public void addFlights(@RequestBody List<FlightDto> flightDtos) {
+        flightService.addFlights(flightDtos);
     }
 
     @GetMapping("/api/v0/flights")
