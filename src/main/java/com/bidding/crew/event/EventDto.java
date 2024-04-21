@@ -7,16 +7,17 @@ public class EventDto {
     private LocalDateTime end;
     private int priority;
     private String description;
-    private boolean reoccuring = false;
+    private boolean reoccurring = false;
 
     public EventDto() {
     }
 
-    public EventDto(LocalDateTime start, LocalDateTime end, int priority, String description) {
+    public EventDto(LocalDateTime start, LocalDateTime end, int priority, String description, boolean reoccurring) {
         this.start = start;
         this.end = end;
         this.priority = priority;
         this.description = description;
+        this.reoccurring = reoccurring;
     }
 
     public LocalDateTime getStart() {
@@ -35,6 +36,10 @@ public class EventDto {
         return description;
     }
 
+    public boolean isReoccurring() {
+        return reoccurring;
+    }
+
     @Override
     public String toString() {
         return "EventDto{" +
@@ -42,7 +47,7 @@ public class EventDto {
                 ", end=" + end +
                 ", priority=" + priority +
                 ", description='" + description + '\'' +
-                ", reoccuring=" + reoccuring +
+                ", reoccurring=" + reoccurring +
                 '}';
     }
 }

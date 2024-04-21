@@ -22,10 +22,30 @@ public class EventService {
         List<EventDto> eventDtos = new ArrayList<>();
         List<Event> events = eventRepository.findAll();
         for (Event event : events) {
-            eventDtos.add(new EventDto(event.getStartTime(),event.getEndTime(),
-                    event.getPriority(),event.getDescription()));
+            eventDtos.add(event.toDto());
         }
         return eventDtos;
     }
 
+ /*   public List<EventDto> getReoccuringEvent(boolean reoccuring) {
+        List<Event> availableEvents = eventRepository.findAll();
+        List<EventDto> results = new ArrayList<>();
+
+        for (Event availableEvent : availableEvents) {
+            if (availableEvent.isReoccuring() == reoccuring) {
+                results.add(availableEvent.toDto());
+            }
+        }
+        return results;
+    }*/
+
+    public List<EventDto> getReoccurringEvent(boolean reoccurring) {
+        List<Event> availableEvents = eventRepository.findByReoccurring(reoccurring);
+        List<EventDto> results = new ArrayList<>();
+
+        for (Event availableEvent : availableEvents) {
+                results.add(availableEvent.toDto());
+        }
+        return results;
+    }
 }

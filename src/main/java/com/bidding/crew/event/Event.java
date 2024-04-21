@@ -17,7 +17,7 @@ public class Event {
     private LocalDateTime endTime;
     private int priority;
     private String description;
-    private boolean reoccuring = false;
+    private boolean reoccurring = false;
 
     public Event() {
     }
@@ -34,6 +34,11 @@ public class Event {
         endTime = eventDto.getEnd();
         priority = eventDto.getPriority();
         description = eventDto.getDescription();
+        reoccurring = eventDto.isReoccurring();
+    }
+
+    public EventDto toDto() {
+        return new EventDto(startTime,endTime,priority,description, reoccurring);
     }
 
     public LocalDateTime getStartTime() {
@@ -50,5 +55,9 @@ public class Event {
 
     public String getDescription() {
         return description;
+    }
+
+    public boolean isReoccurring() {
+        return reoccurring;
     }
 }

@@ -23,7 +23,10 @@ public class EventController {
         return eventService.getAllEvents();
     }
 
-
+    @GetMapping("/api/v0/ev")
+    public List<EventDto> getReoccurringEvents(boolean reoccurring) {
+        return eventService.getReoccurringEvent(reoccurring);
+    }
 
 
 }
