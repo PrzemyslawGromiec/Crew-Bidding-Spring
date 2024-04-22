@@ -13,4 +13,7 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
     @Query("SELECT e FROM Event e WHERE e.startTime < :startDate")
     List<Event> findEventStartingBeforeDate(@Param("startDate") LocalDateTime startDate);
 
+    @Query("SELECT e.description FROM Event e WHERE e.priority = :priority")
+    List<String> findEventDescriptionByPriority(int priority);
+
 }

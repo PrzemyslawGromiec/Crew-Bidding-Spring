@@ -61,4 +61,16 @@ public class EventService {
         }
         return results;
     }
+
+    public List<String> getEventsDescriptionByPriority(int priority) {
+        List<Event> allEvents = eventRepository.findAll();
+        List<String> descriptionsOfEventsByPriority = new ArrayList<>();
+
+        for (Event allEvent : allEvents) {
+            if (allEvent.getPriority() == priority) {
+                descriptionsOfEventsByPriority.add(allEvent.getDescription());
+            }
+        }
+        return descriptionsOfEventsByPriority;
+    }
 }

@@ -34,5 +34,10 @@ public class EventController {
         return eventService.getEventsStartingBefore(startDate);
     }
 
+    @GetMapping("/api/v0/events/descriptions")
+    public List<String> getEventsDescriptionsByPriority(@RequestParam("priority") int priority) {
+        return eventService.getEventsDescriptionByPriority(priority);
+    }
+
 
 }
