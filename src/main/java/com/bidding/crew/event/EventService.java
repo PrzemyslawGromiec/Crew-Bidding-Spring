@@ -2,6 +2,7 @@ package com.bidding.crew.event;
 
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,19 @@ public class EventService {
         List<EventDto> results = new ArrayList<>();
 
         for (Event availableEvent : availableEvents) {
-                results.add(availableEvent.toDto());
+            results.add(availableEvent.toDto());
+        }
+        return results;
+    }
+
+    public List<EventDto> getEventsStartingBefore(LocalDateTime startDate) {
+        List<Event> eventsStartingBefore = eventRepository.findEventStartingBeforeDate(startDate);
+        List<EventDto> results = new ArrayList<>();
+
+        for (Event event : eventsStartingBefore) {
+            if (event.getStartTime().isBefore(startDate)) {
+                results.add(event.toDto());
+            }
         }
         return results;
     }
