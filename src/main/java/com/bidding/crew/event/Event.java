@@ -60,4 +60,16 @@ public class Event {
     public boolean isReoccurring() {
         return reoccurring;
     }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", priority=" + priority +
+                ", description='" + description + '\'' +
+                ", reoccurring=" + reoccurring +
+                '}';
+    }
 }

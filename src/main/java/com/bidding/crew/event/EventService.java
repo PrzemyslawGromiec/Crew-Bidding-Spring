@@ -1,10 +1,12 @@
 package com.bidding.crew.event;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EventService {
@@ -64,6 +66,7 @@ public class EventService {
 
     public List<String> getEventsDescriptionByPriority(int priority) {
         List<Event> allEvents = eventRepository.findAll();
+        //List<Event> allEvents = eventRepository.findEventDescriptionByPriority(priority);
         List<String> descriptionsOfEventsByPriority = new ArrayList<>();
 
         for (Event allEvent : allEvents) {
@@ -73,4 +76,12 @@ public class EventService {
         }
         return descriptionsOfEventsByPriority;
     }
+
+    public List<EventDto> findEventsByParameters(LocalDateTime start, LocalDateTime end, Boolean reoccurring) {
+        return eventRepository.findAllByParameters(start, end, reoccurring)
+                .stream()
+                .map(Event::toDto)
+                .toList();
+    }
+
 }

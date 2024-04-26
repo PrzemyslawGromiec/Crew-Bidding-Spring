@@ -8,6 +8,7 @@ public class BiddingCrewApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BiddingCrewApplication.class, args);
+
 	}
 
 }
