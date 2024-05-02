@@ -11,9 +11,11 @@ import java.util.List;
 @Service
 public class EventService {
     private EventRepository eventRepository;
+    private EventSpecificationBuilder eventSpecificationBuilder;
 
-    public EventService(EventRepository eventRepository) {
+    public EventService(EventRepository eventRepository, EventSpecificationBuilder eventSpecificationBuilder) {
         this.eventRepository = eventRepository;
+        this.eventSpecificationBuilder = eventSpecificationBuilder;
         System.out.println("event service created");
     }
 
@@ -125,4 +127,12 @@ public class EventService {
 
     }
 
+    public List<EventDto> findEventsByCriteria(SpecificationInput2 specificationInput2) {
+        Specification<Event> specification = eventSpecificationBuilder.getSpecificationFor(specificationInput2);
+        return eventRepository.findAll(specification)
+                .stream()
+                .map(Event::toDto)
+                .toList();
+
+    }
 }

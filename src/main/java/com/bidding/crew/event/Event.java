@@ -10,7 +10,6 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name="start_time")
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private int priority;

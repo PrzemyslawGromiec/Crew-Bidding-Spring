@@ -35,6 +35,11 @@ public class EventController {
         return eventService.findEventsByParameters(startTime, endTime, reoccurring);
     }
 
+    @GetMapping("api/v0/events/v2/")
+    public List<EventDto> findEventsByCriteria(@RequestBody SpecificationInput2 specificationInput2) {//startTime,endTime,reocurring, description(like)
+        return eventService.findEventsByCriteria(specificationInput2);
+    }
+
     @GetMapping("/api/v0/events/descriptions")
     public List<String> getEventsDescriptionsByPriority(@RequestParam("priority") int priority) {
         return eventService.getEventsDescriptionByPriority(priority);
