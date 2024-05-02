@@ -1,7 +1,5 @@
 package com.bidding.crew.event;
 
-import jakarta.persistence.criteria.Expression;
-import org.hibernate.sql.ast.tree.expression.Literal;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +10,7 @@ import java.time.LocalDateTime;
 public class EventSpecificationBuilderImpl implements EventSpecificationBuilder {
 
     @Override
-    public Specification<Event> getSpecificationFor(SpecificationInput2 input) {
+    public Specification<Event> getSpecificationFor(SpecificationInput input) {
 
         String desc = input.getDescription();
         Specification<Event> descriptionFilter = isNull(desc).or(getDescriptionSpec(desc));
