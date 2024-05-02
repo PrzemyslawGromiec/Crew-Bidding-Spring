@@ -40,6 +40,32 @@ public class EventController {
         return eventService.getEventsDescriptionByPriority(priority);
     }
 
+    @GetMapping("/api/v0/events/descriptions2")
+    public List<String> getEventsByPriorityDescriptionOnly(int priority) {
+        return eventService.getEventsDescriptionByPriority2(priority);
+    }
+
+    @GetMapping("/api/v0/events/criteria")
+    public List<EventDto> getByName() {
+        return eventService.getEventsByName();
+    }
+
+    @GetMapping("/api/v0/events/byEquals")
+    public List<EventDto> byEquals(@RequestBody SpecificationInput specificationInput) {
+        return eventService.getEventsData(specificationInput)
+                .stream()
+                .map(Event::toDto)
+                .toList();
+    }
+
+    @GetMapping("/api/v0/events/byBetweenDates")
+    public List<EventDto> byBetweenDates(@RequestBody SpecificationInput specificationInput) {
+        return eventService.getEventsStartingBetweenDates(specificationInput)
+                .stream()
+                .map(Event::toDto)
+                .toList();
+    }
+
 
     //co gdy dodam kolejny param
     //dedykowanne sposoby na wyszukiwanie po wielu param opcjonalnie

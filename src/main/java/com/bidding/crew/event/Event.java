@@ -1,9 +1,6 @@
 package com.bidding.crew.event;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -13,6 +10,7 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name="start_time")
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private int priority;

@@ -1,12 +1,12 @@
 package com.bidding.crew.event;
 
-import jakarta.annotation.PostConstruct;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class EventService {
@@ -65,16 +65,7 @@ public class EventService {
     }
 
     public List<String> getEventsDescriptionByPriority(int priority) {
-        List<Event> allEvents = eventRepository.findAll();
-        //List<Event> allEvents = eventRepository.findEventDescriptionByPriority(priority);
-        List<String> descriptionsOfEventsByPriority = new ArrayList<>();
-
-        for (Event allEvent : allEvents) {
-            if (allEvent.getPriority() == priority) {
-                descriptionsOfEventsByPriority.add(allEvent.getDescription());
-            }
-        }
-        return descriptionsOfEventsByPriority;
+        return eventRepository.findEventDescriptionByPriority(priority);
     }
 
     public List<EventDto> findEventsByParameters(LocalDateTime start, LocalDateTime end, Boolean reoccurring) {
@@ -82,6 +73,56 @@ public class EventService {
                 .stream()
                 .map(Event::toDto)
                 .toList();
+    }
+
+    public List<String> getEventsDescriptionByPriority2(int priority) {
+        return eventRepository.findEventsByPriority(priority)
+                .stream()
+                .map(Event::getDescription)
+                .toList();
+    }
+
+    private Specification<Event> getSpecification() {
+        return (root, query, criteriaBuilder) -> {
+            return criteriaBuilder.like(root.get("description"), "%event%");
+        };
+    }
+
+    public List<EventDto> getEventsByName(){
+        Specification<Event> specification = getSpecification();
+        return eventRepository.findAll(specification)
+                .stream()
+                .map(Event::toDto)
+                .toList();
+    }
+
+    private Specification<Event> getSpecification(SpecificationInput specificationInput) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(specificationInput.getColumnName()),
+                specificationInput.getValue());
+    }
+
+    public List<Event> getEventsData(SpecificationInput specificationInput){
+        Specification<Event> specification = getSpecification(specificationInput);
+        return eventRepository.findAll(specification);
+    }
+
+    private Specification<Event> getEventsSpecificationStartingBetweenDates(SpecificationInput specificationInput) {
+        String value = specificationInput.getValue();
+        List<String> dateStrings = Arrays.asList(value.split(","));
+
+        if (dateStrings.size() != 2) {
+            throw new IllegalArgumentException("Invalid format of value. Expected two date-time values separated by a comma.");
+        }
+
+        LocalDateTime start = LocalDateTime.parse(dateStrings.get(0));
+        LocalDateTime end = LocalDateTime.parse(dateStrings.get(1));
+        return (root, query, criteriaBuilder) -> criteriaBuilder.between(root.get(specificationInput.getColumnName()), start, end);
+    }
+
+    public List<Event> getEventsStartingBetweenDates(SpecificationInput specificationInput){
+        Specification<Event> specification = getEventsSpecificationStartingBetweenDates(specificationInput);
+        return eventRepository.findAll(specification);
+
     }
 
 }
