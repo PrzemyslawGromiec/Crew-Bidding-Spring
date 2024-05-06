@@ -14,16 +14,22 @@ public class Flight {
     private String flightNumber;
     private LocalDateTime reportTime;
     private LocalDateTime clearTime;
+    private AircraftType aircraftType;
 
 
     public Flight() {
     }
 
-    public Flight(String flightNumber, String airportCode, LocalDateTime reportTime, LocalDateTime clearTime) {
-        this.flightNumber = flightNumber;
-        this.airportCode = airportCode;
-        this.reportTime = reportTime;
-        this.clearTime = clearTime;
+    public Flight(FlightDto flightDto) {
+        flightNumber = flightDto.getFlightNumber();
+        airportCode = flightDto.getAirportCode();
+        reportTime = flightDto.getReportTime();
+        clearTime = flightDto.getClearTime();
+        aircraftType = flightDto.getAircraftType();
+    }
+
+    public FlightDto toDto() {
+        return new FlightDto(airportCode,flightNumber,reportTime,clearTime,aircraftType);
     }
 
     public String getAirportCode() {
@@ -40,5 +46,9 @@ public class Flight {
 
     public LocalDateTime getClearTime() {
         return clearTime;
+    }
+
+    public AircraftType getAircraftType() {
+        return aircraftType;
     }
 }

@@ -58,6 +58,10 @@ public class Event {
         return reoccurring;
     }
 
+    public int currentMonth() {
+        return startTime.getMonthValue();
+    }
+
     @Override
     public String toString() {
         return "Event{" +

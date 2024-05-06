@@ -17,7 +17,7 @@ public class FlightController {
 
     @GetMapping("/api/v0/flights/1")
     public FlightDto getFlight() {
-        return new FlightDto("BER", "123", LocalDateTime.MIN,LocalDateTime.MAX);
+        return new FlightDto("BER", "123", LocalDateTime.MIN,LocalDateTime.MAX, AircraftType.A320);
     }
 
     @GetMapping("/hello")

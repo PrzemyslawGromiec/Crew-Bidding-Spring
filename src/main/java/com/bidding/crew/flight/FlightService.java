@@ -1,7 +1,10 @@
 package com.bidding.crew.flight;
 
+import com.bidding.crew.flight.generator.FlightGeneratorFacade;
+import com.bidding.crew.flight.generator.Source;
 import org.springframework.stereotype.Service;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,23 +15,24 @@ import java.util.List;
 public class FlightService {
     private FlightRepository flightRepository;
 
-    public FlightService(FlightRepository flightRepository) {
+
+    public FlightService(FlightRepository flightRepository) throws FileNotFoundException {
         this.flightRepository = flightRepository;
         System.out.println("flight service");
+        FlightGeneratorFacade flightGenerator = FlightGeneratorFacade.Factory.createFlightFacade(Source.FILE);
+        flightRepository.saveAll(flightGenerator.generateFlights());
     }
 
     //todo:poprawic
     public void saveFlight(FlightDto flightDto) {
-        flightRepository.save(new Flight(flightDto.getFlightNumber(), flightDto.getAirportCode(),
-                flightDto.getReportTime(),flightDto.getClearTime()));
+        flightRepository.save(new Flight(flightDto));
     }
 
     public List<FlightDto> getAllFlights() {
         List<Flight> flights = flightRepository.findAll();
         List<FlightDto> flightDtos = new ArrayList<>();
         for (Flight flight : flights) {
-            flightDtos.add(new FlightDto(flight.getFlightNumber(), flight.getAirportCode(),
-                    flight.getReportTime(), flight.getClearTime()));
+            flightDtos.add(flight.toDto());
         }
         return flightDtos;
     }
@@ -36,8 +40,7 @@ public class FlightService {
     public void addFlights(List<FlightDto> flightDtos) {
         List<Flight> flights = new ArrayList<>();
         for (FlightDto flightDto : flightDtos) {
-            flights.add(new Flight(flightDto.getFlightNumber(),flightDto.getAirportCode(),
-                    flightDto.getReportTime(),flightDto.getClearTime()));
+            flights.add(new Flight(flightDto));
         }
         flightRepository.saveAll(flights);
     }

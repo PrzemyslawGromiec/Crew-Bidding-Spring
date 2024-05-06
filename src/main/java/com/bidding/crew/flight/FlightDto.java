@@ -7,15 +7,17 @@ public class FlightDto {
     private String flightNumber;
     private LocalDateTime reportTime;
     private LocalDateTime clearTime;
+    private AircraftType aircraftType;
 
     public FlightDto() {
     }
 
-    public FlightDto(String airportCode, String flightNumber, LocalDateTime reportTime, LocalDateTime clearTime) {
+    public FlightDto(String airportCode, String flightNumber, LocalDateTime reportTime, LocalDateTime clearTime, AircraftType aircraftType) {
         this.airportCode = airportCode;
         this.flightNumber = flightNumber;
         this.reportTime = reportTime;
         this.clearTime = clearTime;
+        this.aircraftType = aircraftType;
     }
 
     public String getAirportCode() {
@@ -32,6 +34,10 @@ public class FlightDto {
 
     public LocalDateTime getClearTime() {
         return clearTime;
+    }
+
+    public AircraftType getAircraftType() {
+        return aircraftType;
     }
 
     @Override
