@@ -7,13 +7,8 @@ import java.util.List;
 import java.util.Scanner;
 
 class TextFileLoader {
-    private final String filePath;
 
-    public TextFileLoader(String filePath) {
-        this.filePath = filePath;
-    }
-
-    public List<String> readFile() throws FileNotFoundException {
+    public List<String> readFile(String filePath) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(filePath));
         List<String> lines = new ArrayList<>();
         while (scanner.hasNextLine()) {

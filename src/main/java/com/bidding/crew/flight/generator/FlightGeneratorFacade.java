@@ -5,7 +5,6 @@ import com.bidding.crew.flight.Flight;
 import com.bidding.crew.flight.FlightDto;
 import com.bidding.crew.general.Time;
 
-import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,8 +19,8 @@ public class FlightGeneratorFacade {
         this.time = time;
     }
 
-    public List<Flight> generateFlights() {
-        List<FlightTemplate> flightTemplates = flightsTemplateProvider.provideFlights();
+    public List<Flight> generateFlights(String... source) {
+        List<FlightTemplate> flightTemplates = flightsTemplateProvider.provideFlights(source);
         List<Flight> flights = new ArrayList<>();
         for (FlightTemplate flightTemplate : flightTemplates) {
             flights.addAll(generateCustomRecurringFlights(flightTemplate));

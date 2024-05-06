@@ -1,10 +1,11 @@
 package com.bidding.crew.flight;
 
 import com.bidding.crew.flight.generator.FlightGeneratorFacade;
-import com.bidding.crew.flight.generator.Source;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,12 +15,23 @@ import java.util.List;
 @Service
 public class FlightService {
     private FlightRepository flightRepository;
+    private FlightGeneratorFacade flightGeneratorFacade;
 
 
     public FlightService(FlightRepository flightRepository, FlightGeneratorFacade flightGeneratorFacade) {
         this.flightRepository = flightRepository;
         System.out.println("flight service");
-        flightRepository.saveAll(flightGeneratorFacade.generateFlights());
+      //  flightRepository.saveAll(flightGeneratorFacade.generateFlights());
+        this.flightGeneratorFacade = flightGeneratorFacade;
+    }
+
+
+    //todo: poczytac o tym MultipartFile ktory ma sluzyc do zaladowania danych z pliku przez postmana!
+    public void flightFileUpload(MultipartFile multipartFile) throws IOException {
+        String path = "tempdest.txt";
+        File file = new File(path);
+        multipartFile.transferTo(file);
+        flightRepository.saveAll(flightGeneratorFacade.generateFlights(path));
     }
 
     //todo:poprawic

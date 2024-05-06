@@ -1,5 +1,5 @@
 package com.bidding.crew.flight.generator;
 
-public enum Source {
+public enum SourceType {
     DUMMY, FILE;
 }

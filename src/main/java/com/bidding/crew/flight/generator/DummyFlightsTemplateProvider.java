@@ -11,7 +11,7 @@ import java.util.List;
 class DummyFlightsTemplateProvider implements FlightsTemplateProvider {
 
     @Override
-    public List<FlightTemplate> provideFlights() {
+    public List<FlightTemplate> provideFlights(String... source) {
 
         List<FlightTemplate> flightList = new ArrayList<>();
         flightList.add(new FlightTemplate("BA320", "MXP",LocalTime.of(5,10)));

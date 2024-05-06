@@ -11,11 +11,10 @@ import java.io.FileNotFoundException;
 public class FlightGeneratorConfiguration {
 
     @Bean
-    public FlightGeneratorFacade createFlightFacade(@Value("${flight.source}")Source source) throws FileNotFoundException {
-        if (source == Source.FILE) {
-            TextFileLoader textFileLoader = new TextFileLoader("Flights.txt");
-            return new FlightGeneratorFacade(new StringMapperFlightsTemplateProvider(textFileLoader.readFile()), Time.getTime());
-        } else if (source == Source.DUMMY) {
+    public FlightGeneratorFacade createFlightFacade(@Value("${flight.sourceType}") SourceType sourceType) throws FileNotFoundException {
+        if (sourceType == SourceType.FILE) {
+            return new FlightGeneratorFacade(new StringMapperFlightsTemplateProvider(),Time.getTime());
+        } else if (sourceType == SourceType.DUMMY) {
             return new FlightGeneratorFacade(new DummyFlightsTemplateProvider(),Time.getTime());
         }
         throw new IllegalStateException("Source not implemented.");

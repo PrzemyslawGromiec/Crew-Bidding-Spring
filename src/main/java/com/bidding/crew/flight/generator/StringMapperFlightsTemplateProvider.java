@@ -1,6 +1,8 @@
 package com.bidding.crew.flight.generator;
 
 import com.bidding.crew.flight.AircraftType;
+
+import java.io.FileNotFoundException;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -10,18 +12,26 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 class StringMapperFlightsTemplateProvider implements FlightsTemplateProvider {
-    private List<String> lines;
 
-    public StringMapperFlightsTemplateProvider(List<String> lines) {
-        this.lines = lines;
-    }
+    private TextFileLoader textFileLoader = new TextFileLoader();
+    private static final String DEFAULT_FILE_PATH = "Flights.txt";
 
     @Override
-    public List<FlightTemplate> provideFlights() {
-        return lines.stream()
-                .map(line -> parseLineToFlight(line).orElse(null))
-                .filter(flight -> flight != null)
-                .collect(Collectors.toList());
+    public List<FlightTemplate> provideFlights(String... source) {
+        String filePath = DEFAULT_FILE_PATH;
+        if (source.length == 1) {
+            filePath = source[0];
+        }
+        try {
+            List<String> lines = textFileLoader.readFile(filePath);
+            return lines.stream()
+                    .map(line -> parseLineToFlight(line).orElse(null))
+                    .filter(flight -> flight != null)
+                    .collect(Collectors.toList());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace(); //todo:poprawic
+            return new ArrayList<>();
+        }
     }
 
     Optional<FlightTemplate> parseLineToFlight(String line) { //todo zdekomponować
@@ -42,9 +52,9 @@ class StringMapperFlightsTemplateProvider implements FlightsTemplateProvider {
         int durationDays = 0;
         if (line.contains("CLEARS")) {
             durationDays = 2;
-            String clearTime = line.substring(line.indexOf("@") +1 );
-            clearHour = Integer.parseInt(clearTime.substring(0,2));
-            clearMinutes = Integer.parseInt(clearTime.substring(3,5));
+            String clearTime = line.substring(line.indexOf("@") + 1);
+            clearHour = Integer.parseInt(clearTime.substring(0, 2));
+            clearMinutes = Integer.parseInt(clearTime.substring(3, 5));
 
         }
 
@@ -53,7 +63,7 @@ class StringMapperFlightsTemplateProvider implements FlightsTemplateProvider {
         for (int i = 0; i < parts.length; i++) {
             String part = parts[i];
             if (part.equalsIgnoreCase("DAY")) {
-                numOfDays = parts[i-1];
+                numOfDays = parts[i - 1];
                 //System.out.println(line);
                 durationDays = getNumOfDays(numOfDays);
                 break;
@@ -61,16 +71,16 @@ class StringMapperFlightsTemplateProvider implements FlightsTemplateProvider {
         }
 
         //todo: dopisac godziny clear po 18 i przestawic na + 6
-        LocalTime clear = LocalTime.of(clearHour,clearMinutes);
+        LocalTime clear = LocalTime.of(clearHour, clearMinutes);
         if (durationDays == 0) {
             clear = LocalTime.of(hourInt + 4, minutesInt);
         }
 
-        return Optional.of(new FlightTemplate(flightNr, code, LocalTime.of(hourInt, minutesInt),clear, //todo builder?
-                durationDays,daysOfWeek,aircraftType));
+        return Optional.of(new FlightTemplate(flightNr, code, LocalTime.of(hourInt, minutesInt), clear, //todo builder?
+                durationDays, daysOfWeek, aircraftType));
     }
 
-    private int getNumOfDays (String days) {
+    private int getNumOfDays(String days) {
         List<String> listOfNumbers = List.of("TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE");
         int i = listOfNumbers.indexOf(days);
         if (i == -1) {
@@ -78,11 +88,12 @@ class StringMapperFlightsTemplateProvider implements FlightsTemplateProvider {
         }
         return i + 1;
     }
+
     private List<DayOfWeek> extractDaysOfWeek(String lineFragment) {
         List<DayOfWeek> daysOfWeek = new ArrayList<>();
         DayOfWeek[] days = DayOfWeek.values();
         for (DayOfWeek day : days) {
-            if(lineFragment.contains(day.toString())) {
+            if (lineFragment.contains(day.toString())) {
                 daysOfWeek.add(day);
             }
         }

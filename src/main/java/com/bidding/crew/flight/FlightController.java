@@ -1,7 +1,9 @@
 package com.bidding.crew.flight;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -33,6 +35,12 @@ public class FlightController {
     @GetMapping("/api/v0/flights")
     public List<FlightDto> getFlights() {
         return flightService.getAllFlights();
+    }
+
+    @PostMapping("/api/v0/flights/upload")
+    public String handleFileUpload(MultipartFile file) throws IOException {
+        flightService.flightFileUpload(file);
+        return "File created" + file.getName();
     }
 
 }
