@@ -15,7 +15,7 @@ public class FlightGeneratorFacade {
     private FlightsTemplateProvider flightsTemplateProvider;
     private Time time;
 
-    private FlightGeneratorFacade(FlightsTemplateProvider flightsTemplateProvider, Time time) {
+    FlightGeneratorFacade(FlightsTemplateProvider flightsTemplateProvider, Time time) {
         this.flightsTemplateProvider = flightsTemplateProvider;
         this.time = time;
     }
@@ -44,15 +44,4 @@ public class FlightGeneratorFacade {
         return flights;
     }
 
-    public static class Factory {
-        public static FlightGeneratorFacade createFlightFacade(Source source) throws FileNotFoundException {
-            if (source == Source.FILE) {
-                TextFileLoader textFileLoader = new TextFileLoader("Flights.txt"); //todo: wyeksponowac
-                return new FlightGeneratorFacade(new StringMapperFlightsTemplateProvider(textFileLoader.readFile()),Time.getTime());
-            } else if (source == Source.DUMMY) {
-                return new FlightGeneratorFacade(new DummyFlightsTemplateProvider(),Time.getTime());
-            }
-            throw new IllegalStateException("Source not implemented.");
-        }
-    }
 }

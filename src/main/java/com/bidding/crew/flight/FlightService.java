@@ -16,11 +16,10 @@ public class FlightService {
     private FlightRepository flightRepository;
 
 
-    public FlightService(FlightRepository flightRepository) throws FileNotFoundException {
+    public FlightService(FlightRepository flightRepository, FlightGeneratorFacade flightGeneratorFacade) {
         this.flightRepository = flightRepository;
         System.out.println("flight service");
-        FlightGeneratorFacade flightGenerator = FlightGeneratorFacade.Factory.createFlightFacade(Source.FILE);
-        flightRepository.saveAll(flightGenerator.generateFlights());
+        flightRepository.saveAll(flightGeneratorFacade.generateFlights());
     }
 
     //todo:poprawic

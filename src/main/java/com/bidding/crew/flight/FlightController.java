@@ -25,12 +25,6 @@ public class FlightController {
         return "hello world";
     }
 
-    /*@GetMapping("/api/v0/flights")
-    public void addFlight(String airportCode, String flightNumber) {
-        System.out.println("airportCode: " + airportCode + " flightNumber: " + flightNumber);
-    }*/
-
-
     @PostMapping("/api/v0/flights")
     public void addFlights(@RequestBody List<FlightDto> flightDtos) {
         flightService.addFlights(flightDtos);
@@ -41,7 +35,6 @@ public class FlightController {
         return flightService.getAllFlights();
     }
 
-    //metody do odpowiadania na zapytania do serwera (endpointy)
 }
 
 
