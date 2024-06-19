@@ -18,8 +18,9 @@ public class EventController {
         eventService.saveEvent(eventDto);
     }
 
-    @GetMapping("api/v0/events")
+    @GetMapping("/api/v0/events")
     public List<EventDto> findEventsByCriteria(@RequestBody SpecificationInput specificationInput) {
+        System.out.println("Received SpecificationInput: " + specificationInput);
         return eventService.findEventsByCriteria(specificationInput);
     }
 

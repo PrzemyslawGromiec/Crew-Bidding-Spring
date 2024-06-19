@@ -27,8 +27,8 @@ public class Event {
     }
 
     public Event(EventDto eventDto) {
-        startTime = eventDto.getStart();
-        endTime = eventDto.getEnd();
+        startTime = eventDto.getStartTime();
+        endTime = eventDto.getEndTime();
         priority = eventDto.getPriority();
         description = eventDto.getDescription();
         reoccurring = eventDto.isReoccurring();

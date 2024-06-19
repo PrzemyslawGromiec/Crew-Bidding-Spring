@@ -6,6 +6,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,17 +24,37 @@ public class FlightService {
     public FlightService(FlightRepository flightRepository, FlightGeneratorFacade flightGeneratorFacade) {
         this.flightRepository = flightRepository;
         System.out.println("flight service");
-      //  flightRepository.saveAll(flightGeneratorFacade.generateFlights());
+        //  flightRepository.saveAll(flightGeneratorFacade.generateFlights());
         this.flightGeneratorFacade = flightGeneratorFacade;
     }
 
 
     //todo: poczytac o tym MultipartFile ktory ma sluzyc do zaladowania danych z pliku przez postmana!
     public void flightFileUpload(MultipartFile multipartFile) throws IOException {
-        String path = "tempdest.txt";
-        File file = new File(path);
+        if (multipartFile.isEmpty()) {
+            System.out.println("File is empty.");
+            return;
+        }
+
+        String uploadDir = "C:\\Users\\pgrom\\OneDrive\\Desktop\\JAVA_all_projects\\Bidding-Crew";
+        ///path/to/upload/dir
+        Path uploadPath = Paths.get(uploadDir);
+
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        String fileName = multipartFile.getOriginalFilename();
+        if (fileName != null) {
+            fileName = Paths.get(fileName).getFileName().toString();
+        } else {
+            throw new IOException("File name is invalid.");
+        }
+
+        Path filePath = uploadPath.resolve(fileName);
+        File file = filePath.toFile();
         multipartFile.transferTo(file);
-        flightRepository.saveAll(flightGeneratorFacade.generateFlights(path));
+        flightRepository.saveAll(flightGeneratorFacade.generateFlights(file.getPath()));
     }
 
     //todo:poprawic

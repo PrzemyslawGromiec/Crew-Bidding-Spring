@@ -7,13 +7,15 @@ import java.util.List;
 
 @Service
 public class EventService {
+    private final EventSpecificationBuilderImpl eventSpecificationBuilderImpl;
     private EventRepository eventRepository;
     private EventSpecificationBuilder eventSpecificationBuilder;
 
-    public EventService(EventRepository eventRepository, EventSpecificationBuilder eventSpecificationBuilder) {
+    public EventService(EventRepository eventRepository, EventSpecificationBuilder eventSpecificationBuilder, EventSpecificationBuilderImpl eventSpecificationBuilderImpl) {
         this.eventRepository = eventRepository;
         this.eventSpecificationBuilder = eventSpecificationBuilder;
         System.out.println("event service created");
+        this.eventSpecificationBuilderImpl = eventSpecificationBuilderImpl;
     }
 
     public void saveEvent(EventDto eventDto) {
@@ -21,7 +23,7 @@ public class EventService {
     }
 
     public List<EventDto> findEventsByCriteria(SpecificationInput specificationInput) {
-        Specification<Event> specification = eventSpecificationBuilder.getSpecificationFor(specificationInput);
+        Specification<Event> specification = eventSpecificationBuilderImpl.getSpecificationFor(specificationInput);
         return eventRepository.findAll(specification)
                 .stream()
                 .map(Event::toDto)

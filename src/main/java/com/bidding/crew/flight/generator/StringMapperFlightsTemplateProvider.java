@@ -34,7 +34,7 @@ class StringMapperFlightsTemplateProvider implements FlightsTemplateProvider {
         }
     }
 
-    Optional<FlightTemplate> parseLineToFlight(String line) { //todo zdekomponować
+    Optional<FlightTemplate> parseLineToFlight(String line) {
         if (!line.startsWith("✓")) {
             return Optional.empty();
         }
@@ -76,7 +76,7 @@ class StringMapperFlightsTemplateProvider implements FlightsTemplateProvider {
             clear = LocalTime.of(hourInt + 4, minutesInt);
         }
 
-        return Optional.of(new FlightTemplate(flightNr, code, LocalTime.of(hourInt, minutesInt), clear, //todo builder?
+        return Optional.of(new FlightTemplate(flightNr, code, LocalTime.of(hourInt, minutesInt), clear,
                 durationDays, daysOfWeek, aircraftType));
     }
 

@@ -9,28 +9,77 @@ import java.time.LocalDateTime;
 
 public class EventSpecificationBuilderImpl implements EventSpecificationBuilder {
 
-    @Override
+   /* @Override
     public Specification<Event> getSpecificationFor(SpecificationInput input) {
+        Specification<Event> spec = Specification.where(null);
 
         String desc = input.getDescription();
-        Specification<Event> descriptionFilter = isNull(desc).or(getDescriptionSpec(desc));
+        //Specification<Event> descriptionFilter = isNull(desc).or(getDescriptionSpec(desc));
+        Specification<Event> descriptionFilter = isNull("description").or(getDescriptionSpec(desc));
 
-        LocalDateTime time = input.getTime();
-        Specification<Event> timeFilter = isNull(time).or(getTimeSpec(time));
+        LocalDateTime time = input.getStartTime();
+        //Specification<Event> timeFilter = isNull("time").or(getTimeSpec(time));
+        Specification<Event> timeFilter = isNull("startTime").or(getTimeSpec(time));
 
         Boolean isReoccurring = input.getReoccurring();
-        Specification<Event> reoccurringFilter = isNull(isReoccurring).or(getReoccurringSpec(isReoccurring));
+        //Specification<Event> reoccurringFilter = isNull("isReoccurring").or(getReoccurringSpec(isReoccurring));
+        Specification<Event> reoccurringFilter = isNull("reoccurring").or(getReoccurringSpec(isReoccurring));
 
         Integer priority = input.getPriority();
-        Specification<Event> priorityFilter = isNull(priority).or(getPrioritySpec(priority));
+        Specification<Event> priorityFilter = isNull("priority").or(getPrioritySpec(priority));
 
-        LocalDateTime endingBeforeTime = input.getTime();
-        Specification<Event> endingBeforeFilter = isNull(endingBeforeTime).or(getEventsEndingBeforeTime(endingBeforeTime));
+        LocalDateTime endingBeforeTime = input.getEndTime();
+        Specification<Event> endingBeforeFilter = isNull("endingBeforeTime").or(getEventsEndingBeforeTime(endingBeforeTime));
 
-        LocalDateTime startTime = input.getTime();
-        Specification<Event> eventsInChosenMonths = isNull(startTime).or(getEventsInChosenMonth(startTime));
-        return Specification.allOf(descriptionFilter,timeFilter,reoccurringFilter,priorityFilter,eventsInChosenMonths);
+        Specification<Event> eventInMonth = null;
+        if (input.getStartTime() != null) {
+            eventInMonth = isNull("startTime").or(getEventsInChosenMonth(time));
+        }
+
+
+        spec = Specification.anyOf(descriptionFilter,timeFilter,reoccurringFilter,priorityFilter, eventInMonth);
+        return spec;
+
+    }*/
+
+    @Override
+    public Specification<Event> getSpecificationFor(SpecificationInput input) {
+        Specification<Event> spec = Specification.where(null);
+
+        if (input.getStartTime() != null) {
+            spec = spec.and((root, query, cb) -> cb.equal(root.get("startTime"), input.getStartTime()));
+        }
+
+        if (input.getEndTime() != null) {
+            spec = spec.and((root, query, cb) -> cb.equal(root.get("endTime"), input.getEndTime()));
+        }
+
+        if (input.getReoccurring() != null) {
+            spec = spec.and((root, query, cb) -> cb.equal(root.get("reoccurring"), input.getReoccurring()));
+        }
+
+        if (input.getDescription() != null) {
+            spec = spec.and((root, query, cb) -> cb.like(root.get("description"), "%" + input.getDescription() + "%"));
+        }
+
+        if (input.getPriority() != null) {
+            spec = spec.and((root, query, cb) -> cb.equal(root.get("priority"), input.getPriority()));
+        }
+
+        if (input.getStartTime() != null) {
+            spec = spec.and(getEventsInChosenMonth(input.getStartTime()));
+        }
+
+        System.out.println(spec.toString());
+
+        return spec;
     }
+
+    private Specification<Event> getEventsInChosenMonth(LocalDateTime time) {
+        return (root, query, cb) -> cb.equal(cb.function("MONTH", Integer.class, root.get("startTime")), time.getMonthValue());
+    }
+
+
 
     //szuka eventow gdzie podana godzina i data znajduja sie pomiedzy data poczatku i konca
     private Specification<Event> getTimeSpec(LocalDateTime time) {
@@ -55,12 +104,12 @@ public class EventSpecificationBuilderImpl implements EventSpecificationBuilder 
         return (root, query, cb) -> cb.lessThanOrEqualTo(root.get("endTime"), time);
     }
 
-    private Specification<Event> getEventsInChosenMonth(LocalDateTime time) {
-        return (root, query, cb) -> cb.equal(cb.function("MONTH",Integer.class,root.get("startTime")), time.getMonthValue());
-    }
-
-    private Specification<Event> isNull(Object value) {
+   /* private Specification<Event> isNull(Object value) {
        return  (root, query, cb) -> cb.isNull(cb.literal(value));
+    }*/
+
+    private Specification<Event> isNull(String attributeName) {
+        return (root, query, cb) -> cb.isNull(root.get(attributeName));
     }
 
 }

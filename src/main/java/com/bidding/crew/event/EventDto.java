@@ -3,8 +3,8 @@ package com.bidding.crew.event;
 import java.time.LocalDateTime;
 
 public class EventDto {
-    private LocalDateTime start;
-    private LocalDateTime end;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private int priority;
     private String description;
     private boolean reoccurring = false;
@@ -12,20 +12,20 @@ public class EventDto {
     public EventDto() {
     }
 
-    public EventDto(LocalDateTime start, LocalDateTime end, int priority, String description, boolean reoccurring) {
-        this.start = start;
-        this.end = end;
+    public EventDto(LocalDateTime startTime, LocalDateTime endTime, int priority, String description, boolean reoccurring) {
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.priority = priority;
         this.description = description;
         this.reoccurring = reoccurring;
     }
 
-    public LocalDateTime getStart() {
-        return start;
+    public LocalDateTime getStartTime() {
+        return startTime;
     }
 
-    public LocalDateTime getEnd() {
-        return end;
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 
     public int getPriority() {
@@ -43,8 +43,8 @@ public class EventDto {
     @Override
     public String toString() {
         return "EventDto{" +
-                "start=" + start +
-                ", end=" + end +
+                "start=" + startTime +
+                ", end=" + endTime +
                 ", priority=" + priority +
                 ", description='" + description + '\'' +
                 ", reoccurring=" + reoccurring +
