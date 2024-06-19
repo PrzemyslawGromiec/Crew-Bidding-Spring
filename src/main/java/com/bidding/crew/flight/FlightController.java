@@ -32,15 +32,20 @@ public class FlightController {
         flightService.addFlights(flightDtos);
     }
 
-    @GetMapping("/api/v0/flights")
+   /* @GetMapping("/api/v0/flights")
     public List<FlightDto> getFlights() {
         return flightService.getAllFlights();
     }
-
+*/
     @PostMapping("/api/v0/flights/upload")
     public String handleFileUpload(MultipartFile file) throws IOException {
         flightService.flightFileUpload(file);
         return "File created" + file.getName();
+    }
+
+    @GetMapping("/api/v0/flights")
+    public List<FlightDto> findFlightsByCriteria(@RequestBody FlightSpecificationInput specificationInput) {
+        return flightService.findFlightByCriteria(specificationInput);
     }
 
 }

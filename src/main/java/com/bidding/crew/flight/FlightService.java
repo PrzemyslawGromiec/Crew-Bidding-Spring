@@ -1,6 +1,7 @@
 package com.bidding.crew.flight;
 
 import com.bidding.crew.flight.generator.FlightGeneratorFacade;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,13 +20,15 @@ import java.util.List;
 public class FlightService {
     private FlightRepository flightRepository;
     private FlightGeneratorFacade flightGeneratorFacade;
+    private FlightSpecificationBuilderImpl flightSpecificationBuilder;
 
 
-    public FlightService(FlightRepository flightRepository, FlightGeneratorFacade flightGeneratorFacade) {
+    public FlightService(FlightRepository flightRepository, FlightGeneratorFacade flightGeneratorFacade, FlightSpecificationBuilderImpl flightSpecificationBuilderImpl) {
         this.flightRepository = flightRepository;
         System.out.println("flight service");
         //  flightRepository.saveAll(flightGeneratorFacade.generateFlights());
         this.flightGeneratorFacade = flightGeneratorFacade;
+        this.flightSpecificationBuilder = flightSpecificationBuilderImpl;
     }
 
 
@@ -77,5 +80,13 @@ public class FlightService {
             flights.add(new Flight(flightDto));
         }
         flightRepository.saveAll(flights);
+    }
+
+    public List<FlightDto> findFlightByCriteria(FlightSpecificationInput input) {
+        Specification<Flight> specification = flightSpecificationBuilder.getSpecificationFor(input);
+        return flightRepository.findAll(specification)
+                .stream()
+                .map(Flight::toDto)
+                .toList();
     }
 }
