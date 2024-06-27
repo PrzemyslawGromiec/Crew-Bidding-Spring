@@ -7,14 +7,12 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
-//@Controller // zwraca widoki (html)
 @RestController // zwraca dane (json)
 public class FlightController {
     private FlightService flightService;
 
     public FlightController(FlightService flightService) {
         this.flightService = flightService;
-        System.out.println("flight controller");
     }
 
     @GetMapping("/api/v0/flights/1")
@@ -43,10 +41,18 @@ public class FlightController {
         return "File created" + file.getName();
     }
 
+
     @GetMapping("/api/v0/flights")
     public List<FlightDto> findFlightsByCriteria(@RequestBody FlightSpecificationInput specificationInput) {
+        System.out.println("Received spec input:" + specificationInput);
         return flightService.findFlightByCriteria(specificationInput);
     }
+
+
+  /*  @GetMapping("/api/v0/flights")
+    public List<FlightDto> getFlightsByAirportCode(@RequestParam String airport) {
+        return flightService.getFlightsByAirport(airport);
+    }*/
 
 }
 

@@ -82,8 +82,20 @@ public class FlightService {
         flightRepository.saveAll(flights);
     }
 
+    public List<FlightDto> getFlightsByAirport(String airportCode) {
+        List<Flight> flights = flightRepository.findFlightsByAirport(airportCode);
+        List<FlightDto> flightDtos = new ArrayList<>();
+        for (Flight flight : flights) {
+            flightDtos.add(flight.toDto());
+        }
+
+        return flightDtos;
+
+    }
+
     public List<FlightDto> findFlightByCriteria(FlightSpecificationInput input) {
         Specification<Flight> specification = flightSpecificationBuilder.getSpecificationFor(input);
+
         return flightRepository.findAll(specification)
                 .stream()
                 .map(Flight::toDto)

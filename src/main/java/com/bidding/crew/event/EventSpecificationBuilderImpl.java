@@ -70,8 +70,6 @@ public class EventSpecificationBuilderImpl implements EventSpecificationBuilder 
             spec = spec.and(getEventsInChosenMonth(input.getStartTime()));
         }
 
-        System.out.println(spec.toString());
-
         return spec;
     }
 

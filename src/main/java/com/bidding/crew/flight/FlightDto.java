@@ -45,9 +45,9 @@ public class FlightDto {
         return "FlightDto{" +
                 "airportCode='" + airportCode + '\'' +
                 ", flightNumber='" + flightNumber + '\'' +
+                ", reportTime=" + reportTime +
+                ", clearTime=" + clearTime +
+                ", aircraftType=" + aircraftType +
                 '}';
     }
 }
-
-
-//na potrzeby bibl Jackson potrzebujemy bezparam. konstruktor i getteery do wszystkich pol
