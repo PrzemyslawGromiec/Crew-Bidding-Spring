@@ -52,3 +52,29 @@ public class Flight {
         return aircraftType;
     }
 }
+
+
+/*
+* Flight + Events w bazie
+*  FlightRequesty na bazie Flight trafiaja do FlightRequestFactory
+* EventRequesty na bazie eventów trafiają do EventRequestFactory
+* potem na bazie jednych i drugich przygotowywane są periody w locie
+* periody są uzupełniane lotami
+* loty są prezentowane
+* Można wybrać lot lub pominąć
+* Nowy lot jest przerabiany na FlightRequest i dodawany do puli w factory
+* Na tej bazie powstaje kolejny period do wyboru aż się skończą
+* Wynikowo mamy zbiór Fliht i Event requestów w raporcie
+*
+* createRaport -> zwraca raport w budowie
+*getPeriod/raportId -> zwraca liste lotów na najbliszy period
+* postDecision -> decyzja zapisana
+*
+* postAction (stworz raport) -> pierwszy period
+* postAction (decyzja) -> kolejny period
+*
+*
+* */
+
+
+
