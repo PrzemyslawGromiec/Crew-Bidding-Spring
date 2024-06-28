@@ -16,7 +16,7 @@ public class Report {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Request> requests;
 
-    Report() {
+    public Report() {
     }
 
     public Report(List<EventRequest> requests) {

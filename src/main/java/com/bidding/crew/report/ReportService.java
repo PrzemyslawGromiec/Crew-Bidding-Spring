@@ -24,7 +24,7 @@ public class ReportService {
     }
 
     private List<EventRequest> getEventRequests() {
-        return eventFactory.createRequests(eventService.getEventDtos());
+        return eventFactory.createRequests(eventService.getEvents());
     }
 
     ReportDto applyAction(ActionType actionType){

@@ -1,5 +1,6 @@
 package com.bidding.crew.report;
 
+import com.bidding.crew.event.Event;
 import com.bidding.crew.event.EventDto;
 import com.bidding.crew.general.Time;
 
@@ -15,35 +16,35 @@ public class EventRequestFactory {
         this.time = time;
     }
 
-    public List<EventRequest> createRequests(List<EventDto> eventDtos) {
-        List<EventDto> sortedAndFilteredEvents = eventDtos.stream()
+    public List<EventRequest> createRequests(List<Event> events) {
+        List<Event> sortedAndFilteredEvents = events.stream()
                 .filter(
-                        eventDto -> eventDto.getStartTime().getMonth() == time.nextMonthLocalDate().getMonth()
-                        || eventDto.getEndTime().getMonth() == time.nextMonthLocalDate().getMonth()
-                ).sorted(Comparator.comparing(EventDto::getStartTime)).toList();
+                        event -> event.getStartTime().getMonth() == time.nextMonthLocalDate().getMonth()
+                        || event.getEndTime().getMonth() == time.nextMonthLocalDate().getMonth()
+                ).sorted(Comparator.comparing(Event::getStartTime)).toList();
 
-        List<List<EventDto>> groupedEvents = new ArrayList<>();
+        List<List<Event>> groupedEvents = new ArrayList<>();
 
-        for (EventDto eventDto : sortedAndFilteredEvents) {
+        for (Event event : sortedAndFilteredEvents) {
             if (groupedEvents.isEmpty()) {
                 groupedEvents.add(new ArrayList<>());
-                groupedEvents.getFirst().add(eventDto);
+                groupedEvents.getFirst().add(event);
                 continue;
             }
-            List<EventDto> lastGroup = groupedEvents.getLast();
-            EventDto lastEventInGroup = lastGroup.getLast();
+            List<Event> lastGroup = groupedEvents.getLast();
+            Event lastEventInGroup = lastGroup.getLast();
 
-            if (eventDto.getPriority() == lastEventInGroup.getPriority() &&
-            !eventDto.getStartTime().toLocalDate().isAfter(lastEventInGroup.getEndTime().toLocalDate().plusDays(1))) {
-                lastGroup.add(eventDto);
+            if (event.getPriority() == lastEventInGroup.getPriority() &&
+            !event.getStartTime().toLocalDate().isAfter(lastEventInGroup.getEndTime().toLocalDate().plusDays(1))) {
+                lastGroup.add(event);
                 continue;
             }
-            List<EventDto> newGroup = new ArrayList<>();
-            newGroup.add(eventDto);
+            List<Event> newGroup = new ArrayList<>();
+            newGroup.add(event);
             groupedEvents.add(newGroup);
         }
 
-        for(List<EventDto> group : groupedEvents) {
+        for(List<Event> group : groupedEvents) {
             requests.add(new EventRequest(group));
         }
         return requests;

@@ -22,7 +22,7 @@ public class RequestService {
     }
 
     public List<EventRequest> getEventRequests() {
-        return eventFactory.createRequests(eventService.getEventDtos());
+        return eventFactory.createRequests(eventService.getEvents());
     }
 
     public void buildRequest(FlightDto chosenFlight, int priority) {

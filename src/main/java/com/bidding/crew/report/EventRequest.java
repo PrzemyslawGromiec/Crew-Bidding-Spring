@@ -1,20 +1,26 @@
 package com.bidding.crew.report;
 
 import com.bidding.crew.event.Event;
-import com.bidding.crew.event.EventDto;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 
+@Entity
 public class EventRequest extends Request{
-    private List<EventDto> events;
+    @OneToMany
+    private List<Event> events;
 
-    public EventRequest(List<EventDto> events) {
+    public EventRequest(List<Event> events) {
         this.events = events;
-        events.sort(Comparator.comparing(EventDto::getStartTime));
+        events.sort(Comparator.comparing(Event::getStartTime));
     }
 
+    public EventRequest() {
+
+    }
 
     @Override
     public LocalDateTime startTime() {

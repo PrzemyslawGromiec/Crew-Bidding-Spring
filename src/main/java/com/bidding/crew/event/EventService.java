@@ -30,6 +30,10 @@ public class EventService {
                 .toList();
     }
 
+    public List<Event> getEvents() {
+        return eventRepository.findAll();
+    }
+
     public List<EventDto> getEventDtos() {
         return eventRepository.findAll()
                 .stream()
