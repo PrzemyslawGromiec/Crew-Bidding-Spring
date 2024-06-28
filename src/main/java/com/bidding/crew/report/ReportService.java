@@ -33,10 +33,8 @@ public class ReportService {
         }
 
         Report report = new Report(getEventRequests());
-        ReportDto reportDto = new ReportDto();
-        reportDto.setId(report.getId());
         reportRepository.save(report);
-        return reportDto;
+        return report.toDto();
     }
 
     //wpisywanie eventow

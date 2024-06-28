@@ -22,6 +22,10 @@ public class EventRequest extends Request{
 
     }
 
+    public EventRequestDto toDto() {
+        return new EventRequestDto(id, startTime(),endTime(),points);
+    }
+
     @Override
     public LocalDateTime startTime() {
         return events.getFirst().getStartTime();

@@ -6,9 +6,15 @@ import java.util.List;
 public class ReportDto {
     private Long id;
     private boolean reportFinalized;
-    private List<Period> periods = new ArrayList<>();
+    private List<EventRequestDto> eventRequest;
 
     public ReportDto() {
+    }
+
+    public ReportDto(Long id, boolean reportFinalized, List<EventRequestDto> eventRequest) {
+        this.id = id;
+        this.reportFinalized = reportFinalized;
+        this.eventRequest = eventRequest;
     }
 
     public boolean isReportFinalized() {
@@ -17,6 +23,10 @@ public class ReportDto {
 
     public Long getId() {
         return id;
+    }
+
+    public List<EventRequestDto> getEventRequest() {
+        return eventRequest;
     }
 
     public void setId(Long id) {

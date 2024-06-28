@@ -19,8 +19,24 @@ public class Report {
     public Report() {
     }
 
+
     public Report(List<EventRequest> requests) {
         this.requests = new ArrayList<>(requests);
+    }
+
+    public ReportDto toDto() {
+        List<EventRequestDto> eventRequests = getEventRequests().stream()
+                .map(EventRequest::toDto)
+                .toList();
+
+        return new ReportDto(id, reportFinalized,eventRequests);
+    }
+
+    private List<EventRequest> getEventRequests() {
+        return requests.stream()
+                .filter(request -> request instanceof EventRequest)
+                .map(request -> (EventRequest) request)
+                .toList();
     }
 
     public List<Request> getRequests() {

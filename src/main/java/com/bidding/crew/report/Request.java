@@ -9,8 +9,9 @@ import java.util.Random;
 public abstract class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int id;
-    private int points = new Random().nextInt();
+    Long id;
+    int points = new Random().nextInt();
+
     public abstract LocalDateTime startTime();
     public abstract LocalDateTime endTime();
 }
