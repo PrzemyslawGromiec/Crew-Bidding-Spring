@@ -29,4 +29,11 @@ public class EventService {
                 .map(Event::toDto)
                 .toList();
     }
+
+    public List<EventDto> getEventDtos() {
+        return eventRepository.findAll()
+                .stream()
+                .map(Event::toDto)
+                .toList();
+    }
 }

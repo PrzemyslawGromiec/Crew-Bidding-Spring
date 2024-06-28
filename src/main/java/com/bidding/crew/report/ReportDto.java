@@ -1,14 +1,18 @@
 package com.bidding.crew.report;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ReportDto {
     private Long id;
-    private boolean reportState;
+    private boolean reportFinalized;
+    private List<Period> periods = new ArrayList<>();
 
     public ReportDto() {
     }
 
-    public boolean isReportState() {
-        return reportState;
+    public boolean isReportFinalized() {
+        return reportFinalized;
     }
 
     public Long getId() {
@@ -19,15 +23,15 @@ public class ReportDto {
         this.id = id;
     }
 
-    public void setReportState(boolean reportState) {
-        this.reportState = reportState;
+    public void setReportFinalized(boolean reportFinalized) {
+        this.reportFinalized = reportFinalized;
     }
 
     @Override
     public String toString() {
         return "ReportDto{" +
                 "id=" + id +
-                ", reportState=" + reportState +
+                ", reportState=" + reportFinalized +
                 '}';
     }
 }
