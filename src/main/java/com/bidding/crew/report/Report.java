@@ -11,7 +11,7 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private boolean reportFinalized;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Period> periods = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL)
     private List<Request> requests;
@@ -20,8 +20,9 @@ public class Report {
     }
 
 
-    public Report(List<EventRequest> requests) {
+    public Report(List<EventRequest> requests, List<Period> periods) {
         this.requests = new ArrayList<>(requests);
+        this.periods = periods;
     }
 
     public ReportDto toDto() {

@@ -13,6 +13,7 @@ public class ReportService {
     private EventRequestFactory eventFactory = new EventRequestFactory(Time.getTime());
     private FlightRequestFactory flightFactory = new FlightRequestFactory();
     private EventService eventService;
+    private PeriodFactory periodFactory = new PeriodFactory();
 
     public ReportService(ReportRepository reportRepository, EventService eventService) {
         this.reportRepository = reportRepository;
@@ -32,7 +33,9 @@ public class ReportService {
             throw new IllegalStateException("Not finalized report exists.");
         }
 
-        Report report = new Report(getEventRequests());
+        List<EventRequest> eventRequests = getEventRequests();
+        List<Period> periods = periodFactory.createPeriodsBetweenRequests(eventRequests);
+        Report report = new Report(eventRequests,periods);
         reportRepository.save(report);
         return report.toDto();
     }
