@@ -1,6 +1,8 @@
 package com.bidding.crew.flight;
 
 import com.bidding.crew.flight.generator.FlightGeneratorFacade;
+import com.bidding.crew.general.Preference;
+import com.bidding.crew.report.Period;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 //Service uzywa encji - sterowany przez kontroler, dostarcza mu DTos,
@@ -21,14 +24,17 @@ public class FlightService {
     private FlightRepository flightRepository;
     private FlightGeneratorFacade flightGeneratorFacade;
     private FlightSpecificationBuilderImpl flightSpecificationBuilder;
+    private Preference preference;
 
 
-    public FlightService(FlightRepository flightRepository, FlightGeneratorFacade flightGeneratorFacade, FlightSpecificationBuilderImpl flightSpecificationBuilderImpl) {
+    public FlightService(FlightRepository flightRepository, FlightGeneratorFacade flightGeneratorFacade, FlightSpecificationBuilderImpl flightSpecificationBuilderImpl,
+                         Preference preference) {
         this.flightRepository = flightRepository;
         System.out.println("flight service");
         //  flightRepository.saveAll(flightGeneratorFacade.generateFlights());
         this.flightGeneratorFacade = flightGeneratorFacade;
         this.flightSpecificationBuilder = flightSpecificationBuilderImpl;
+        this.preference = preference;
     }
 
 
@@ -98,5 +104,19 @@ public class FlightService {
                 .stream()
                 .map(Flight::toDto)
                 .toList();
+    }
+
+    public List<Flight> getFlightsForPeriod(Period period, boolean allDurations) {
+        return flightRepository.findAll().stream()
+                .filter(flight -> allDurations || preferredDuration(preference, flight))
+                .filter(flight -> preference.containsAircraftType(flight.getAircraftType()))
+                .filter(flight -> !flight.getReportTime().isBefore(period.getStartTime())
+                        && !flight.getClearTime().isAfter(period.getEndTime()))
+                .collect(Collectors.toList());
+    }
+
+    private  boolean preferredDuration(Preference preference, Flight flight) {
+        return flight.getFlightDuration().toHours() >= preference.getMinFlightHours()
+                && flight.getFlightDuration().toHours() <= preference.getMaxFlightHours();
     }
 }

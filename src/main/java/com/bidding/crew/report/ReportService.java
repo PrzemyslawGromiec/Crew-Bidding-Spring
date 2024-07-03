@@ -1,6 +1,8 @@
 package com.bidding.crew.report;
 
 import com.bidding.crew.event.EventService;
+import com.bidding.crew.flight.Flight;
+import com.bidding.crew.flight.FlightService;
 import com.bidding.crew.general.Time;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +17,12 @@ public class ReportService {
     private FlightRequestFactory flightFactory = new FlightRequestFactory();
     private EventService eventService;
     private PeriodFactory periodFactory = new PeriodFactory();
+    private FlightService flightService;
 
-    public ReportService(ReportRepository reportRepository, EventService eventService) {
+    public ReportService(ReportRepository reportRepository, EventService eventService, FlightService flightService) {
         this.reportRepository = reportRepository;
         this.eventService = eventService;
+        this.flightService = flightService;
     }
 
     public List<FlightRequest> getFlightRequests() {
@@ -39,7 +43,8 @@ public class ReportService {
 
         Report report = new Report(eventRequests,periods);
         reportRepository.save(report);
-        return report.toDto();
+        List<Flight> flights = flightService.getFlightsForPeriod(periods.getFirst(), false);
+        return report.toDto(flights);
     }
 
     //wpisywanie eventow

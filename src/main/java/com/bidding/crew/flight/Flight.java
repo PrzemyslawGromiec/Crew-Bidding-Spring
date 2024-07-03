@@ -2,6 +2,7 @@ package com.bidding.crew.flight;
 
 import jakarta.persistence.*;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Entity
@@ -30,6 +31,10 @@ public class Flight {
 
     public FlightDto toDto() {
         return new FlightDto(airportCode,flightNumber,reportTime,clearTime,aircraftType);
+    }
+
+    public Duration getFlightDuration() {
+        return Duration.between(reportTime, clearTime);
     }
 
     public String getAirportCode() {

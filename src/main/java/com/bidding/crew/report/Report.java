@@ -1,5 +1,7 @@
 package com.bidding.crew.report;
 
+import com.bidding.crew.flight.Flight;
+import com.bidding.crew.flight.FlightDto;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -25,7 +27,7 @@ public class Report {
         this.periods = periods;
     }
 
-    public ReportDto toDto() {
+    public ReportDto toDto(List<Flight> flights) {
         List<EventRequestDto> eventRequests = getEventRequests().stream()
                 .map(EventRequest::toDto)
                 .toList();
@@ -34,7 +36,11 @@ public class Report {
                 .map(Period::toDto)
                 .toList();
 
-        return new ReportDto(id, reportFinalized,eventRequests, periods);
+        List<FlightDto> flightsDtos= flights.stream()
+                .map(flight -> flight.toDto())
+                .toList();
+
+        return new ReportDto(id, reportFinalized,eventRequests, periods, flightsDtos);
     }
 
     private List<EventRequest> getEventRequests() {
