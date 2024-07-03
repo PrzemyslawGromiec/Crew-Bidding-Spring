@@ -20,10 +20,15 @@ public class Event {
     }
 
     public Event(LocalDateTime startTime, LocalDateTime endTime, int priority, String description) {
+        this(startTime,endTime,priority,description,false);
+    }
+
+    public Event(LocalDateTime startTime, LocalDateTime endTime, int priority, String description, boolean reoccurring) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.priority = priority;
         this.description = description;
+        this.reoccurring = reoccurring;
     }
 
     public Event(EventDto eventDto) {

@@ -32,7 +32,6 @@ public class FlightService {
     }
 
 
-    //todo: poczytac o tym MultipartFile ktory ma sluzyc do zaladowania danych z pliku przez postmana!
     public void flightFileUpload(MultipartFile multipartFile) throws IOException {
         if (multipartFile.isEmpty()) {
             System.out.println("File is empty.");
@@ -60,7 +59,6 @@ public class FlightService {
         flightRepository.saveAll(flightGeneratorFacade.generateFlights(file.getPath()));
     }
 
-    //todo:poprawic
     public void saveFlight(FlightDto flightDto) {
         flightRepository.save(new Flight(flightDto));
     }

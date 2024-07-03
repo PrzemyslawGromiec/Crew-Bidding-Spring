@@ -22,6 +22,13 @@ public class EventService {
         eventRepository.save(new Event(eventDto));
     }
 
+    public void saveAllEvents(List<EventDto> eventDtos) {
+        List<Event> events = eventDtos.stream()
+                .map(EventDto::toEntity)
+                .toList();
+        eventRepository.saveAll(events);
+    }
+
     public List<EventDto> findEventsByCriteria(SpecificationInput specificationInput) {
         Specification<Event> specification = eventSpecificationBuilderImpl.getSpecificationFor(specificationInput);
         return eventRepository.findAll(specification)

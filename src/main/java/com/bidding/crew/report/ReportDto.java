@@ -7,14 +7,16 @@ public class ReportDto {
     private Long id;
     private boolean reportFinalized;
     private List<EventRequestDto> eventRequest;
+    private List<PeriodDto> periods;
 
     public ReportDto() {
     }
 
-    public ReportDto(Long id, boolean reportFinalized, List<EventRequestDto> eventRequest) {
+    public ReportDto(Long id, boolean reportFinalized, List<EventRequestDto> eventRequest, List<PeriodDto> periods) {
         this.id = id;
         this.reportFinalized = reportFinalized;
         this.eventRequest = eventRequest;
+        this.periods = periods;
     }
 
     public boolean isReportFinalized() {
@@ -35,6 +37,10 @@ public class ReportDto {
 
     public void setReportFinalized(boolean reportFinalized) {
         this.reportFinalized = reportFinalized;
+    }
+
+    public List<PeriodDto> getPeriods() {
+        return periods;
     }
 
     @Override

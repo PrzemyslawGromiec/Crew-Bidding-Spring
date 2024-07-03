@@ -10,7 +10,6 @@ import java.util.List;
 public class RequestService {
     private EventRequestFactory eventFactory = new EventRequestFactory(Time.getTime());
     private FlightRequestFactory flightFactory = new FlightRequestFactory();
-    //todo:czy ja moge sobie tak serwis tutaj uzyc ?
     private EventService eventService;
 
     public RequestService(EventService eventService) {

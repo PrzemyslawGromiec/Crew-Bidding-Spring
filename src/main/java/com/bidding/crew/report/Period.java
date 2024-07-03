@@ -24,6 +24,10 @@ public class Period {
         this.endTime = endTime;
     }
 
+    public PeriodDto toDto() {
+        return new PeriodDto(id, startTime,endTime);
+    }
+
     public LocalDateTime getStartTime() {
         return startTime;
     }

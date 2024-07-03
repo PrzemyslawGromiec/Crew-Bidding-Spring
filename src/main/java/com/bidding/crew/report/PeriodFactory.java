@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 //todo: sprawdzic ile periodow sie tworzy
-//todo: dodawanie automatyczne eventow
 public class PeriodFactory {
 
     private Time time = Time.getTime();

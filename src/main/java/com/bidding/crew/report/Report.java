@@ -30,7 +30,11 @@ public class Report {
                 .map(EventRequest::toDto)
                 .toList();
 
-        return new ReportDto(id, reportFinalized,eventRequests);
+        List<PeriodDto> periods =  this.periods.stream()
+                .map(Period::toDto)
+                .toList();
+
+        return new ReportDto(id, reportFinalized,eventRequests, periods);
     }
 
     private List<EventRequest> getEventRequests() {

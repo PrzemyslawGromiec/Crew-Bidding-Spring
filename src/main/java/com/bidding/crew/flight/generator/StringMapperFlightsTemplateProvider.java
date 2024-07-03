@@ -70,7 +70,6 @@ class StringMapperFlightsTemplateProvider implements FlightsTemplateProvider {
             }
         }
 
-        //todo: dopisac godziny clear po 18 i przestawic na + 6
         LocalTime clear = LocalTime.of(clearHour, clearMinutes);
         if (durationDays == 0) {
             clear = LocalTime.of(hourInt + 4, minutesInt);

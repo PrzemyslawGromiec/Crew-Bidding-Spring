@@ -20,6 +20,10 @@ public class EventDto {
         this.reoccurring = reoccurring;
     }
 
+    public Event toEntity() {
+        return new Event(startTime,endTime,priority,description, reoccurring);
+    }
+
     public LocalDateTime getStartTime() {
         return startTime;
     }

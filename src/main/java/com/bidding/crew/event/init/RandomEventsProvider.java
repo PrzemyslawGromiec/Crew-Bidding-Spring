@@ -1,6 +1,8 @@
-package com.bidding.crew.event;
+package com.bidding.crew.event.init;
 
-import org.springframework.boot.CommandLineRunner;
+import com.bidding.crew.event.EventDto;
+import com.bidding.crew.general.Time;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -8,32 +10,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@Component
-public class EventDataInitializer implements CommandLineRunner {
-
-    private final Random random = new Random();
-    private final EventService eventService;
-
-    public EventDataInitializer(EventService eventService) {
-        this.eventService = eventService;
-    }
-
+public class RandomEventsProvider implements TestEventSource {
+    private Random random = new Random();
 
     @Override
-    public void run(String... args) throws Exception {
+    public List<EventDto> createEvents() {
         List<EventDto> events = new ArrayList<>();
-
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 5; i++) {
             events.add(createRandomEvent());
-        }
 
-        events.forEach(eventService::saveEvent);
-        events.forEach(event -> System.out.println(event.getDescription() + " starts at " + event.getStartTime()));
+        }
+        return events;
     }
 
     private EventDto createRandomEvent() {
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime startOfNextMonth = now.withDayOfMonth(1).plusMonths(1);
+        LocalDateTime startOfNextMonth = Time.getTime().nextMonthTime();
 
         LocalDateTime startTime = startOfNextMonth.plusDays(random.nextInt(startOfNextMonth.toLocalDate().lengthOfMonth()))
                 .plusHours(random.nextInt(24))

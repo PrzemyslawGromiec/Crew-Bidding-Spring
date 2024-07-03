@@ -6,7 +6,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//todo:poprawic eventy
+//todo: koncowy period nie istnieje
 @Service
 public class ReportService {
     private ReportRepository reportRepository;
@@ -35,6 +36,7 @@ public class ReportService {
 
         List<EventRequest> eventRequests = getEventRequests();
         List<Period> periods = periodFactory.createPeriodsBetweenRequests(eventRequests);
+
         Report report = new Report(eventRequests,periods);
         reportRepository.save(report);
         return report.toDto();
@@ -47,10 +49,6 @@ public class ReportService {
     //wybieranie lotow lub pomijanie w danym periodzie
     //
 
-    //event service
-    //create request
-    //generowanie periodow
-    //zwrocic jako dto
 
 
 
