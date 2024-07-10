@@ -19,6 +19,10 @@ public class Time {
         return nextMonthLocalDate().atTime(LocalTime.MIN);
     }
 
+    public LocalDateTime startOfNextMonthDate() {
+        return LocalDateTime.now().plusMonths(1).withDayOfMonth(1);
+    }
+
     public static Time getTime() {
         return time;
     }

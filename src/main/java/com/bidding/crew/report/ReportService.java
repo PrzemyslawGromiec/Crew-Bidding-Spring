@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-//todo:poprawic eventy
 //todo: koncowy period nie istnieje
 @Service
 public class ReportService {
@@ -19,6 +18,7 @@ public class ReportService {
     private PeriodFactory periodFactory = new PeriodFactory();
     private FlightService flightService;
 
+    //todo:kolejne periody, all durations
     public ReportService(ReportRepository reportRepository, EventService eventService, FlightService flightService) {
         this.reportRepository = reportRepository;
         this.eventService = eventService;

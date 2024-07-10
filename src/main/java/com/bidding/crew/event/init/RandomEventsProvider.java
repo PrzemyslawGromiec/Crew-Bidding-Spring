@@ -2,8 +2,6 @@ package com.bidding.crew.event.init;
 
 import com.bidding.crew.event.EventDto;
 import com.bidding.crew.general.Time;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

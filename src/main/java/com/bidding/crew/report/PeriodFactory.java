@@ -7,7 +7,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-//todo: sprawdzic ile periodow sie tworzy
 public class PeriodFactory {
 
     private Time time = Time.getTime();
@@ -20,7 +19,7 @@ public class PeriodFactory {
             return Collections.singletonList(fullMonthPeriod);
         }
 
-        EventRequest firstRequest = requests.get(0);
+        EventRequest firstRequest = requests.getFirst();
         if (firstRequest.startTime().getDayOfMonth() != 1) {
             Period firstDayOfMonthPeriod = nextMonthPeriod(firstRequest.startTime());
             createdPeriods.add(firstDayOfMonthPeriod);
@@ -36,11 +35,17 @@ public class PeriodFactory {
             previousEventRequest = currentEventRequest;
         }
 
+        LocalDateTime endOfMonth = time.startOfNextMonthDate().plusMonths(1).minusMinutes(1);
+        Period lastPeriod = nextMonthPeriod(previousEventRequest.endTime(), endOfMonth);
+        if (lastPeriod.getStartTime().isBefore(lastPeriod.getEndTime())) {
+            createdPeriods.add(lastPeriod);
+        }
+
         return createdPeriods;
     }
 
     private Period nextMonthPeriod() {
-        return nextMonthPeriod(time.nextMonthTime().plusMonths(1).withDayOfMonth(1));
+        return nextMonthPeriod(time.startOfNextMonthDate());
     }
 
     private Period nextMonthPeriod(LocalDateTime endBeforeThis) {
