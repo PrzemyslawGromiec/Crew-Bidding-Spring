@@ -1,7 +1,5 @@
 package com.bidding.crew.report;
 
-import com.bidding.crew.flight.Flight;
-import com.bidding.crew.flight.FlightDto;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -12,7 +10,7 @@ public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private boolean reportFinalized;
+    private boolean closed;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Period> periods = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL)
@@ -27,7 +25,7 @@ public class Report {
         this.periods = periods;
     }
 
-    public ReportDto toDto(List<Flight> flights) {
+    public ReportResponse toResponse() {
         List<EventRequestDto> eventRequests = getEventRequests().stream()
                 .map(EventRequest::toDto)
                 .toList();
@@ -36,11 +34,8 @@ public class Report {
                 .map(Period::toDto)
                 .toList();
 
-        List<FlightDto> flightsDtos= flights.stream()
-                .map(flight -> flight.toDto())
-                .toList();
 
-        return new ReportDto(id, reportFinalized,eventRequests, periods, flightsDtos);
+        return new ReportResponse(id, closed,eventRequests, periods);
     }
 
     private List<EventRequest> getEventRequests() {
@@ -62,7 +57,11 @@ public class Report {
         return id;
     }
 
-    public boolean isReportFinalized() {
-        return reportFinalized;
+    public boolean isClosed() {
+        return closed;
+    }
+
+    public void setClosed(boolean closed) {
+        this.closed = closed;
     }
 }

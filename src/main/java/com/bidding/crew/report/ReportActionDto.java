@@ -1,7 +1,7 @@
 package com.bidding.crew.report;
 
 enum ActionType {
-    CREATE_REPORT, NEXT_PERIOD
+    CREATE_REPORT, NEXT_PERIOD, CHOOSE_FLIGHT
 }
 
 

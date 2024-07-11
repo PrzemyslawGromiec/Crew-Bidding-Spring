@@ -102,7 +102,7 @@ public class FlightService {
 
         return flightRepository.findAll(specification)
                 .stream()
-                .map(Flight::toDto)
+                .map(Flight::toDtoWithId)
                 .toList();
     }
 
@@ -119,4 +119,9 @@ public class FlightService {
         return flight.getFlightDuration().toHours() >= preference.getMinFlightHours()
                 && flight.getFlightDuration().toHours() <= preference.getMaxFlightHours();
     }
+
+    private Flight getFlightById(int id) {
+        return flightRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Flight not found with id: " + id));
+    }
+
 }

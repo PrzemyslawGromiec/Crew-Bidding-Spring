@@ -33,6 +33,10 @@ public class Flight {
         return new FlightDto(airportCode,flightNumber,reportTime,clearTime,aircraftType);
     }
 
+    public FlightDto toDtoWithId() {
+        return new FlightDto(id,airportCode,flightNumber,reportTime,clearTime,aircraftType);
+    }
+
     public Duration getFlightDuration() {
         return Duration.between(reportTime, clearTime);
     }

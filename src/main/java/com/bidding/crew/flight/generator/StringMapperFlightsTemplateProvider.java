@@ -1,6 +1,7 @@
 package com.bidding.crew.flight.generator;
 
 import com.bidding.crew.flight.AircraftType;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 import java.time.DayOfWeek;
@@ -9,12 +10,14 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
+import org.slf4j.Logger;
 import java.util.stream.Collectors;
 
 class StringMapperFlightsTemplateProvider implements FlightsTemplateProvider {
 
     private TextFileLoader textFileLoader = new TextFileLoader();
     private static final String DEFAULT_FILE_PATH = "Flights.txt";
+    private static final Logger logger = LoggerFactory.getLogger(StringMapperFlightsTemplateProvider.class);
 
     @Override
     public List<FlightTemplate> provideFlights(String... source) {
@@ -29,7 +32,7 @@ class StringMapperFlightsTemplateProvider implements FlightsTemplateProvider {
                     .filter(flight -> flight != null)
                     .collect(Collectors.toList());
         } catch (FileNotFoundException e) {
-            e.printStackTrace(); //todo:poprawic
+            logger.error("File not found: {}", filePath, e);
             return new ArrayList<>();
         }
     }
