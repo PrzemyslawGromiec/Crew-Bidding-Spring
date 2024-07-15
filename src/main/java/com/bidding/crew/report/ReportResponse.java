@@ -7,8 +7,13 @@ public class ReportResponse {
     private boolean closed;
     private List<EventRequestDto> eventRequest;
     private List<PeriodDto> periods;
+    private String message;
 
     public ReportResponse() {
+    }
+
+    public ReportResponse(String message) {
+        this.message = message;
     }
 
     public ReportResponse(Long id, boolean closed, List<EventRequestDto> eventRequest, List<PeriodDto> periods) {
@@ -16,6 +21,14 @@ public class ReportResponse {
         this.closed = closed;
         this.eventRequest = eventRequest;
         this.periods = periods;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public boolean isClosed() {

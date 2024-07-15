@@ -7,6 +7,9 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 @Service
 public class ReportService {
     private ReportRepository reportRepository;
@@ -16,7 +19,6 @@ public class ReportService {
     private PeriodFactory periodFactory = new PeriodFactory();
     private FlightService flightService;
     private List<Period> periods;
-    private int currentPeriodIndex = 0;
 
     public ReportService(ReportRepository reportRepository, EventService eventService, FlightService flightService) {
         this.reportRepository = reportRepository;
@@ -32,18 +34,15 @@ public class ReportService {
         return eventFactory.createRequests(eventService.getEvents());
     }
 
-    ReportResponse createReport(ReportRequest reportRequest){
-        if(reportRequest.isClosed()) {
+    ReportResponse createReport(ReportRequest reportRequest) {
+        if (reportRequest.isClosed()) {
             throw new RuntimeException("New created report cannot be finalized.");
         }
-        /*if (reportRepository.count() !=0 && !reportRepository.findAll().getFirst().isReportFinalized()) {
-            throw new IllegalStateException("Not finalized report exists.");
-        }*/
 
         List<EventRequest> eventRequests = getEventRequests();
         List<Period> periods = periodFactory.createPeriodsBetweenRequests(eventRequests);
 
-        Report report = new Report(eventRequests,periods);
+        Report report = new Report(eventRequests, periods);
         reportRepository.save(report);
 
         return report.toResponse();
@@ -51,23 +50,34 @@ public class ReportService {
     }
 
     ReportResponse getReport(Long id) {
-        return reportRepository.findById(id).orElseThrow().toResponse();
+        return reportRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Report with id " + id + " not found"))
+                .toResponse();
+
     }
 
     @Transactional
     ReportResponse updateStatus(Long id, ReportRequest reportRequest) {
         Report report = reportRepository.findById(id).orElseThrow();
 
-        if(reportRequest.isClosed()) {
+        if (reportRequest.isClosed()) {
             report.setClosed(true);
         }
 
-        if(!reportRequest.isClosed() && report.isClosed()) {
+        if (!reportRequest.isClosed() && report.isClosed()) {
             throw new RuntimeException("You cannot open closed report.");
         }
 
         return report.toResponse();
     }
+
+    public List<PeriodDto> getAllPeriods(Long reportId) {
+        Report report = reportRepository.findById(reportId).orElseThrow();
+        return report.toResponse().getPeriods();
+
+    }
+
+
 
 
 }

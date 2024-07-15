@@ -14,6 +14,9 @@ public class PeriodDto {
 
     }
 
+    public PeriodDto() {
+    }
+
     public Long getId() {
         return id;
     }
