@@ -2,7 +2,7 @@ package com.bidding.crew.flight;
 
 import com.bidding.crew.flight.generator.FlightGeneratorFacade;
 import com.bidding.crew.general.Preference;
-import com.bidding.crew.report.Period;
+import com.bidding.crew.report.PeriodDto;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,12 +12,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-
-//Service uzywa encji - sterowany przez kontroler, dostarcza mu DTos,
 
 @Service
 public class FlightService {
@@ -45,7 +43,6 @@ public class FlightService {
         }
 
         String uploadDir = "C:\\Users\\pgrom\\OneDrive\\Desktop\\JAVA_all_projects\\Bidding-Crew";
-        ///path/to/upload/dir
         Path uploadPath = Paths.get(uploadDir);
 
         if (!Files.exists(uploadPath)) {
@@ -94,7 +91,6 @@ public class FlightService {
         }
 
         return flightDtos;
-
     }
 
     public List<FlightDto> findFlightByCriteria(FlightSpecificationInput input) {
@@ -102,11 +98,11 @@ public class FlightService {
 
         return flightRepository.findAll(specification)
                 .stream()
-                .map(Flight::toDtoWithId)
+                .map(Flight::toDto)
                 .toList();
     }
 
-    public List<Flight> getFlightsForPeriod(Period period, boolean allDurations) {
+    public List<Flight> getFlightsForPeriod(PeriodDto period, boolean allDurations) {
         return flightRepository.findAll().stream()
                 .filter(flight -> allDurations || preferredDuration(preference, flight))
                 .filter(flight -> preference.containsAircraftType(flight.getAircraftType()))
@@ -115,13 +111,21 @@ public class FlightService {
                 .collect(Collectors.toList());
     }
 
+    public List<Flight> getFlightsWithinPeriodWithMinDuration(PeriodDto period, Duration minDuration) {
+        List<Flight> flights = flightRepository.findFlightsWithinPeriod(period.getStartTime(), period.getEndTime());
+        return flights.stream()
+                .filter(flight -> flight.getFlightDuration().compareTo(minDuration) >= 0)
+                .toList();
+    }
+
+    //todo: sql wyszuka w bazie danych loty dla danej daty (findAll z data, lub przekazywac wszystkie daty)
+
     private  boolean preferredDuration(Preference preference, Flight flight) {
         return flight.getFlightDuration().toHours() >= preference.getMinFlightHours()
                 && flight.getFlightDuration().toHours() <= preference.getMaxFlightHours();
     }
 
-    private Flight getFlightById(int id) {
+    public Flight getFlightById(int id) {
         return flightRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Flight not found with id: " + id));
     }
-
 }

@@ -1,25 +1,45 @@
 package com.bidding.crew.report;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public class PeriodDto {
-    private Long id;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
-    public PeriodDto(Long id, LocalDateTime startTime, LocalDateTime endTime) {
-        this.id = id;
+    public PeriodDto(LocalDateTime startTime, LocalDateTime endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
-
     }
 
     public PeriodDto() {
     }
 
-    public Long getId() {
-        return id;
+    //todo:problem z liczeniem periodow
+    public Optional<PeriodDto> getCommonPeriod(PeriodDto userPeriod) {
+
+        if(this.getEndTime().isAfter(userPeriod.getStartTime())
+                && userPeriod.getStartTime().isBefore(this.endTime)) {
+            return Optional.of(new PeriodDto(userPeriod.getStartTime(),this.endTime));
+        }
+        if(this.getEndTime().isBefore(userPeriod.startTime)) {
+            return Optional.empty();
+        }
+        if(userPeriod.getStartTime().isAfter(this.startTime)
+                && userPeriod.getEndTime().isBefore(this.endTime)) {
+            return Optional.of(new PeriodDto(userPeriod.getStartTime(),userPeriod.getEndTime()));
+        }
+        if(this.startTime.isAfter(userPeriod.getStartTime())
+                && this.endTime.isBefore(userPeriod.getEndTime())) {
+            return Optional.of(new PeriodDto(this.startTime,this.endTime));
+        }
+        if(this.startTime.isEqual(userPeriod.startTime)
+                && (this.endTime.isEqual(userPeriod.endTime))) {
+            return Optional.of(new PeriodDto(this.startTime,this.endTime));
+        }
+        return Optional.empty();
     }
+
 
     public LocalDateTime getStartTime() {
         return startTime;
@@ -27,10 +47,6 @@ public class PeriodDto {
 
     public LocalDateTime getEndTime() {
         return endTime;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public void setStartTime(LocalDateTime startTime) {
@@ -44,7 +60,6 @@ public class PeriodDto {
     @Override
     public String toString() {
         return "PeriodDto{" +
-                "id=" + id +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 '}';

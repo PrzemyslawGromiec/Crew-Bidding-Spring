@@ -13,15 +13,7 @@ public class FlightDto {
     public FlightDto() {
     }
 
-    public FlightDto(String airportCode, String flightNumber, LocalDateTime reportTime, LocalDateTime clearTime, AircraftType aircraftType) {
-        this.airportCode = airportCode;
-        this.flightNumber = flightNumber;
-        this.reportTime = reportTime;
-        this.clearTime = clearTime;
-        this.aircraftType = aircraftType;
-    }
-
-    public FlightDto(int id, String airportCode, String flightNumber, LocalDateTime clearTime, LocalDateTime reportTime, AircraftType aircraftType) {
+    public FlightDto(int id, String airportCode, String flightNumber, LocalDateTime reportTime, LocalDateTime clearTime, AircraftType aircraftType) {
         this.id = id;
         this.airportCode = airportCode;
         this.flightNumber = flightNumber;
@@ -53,17 +45,6 @@ public class FlightDto {
     public AircraftType getAircraftType() {
         return aircraftType;
     }
-
-/*    @Override
-    public String toString() {
-        return "FlightDto{" +
-                "airportCode='" + airportCode + '\'' +
-                ", flightNumber='" + flightNumber + '\'' +
-                ", reportTime=" + reportTime +
-                ", clearTime=" + clearTime +
-                ", aircraftType=" + aircraftType +
-                '}';
-    }*/
 
     @Override
     public String toString() {

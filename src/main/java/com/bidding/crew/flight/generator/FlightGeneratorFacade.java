@@ -37,7 +37,7 @@ public class FlightGeneratorFacade {
             }
             LocalDateTime report = LocalDateTime.of(nextMonth.withDayOfMonth(day), flightTemplate.getReportTime());
             LocalDateTime clear = LocalDateTime.of(nextMonth.withDayOfMonth(day).plusDays(flightTemplate.getDurationDays()), flightTemplate.getClearTime());
-            FlightDto flightDto = new FlightDto(flightTemplate.getAirportCode(),flightTemplate.getFlightNumber(),  report, clear, flightTemplate.getAircraftType());
+            FlightDto flightDto = new FlightDto(0,flightTemplate.getAirportCode(),flightTemplate.getFlightNumber(),  report, clear, flightTemplate.getAircraftType());
             flights.add(new Flight(flightDto));
         }
         return flights;

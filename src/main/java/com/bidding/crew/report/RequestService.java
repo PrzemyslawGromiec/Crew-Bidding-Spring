@@ -24,8 +24,8 @@ public class RequestService {
         return eventFactory.createRequests(eventService.getEvents());
     }
 
-    public void buildRequest(FlightDto chosenFlight, int priority) {
+/*    public void buildRequest(FlightDto chosenFlight, int priority) {
         flightFactory.buildRequest(chosenFlight,priority);
-    }
+    }*/
 
 }

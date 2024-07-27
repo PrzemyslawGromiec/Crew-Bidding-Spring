@@ -30,12 +30,9 @@ public class Flight {
     }
 
     public FlightDto toDto() {
-        return new FlightDto(airportCode,flightNumber,reportTime,clearTime,aircraftType);
+        return new FlightDto(id,airportCode, flightNumber, reportTime, clearTime, aircraftType);
     }
 
-    public FlightDto toDtoWithId() {
-        return new FlightDto(id,airportCode,flightNumber,reportTime,clearTime,aircraftType);
-    }
 
     public Duration getFlightDuration() {
         return Duration.between(reportTime, clearTime);
@@ -60,30 +57,34 @@ public class Flight {
     public AircraftType getAircraftType() {
         return aircraftType;
     }
+
+    public LocalDateTime getClearTimeWithBuffer() {
+        return getClearTime().plus(calculateBuffer());
+    }
+
+    public Duration calculateBuffer() {
+        if (getFlightDuration().compareTo(Duration.ofHours(14)) < 0) {
+            //todo:zmienic pozniej na plus 30 min
+            return Duration.ofHours(12).plusMinutes(0);
+        } else {
+            return Duration.ofHours(48);
+        }
+    }
+
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "id=" + id +
+                ", airportCode='" + airportCode + '\'' +
+                ", flightNumber='" + flightNumber + '\'' +
+                ", reportTime=" + reportTime +
+                ", clearTime=" + clearTime +
+                ", aircraftType=" + aircraftType +
+                '}';
+    }
 }
 
-
-/*
-* Flight + Events w bazie
-*  FlightRequesty na bazie Flight trafiaja do FlightRequestFactory
-* EventRequesty na bazie eventów trafiają do EventRequestFactory
-* potem na bazie jednych i drugich przygotowywane są periody w locie
-* periody są uzupełniane lotami
-* loty są prezentowane
-* Można wybrać lot lub pominąć
-* Nowy lot jest przerabiany na FlightRequest i dodawany do puli w factory
-* Na tej bazie powstaje kolejny period do wyboru aż się skończą
-* Wynikowo mamy zbiór Fliht i Event requestów w raporcie
-*
-* createRaport -> zwraca raport w budowie
-*getPeriod/raportId -> zwraca liste lotów na najbliszy period
-* postDecision -> decyzja zapisana
-*
-* postAction (stworz raport) -> pierwszy period
-* postAction (decyzja) -> kolejny period
-*
-*
-* */
 
 
 

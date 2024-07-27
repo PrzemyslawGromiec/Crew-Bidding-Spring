@@ -1,34 +1,46 @@
 package com.bidding.crew.report;
 
 import com.bidding.crew.flight.Flight;
-import com.bidding.crew.flight.FlightDto;
 
 import java.time.LocalDateTime;
 
 public class FlightRequest extends Request {
-    private FlightDto flightDto;
+    private Flight flight;
     private int numOfStars;
 
-    public FlightRequest(FlightDto flightDto, int numOfStars) {
-        this.flightDto = flightDto;
+    public FlightRequest(Flight flight, int numOfStars) {
+        this.flight = flight;
         this.numOfStars = numOfStars;
     }
 
     @Override
     public LocalDateTime startTime() {
-        return null;
+        return flight.getReportTime();
     }
 
     @Override
     public LocalDateTime endTime() {
-        return null;
+        return flight.getClearTime();
     }
 
-    public FlightDto getFlightDto() {
-        return flightDto;
+    @Override
+    public LocalDateTime endTimeBuffered() {
+        return flight.getClearTimeWithBuffer();
     }
 
     public int getNumOfStars() {
         return numOfStars;
+    }
+
+    public Flight getFlight() {
+        return flight;
+    }
+
+    @Override
+    public String toString() {
+        return "FlightRequest{" +
+                "flight=" + flight +
+                ", numOfStars=" + numOfStars +
+                '}';
     }
 }

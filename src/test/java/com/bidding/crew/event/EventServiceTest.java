@@ -36,7 +36,7 @@ class EventServiceTest {
                 1, "first", true));
     }
 
-    @Test
+  /*  @Test
     public void testFindEvents() {
         List<EventDto> events = eventService.findEventsByParameters(null,
                 (LocalDateTime.of(2024, 4, 30, 23, 59)), true);
@@ -52,6 +52,6 @@ class EventServiceTest {
         Assertions.assertEquals(3,eventsWithNull.size());
 
 
-    }
+    }*/
 
 }

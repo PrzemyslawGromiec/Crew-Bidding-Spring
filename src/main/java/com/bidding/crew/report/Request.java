@@ -14,4 +14,6 @@ public abstract class Request {
 
     public abstract LocalDateTime startTime();
     public abstract LocalDateTime endTime();
+
+    public abstract LocalDateTime endTimeBuffered();
 }

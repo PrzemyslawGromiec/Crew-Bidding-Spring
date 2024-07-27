@@ -23,6 +23,11 @@ public class Time {
         return LocalDateTime.now().plusMonths(1).withDayOfMonth(1);
     }
 
+    public LocalDateTime endOfNextMonthDate() {
+        //return nextMonthLocalDate().atTime(LocalTime.MAX).plusMonths(1).minusDays(1);
+        return LocalDate.now().plusMonths(2).atTime(LocalTime.MAX).withDayOfMonth(1).minusDays(1);
+    }
+
     public static Time getTime() {
         return time;
     }

@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -14,8 +15,8 @@ public class EventRequest extends Request{
     private List<Event> events;
 
     public EventRequest(List<Event> events) {
-        this.events = events;
-        events.sort(Comparator.comparing(Event::getStartTime));
+        this.events = new ArrayList<>(events);
+        this.events.sort(Comparator.comparing(Event::getStartTime));
     }
 
     public EventRequest() {
@@ -34,5 +35,17 @@ public class EventRequest extends Request{
     @Override
     public LocalDateTime endTime() {
         return events.getLast().getEndTime();
+    }
+
+    @Override
+    public LocalDateTime endTimeBuffered() {
+        return endTime().plusDays(1).withHour(6).withMinute(0).withSecond(0);
+    }
+
+    @Override
+    public String toString() {
+        return "EventRequest{" +
+                "events=" + events +
+                '}';
     }
 }
