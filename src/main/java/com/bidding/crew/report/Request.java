@@ -2,6 +2,7 @@ package com.bidding.crew.report;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Random;
 
@@ -16,4 +17,5 @@ public abstract class Request {
     public abstract LocalDateTime endTime();
 
     public abstract LocalDateTime endTimeBuffered();
+    public abstract LocalDate startDate();
 }

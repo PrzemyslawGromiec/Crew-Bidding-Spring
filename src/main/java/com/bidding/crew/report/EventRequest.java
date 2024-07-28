@@ -4,6 +4,7 @@ import com.bidding.crew.event.Event;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -41,6 +42,12 @@ public class EventRequest extends Request{
     public LocalDateTime endTimeBuffered() {
         return endTime().plusDays(1).withHour(6).withMinute(0).withSecond(0);
     }
+
+    @Override
+    public LocalDate startDate() {
+        return events.getFirst().getStartTime().toLocalDate();
+    }
+
 
     @Override
     public String toString() {

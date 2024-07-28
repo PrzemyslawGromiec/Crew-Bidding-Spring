@@ -4,6 +4,7 @@ import com.bidding.crew.general.Time;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -43,18 +44,21 @@ public class Report {
         System.out.println(allRequests);
 
         List<PeriodDto> periods = new ArrayList<>();
-        LocalDateTime currentTime = Time.getTime().startOfNextMonthDate();
+        LocalDateTime currentStartTime = Time.getTime().startOfNextMonthDate();
+        LocalDateTime currentEndTime = requests.getFirst().startDate().atTime(LocalTime.of(22,0,0)).minusDays(1);
         LocalDateTime endOfMonth = Time.getTime().endOfNextMonthDate();
 
         for (Request request : allRequests) {
-            if (currentTime.isBefore(request.startTime())) {
-                periods.add(new PeriodDto(currentTime, request.startTime()));
+            currentEndTime = request.startDate().atTime(LocalTime.of(22,0,0)).minusDays(1);
+            if (currentStartTime.isBefore(request.startTime())) {
+                //periods.add(new PeriodDto(currentStartTime, request.startTime()));
+                periods.add(new PeriodDto(currentStartTime, currentEndTime));
             }
-            currentTime = request.endTimeBuffered();
+            currentStartTime = request.endTimeBuffered();
         }
 
-        if (currentTime.isBefore(endOfMonth)) {
-            periods.add(new PeriodDto(currentTime, endOfMonth));
+        if (currentStartTime.isBefore(endOfMonth)) {
+            periods.add(new PeriodDto(currentStartTime, endOfMonth));
         }
 
         return periods;

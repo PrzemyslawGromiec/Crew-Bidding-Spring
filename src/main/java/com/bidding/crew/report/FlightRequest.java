@@ -2,6 +2,7 @@ package com.bidding.crew.report;
 
 import com.bidding.crew.flight.Flight;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class FlightRequest extends Request {
@@ -26,6 +27,11 @@ public class FlightRequest extends Request {
     @Override
     public LocalDateTime endTimeBuffered() {
         return flight.getClearTimeWithBuffer();
+    }
+
+    @Override
+    public LocalDate startDate() {
+        return flight.getReportTime().toLocalDate();
     }
 
     public int getNumOfStars() {
