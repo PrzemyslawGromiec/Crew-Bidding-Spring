@@ -9,8 +9,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -115,7 +113,7 @@ public class ReportService {
 
         List<FlightDto> suggestions = new ArrayList<>();
         for (PeriodDto periodDto : commonTime) {
-            suggestions.addAll(flightService.getFlightsWithinPeriodWithMinDuration(periodDto,minDuration)
+            suggestions.addAll(flightService.getFlightsWithinPeriodWithMinDuration(periodDto, minDuration)
                     .stream()
                     .map(Flight::toDto)
                     .toList());
@@ -123,68 +121,9 @@ public class ReportService {
 
         return suggestions;
     }
-
-/*    private List<PeriodDto> getCommonPeriods(PeriodDto period, List<PeriodDto> generatedPeriods) {
-        LocalDateTime start = period.getStartTime();
-        LocalDateTime end = period.getEndTime();
-
-        //przejsc przez generatedPeriods i sprawdzic czy ktorys z nich pokrywa sie z data podana przez uzytkownika
-        for (PeriodDto generatedPeriod : generatedPeriods) {
-            if ()
-        }
-
-        return null;
-    }*/
-
-
 }
 
-/*   public List<FlightDto> getSuggestedFlightsInPeriod(Long reportId, Long periodId) {
- *//*PeriodDto period = getAllPeriods(reportId).stream()
-                .filter(p -> p.getId().equals(periodId))
-                .findFirst()
-                .orElseThrow(()->new NoSuchElementException("Period not found"));
-       *//*
-        Report report = reportRepository.findById(reportId)
-                .orElseThrow(() -> new NoSuchElementException("Report not found"));
 
-        Period period = report.generatePeriods().stream()
-                .filter(p -> p.getId().equals(periodId))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("Period not found"));
-
-        List<Flight> suggestedFlights = flightService.getFlightsForPeriod(period, true);
-        return suggestedFlights.stream()
-                .map(Flight::toDtoWithId)
-                .toList();
-    }*/
-
- /*   @Transactional
-    public ReportResponse selectFlightForPeriod(Long reportId, Long periodId, FlightDto selectedFlightDto) {
-        Report report = reportRepository.findById(reportId)
-                .orElseThrow(() -> new NoSuchElementException("Report not found"));
-
-        Period period = report.getPeriods().stream()
-                .filter(p -> p.getId().equals(periodId))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("Period not found in the report"));
-
-        Flight selectedFlight = flightService.getFlightById(selectedFlightDto.getId());
-
-        Period period1 = new Period(period.getStartTime(), selectedFlight.getReportTime());
-        Period period2 = new Period(selectedFlight.getClearTimeWithBuffer(), period.getEndTime());
-
-        report.getPeriods().remove(period);
-        if (period1.getStartTime().isBefore(period1.getEndTime())) {
-            report.getPeriods().add(period1);
-        }
-        if (period2.getStartTime().isBefore(period2.getEndTime())) {
-            report.getPeriods().add(period2);
-        }
-
-        reportRepository.save(report);
-        return report.toResponse();
-    }*/
 
 
 

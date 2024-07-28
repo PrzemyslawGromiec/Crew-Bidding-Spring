@@ -88,18 +88,6 @@ public class ReportController {
     }
 }
 
-/*    @PostMapping("/{reportId}/requests")
-    public ResponseEntity<ReportResponse> addFlightsToPeriods(@PathVariable Long reportId,
-                                                              @RequestBody List<FlightDto> flights) {
-        try {
-            ReportResponse updatedReport = reportService.addFlightsToPeriods(reportId, flights);
-            return ResponseEntity.ok(updatedReport);
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }*/
-
-
     //post reports -> tworze pusty raport
     //put reports/id  (status=finalized)
     //get reports/id/periods

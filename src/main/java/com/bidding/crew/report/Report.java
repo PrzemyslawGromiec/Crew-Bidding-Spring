@@ -32,20 +32,12 @@ public class Report {
         return new ReportResponse(id, closed, eventRequests, generatePeriods());
     }
 
-    //posortowac requesty chronologicznie
-    //ustawiamy 01. o 6.AM na start perioda
-    //iterujac po requestach tworzymy period trwajacy do startu bierzacego requestu
-    //aktualizujemy czas startu dla kolejnego perioda jako czas buforowanego konca bierzacego requestu
-
     List<PeriodDto> generatePeriods() {
         List<EventRequest> eventRequestList = getEventRequests();
         List<FlightRequest> flightRequestList = getFlightRequest();
         List<Request> allRequests = new ArrayList<>();
         allRequests.addAll(eventRequestList);
         allRequests.addAll(flightRequestList);
-        //zakomentowalem ponizej, bo metoda testowa podwaja zawartosc requestow
-        //requests.addAll(eventRequestList);
-        //requests.addAll(flightRequestList);
 
         allRequests.sort(Comparator.comparing(Request::startTime));
         System.out.println(allRequests);

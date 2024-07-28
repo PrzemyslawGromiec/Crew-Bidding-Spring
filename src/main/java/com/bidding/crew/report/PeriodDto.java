@@ -16,27 +16,39 @@ public class PeriodDto {
     }
 
     //todo:problem z liczeniem periodow
-    public Optional<PeriodDto> getCommonPeriod(PeriodDto userPeriod) {
+   /* public Optional<PeriodDto> getCommonPeriod(PeriodDto userPeriod) {
 
-        if(this.getEndTime().isAfter(userPeriod.getStartTime())
-                && userPeriod.getStartTime().isBefore(this.endTime)) {
+        if((this.getEndTime().isAfter(userPeriod.getStartTime())
+                && userPeriod.getStartTime().isBefore(this.endTime))
+        || (userPeriod.getEndTime().isAfter(this.startTime) && (this.startTime.isBefore(userPeriod.getEndTime())))) {
             return Optional.of(new PeriodDto(userPeriod.getStartTime(),this.endTime));
         }
-        if(this.getEndTime().isBefore(userPeriod.startTime)) {
+        if((this.getEndTime().isBefore(userPeriod.startTime))|| (userPeriod.endTime.isBefore(this.startTime))) {
             return Optional.empty();
         }
         if(userPeriod.getStartTime().isAfter(this.startTime)
                 && userPeriod.getEndTime().isBefore(this.endTime)) {
             return Optional.of(new PeriodDto(userPeriod.getStartTime(),userPeriod.getEndTime()));
         }
-        if(this.startTime.isAfter(userPeriod.getStartTime())
-                && this.endTime.isBefore(userPeriod.getEndTime())) {
+        if((this.startTime.isAfter(userPeriod.getStartTime())
+                && this.endTime.isBefore(userPeriod.getEndTime())) ){
             return Optional.of(new PeriodDto(this.startTime,this.endTime));
         }
         if(this.startTime.isEqual(userPeriod.startTime)
                 && (this.endTime.isEqual(userPeriod.endTime))) {
             return Optional.of(new PeriodDto(this.startTime,this.endTime));
         }
+        return Optional.empty();
+    }*/
+
+    public Optional<PeriodDto> getCommonPeriod(PeriodDto userPeriod) {
+        LocalDateTime commonStartTime = this.startTime.isAfter(userPeriod.getStartTime()) ? this.startTime : userPeriod.getStartTime();
+        LocalDateTime commonEndTime = this.endTime.isBefore(userPeriod.getEndTime()) ? this.endTime : userPeriod.getEndTime();
+
+        if (commonStartTime.isBefore(commonEndTime) || commonStartTime.isEqual(commonEndTime)) {
+            return Optional.of(new PeriodDto(commonStartTime, commonEndTime));
+        }
+
         return Optional.empty();
     }
 

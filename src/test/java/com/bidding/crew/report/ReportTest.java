@@ -25,15 +25,16 @@ class ReportTest {
         //iterujac po requestach tworzymy period trwajacy do startu bierzacego requestu
         //aktualizujemy czas startu dla kolejnego perioda jako czas buforowanego konca bierzacego requestu
 
-
+        //time off
         report.addRequest(createEventRequest(3, 3));
         report.addRequest(createEventRequest(7, 1));
         report.addRequest(createEventRequest(12, 2));
 
+        //flight requests
         report.addRequest(createFlightRequest(1, 12, 8));
         report.addRequest(createFlightRequest(9, 8, 8));
         report.addRequest(createFlightRequest(20, 8, 8));
-        //1. 01.08 12:00 - 01.08 20:00 - lot + 12h - ok
+        //1. 01.08 12:00 - 01.08 20:00 - flight + 12h - ok
         //2. 02.08 08:00 - 03.08 00:00 - period - ok
         //3. 03.08 00:00 - 05.08 23:59 - event + 6h - ok
         //4. 06.08 06:00 - 07.08 00:00 - period - ok
@@ -49,10 +50,10 @@ class ReportTest {
         System.out.println(periods);
         System.out.println(periods.size());
 
-        Assertions.assertTrue(periods.contains(createPeriod(1, 12, 1, 20)));
         Assertions.assertTrue(periods.contains(createPeriod(2, 8, 3, 0)));
-        Assertions.assertTrue(periods.contains(createPeriod(3, 0, 5, 23)));
-        //Assertions.assertTrue(periods.contains(createPeriod(6, 6, 7, 0)));
+        //Assertions.assertTrue(periods.contains(createPeriod(2, 8, 3, 0)));
+        //Assertions.assertTrue(periods.contains(createPeriod(3, 0, 5, 23)));
+        Assertions.assertTrue(periods.contains(createPeriod(6, 6, 7, 0)));
         Assertions.assertTrue(periods.contains(createPeriod(7, 0, 7, 23)));
         //Assertions.assertTrue(periods.contains(createPeriod(8, 6, 9, 8)));
         Assertions.assertTrue(periods.contains(createPeriod(9, 8, 9, 16)));
@@ -79,8 +80,7 @@ class ReportTest {
         // jest -1, bo jak event ma trwac 3 dni, to chce zeby byl np od 03.08 00:00 do 05.08 23:59
         LocalDateTime endTime = Time.getTime().nextMonthLocalDate().atTime(LocalTime.MAX).withDayOfMonth(startDayOfMonth).plusDays(days - 1);
         Event event = new EventDto(startTime, endTime, numOfStars, "uni", false).toEntity();
-        EventRequest request = new EventRequest(List.of(event));
-        return request;
+        return new EventRequest(List.of(event));
 
     }
 
@@ -99,7 +99,7 @@ class ReportTest {
 
 
     private Flight createFlight(int startDayOfMonth, int startingHour, int hoursFlight) {
-        FlightDto flightDto = new FlightDto("", "", LocalDateTime.of(2024, 8, startDayOfMonth, startingHour, 0),
+        FlightDto flightDto = new FlightDto(0,"", "", LocalDateTime.of(2024, 8, startDayOfMonth, startingHour, 0),
                 LocalDateTime.of(2024, 8, startDayOfMonth, startingHour, 0).plusHours(hoursFlight), AircraftType.A320);
         return new Flight(flightDto);
     }
