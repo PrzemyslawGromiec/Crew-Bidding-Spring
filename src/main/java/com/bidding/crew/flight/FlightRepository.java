@@ -12,7 +12,16 @@ public interface FlightRepository extends JpaRepository<Flight, Integer>, JpaSpe
     @Query("SELECT f FROM Flight f WHERE f.airportCode = :airportCode")
     List<Flight> findFlightsByAirport(String airportCode);
 
-    @Query("SELECT f FROM Flight f WHERE f.reportTime >= :startTime AND f.clearTime <= :endTime")
-    List<Flight> findFlightsWithinPeriod(@Param("startTime") LocalDateTime startTime,
-                                         @Param("endTime") LocalDateTime endTime);
+    @Query("SELECT f FROM Flight f WHERE f.reportTime >= :startTime AND f.clearTime <= :endTime AND f.aircraftType <> :aircraftType")
+    List<Flight> findFlightsWithinPeriodExcludingOneType(@Param("startTime") LocalDateTime startTime,
+                                                         @Param("endTime") LocalDateTime endTime,
+                                                         @Param("aircraftType") AircraftType aircraftType);
+
+    //list of excluded aircraft types
+    @Query("SELECT f FROM Flight f WHERE f.reportTime >= :startTime AND f.clearTime <= :endTime AND f.aircraftType NOT IN :aircraftTypes")
+    List<Flight> findFlightsWithinPeriodExcludingTypes(@Param("startTime") LocalDateTime startTime,
+                                                       @Param("endTime") LocalDateTime endTime,
+                                                       @Param("aircraftTypes") List<AircraftType> aircraftTypes);
+
+
 }

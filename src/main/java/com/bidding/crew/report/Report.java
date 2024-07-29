@@ -45,7 +45,7 @@ public class Report {
 
         List<PeriodDto> periods = new ArrayList<>();
         LocalDateTime currentStartTime = Time.getTime().startOfNextMonthDate();
-        LocalDateTime currentEndTime = requests.getFirst().startDate().atTime(LocalTime.of(22,0,0)).minusDays(1);
+        LocalDateTime currentEndTime;
         LocalDateTime endOfMonth = Time.getTime().endOfNextMonthDate();
 
         for (Request request : allRequests) {

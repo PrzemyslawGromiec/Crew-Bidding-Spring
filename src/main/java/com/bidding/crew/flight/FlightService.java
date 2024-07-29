@@ -111,8 +111,8 @@ public class FlightService {
                 .collect(Collectors.toList());
     }
 
-    public List<Flight> getFlightsWithinPeriodWithMinDuration(PeriodDto period, Duration minDuration) {
-        List<Flight> flights = flightRepository.findFlightsWithinPeriod(period.getStartTime(), period.getEndTime());
+    public List<Flight> getFlightsWithinPeriodWithMinDuration(PeriodDto period, Duration minDuration, AircraftType aircraftType) {
+        List<Flight> flights = flightRepository.findFlightsWithinPeriodExcludingOneType(period.getStartTime(),period.getEndTime(),aircraftType);
         return flights.stream()
                 .filter(flight -> flight.getFlightDuration().compareTo(minDuration) >= 0)
                 .toList();

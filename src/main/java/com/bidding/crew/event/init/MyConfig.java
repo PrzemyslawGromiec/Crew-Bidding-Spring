@@ -3,6 +3,7 @@ package com.bidding.crew.event.init;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 
@@ -21,5 +22,10 @@ public class MyConfig {
         else {
             throw new IllegalArgumentException("Unknown service implementation" + eventSourceType);
         }
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }

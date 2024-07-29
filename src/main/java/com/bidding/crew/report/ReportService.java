@@ -1,6 +1,7 @@
 package com.bidding.crew.report;
 
 import com.bidding.crew.event.EventService;
+import com.bidding.crew.flight.AircraftType;
 import com.bidding.crew.flight.Flight;
 import com.bidding.crew.flight.FlightDto;
 import com.bidding.crew.flight.FlightService;
@@ -103,7 +104,7 @@ public class ReportService {
         return suggestions;
     }*/
 
-    public List<FlightDto> getSuggestedFlightsForPeriods(Long reportId, PeriodDto period, Duration minDuration) {
+    public List<FlightDto> getSuggestedFlightsForPeriods(Long reportId, PeriodDto period, Duration minDuration, AircraftType aircraftType) {
         List<PeriodDto> periods = generatePeriodsForReport(reportId);
         List<PeriodDto> commonTime = new ArrayList<>();
         for (PeriodDto periodDto : periods) {
@@ -113,7 +114,7 @@ public class ReportService {
 
         List<FlightDto> suggestions = new ArrayList<>();
         for (PeriodDto periodDto : commonTime) {
-            suggestions.addAll(flightService.getFlightsWithinPeriodWithMinDuration(periodDto, minDuration)
+            suggestions.addAll(flightService.getFlightsWithinPeriodWithMinDuration(periodDto, minDuration, aircraftType)
                     .stream()
                     .map(Flight::toDto)
                     .toList());

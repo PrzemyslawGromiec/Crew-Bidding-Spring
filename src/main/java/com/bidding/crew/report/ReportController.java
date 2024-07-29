@@ -1,5 +1,6 @@
 package com.bidding.crew.report;
 
+import com.bidding.crew.flight.AircraftType;
 import com.bidding.crew.flight.FlightDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,10 +29,6 @@ public class ReportController {
         }
     }
 
-    //100 info, 200 ok, 300 redirect
-    //400 front-client 500 back-server
-
-
     @GetMapping("/{id}")
     public ResponseEntity<ReportResponse> getReport(@PathVariable Long id) {
         try {
@@ -43,7 +40,6 @@ public class ReportController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ReportResponse());
         }
     }
-
 
     @PutMapping("/{id}")
     public ResponseEntity<ReportResponse> updateStatus(@PathVariable Long id, @RequestBody ReportRequest reportRequest) {
@@ -77,10 +73,11 @@ public class ReportController {
 
     @GetMapping("/{id}/suggestions")
     public ResponseEntity<List<FlightDto>> getSuggestionsForPeriod(@PathVariable Long id, @RequestBody PeriodDto period,
-                                                                   @RequestParam(required = false) Long minDurationHours) {
+                                                                   @RequestParam(required = false) Long minDurationHours,
+                                                                   @RequestParam AircraftType aircraftType) {
         try {
             Duration minDuration = minDurationHours != null ? Duration.ofHours(minDurationHours) : Duration.ZERO;
-            List<FlightDto> suggestedFlights = reportService.getSuggestedFlightsForPeriods(id,period,minDuration);
+            List<FlightDto> suggestedFlights = reportService.getSuggestedFlightsForPeriods(id,period,minDuration,aircraftType);
             return ResponseEntity.ok(suggestedFlights);
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
