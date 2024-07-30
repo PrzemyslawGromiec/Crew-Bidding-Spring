@@ -1,5 +1,6 @@
 package com.bidding.crew.flight;
 
+import com.bidding.crew.report.SuggestionCriteriaDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -12,11 +13,14 @@ public interface FlightRepository extends JpaRepository<Flight, Integer>, JpaSpe
     @Query("SELECT f FROM Flight f WHERE f.airportCode = :airportCode")
     List<Flight> findFlightsByAirport(String airportCode);
 
-    //todo refactor
-    @Query("SELECT f FROM Flight f WHERE f.reportTime >= :startTime AND f.clearTime <= :endTime AND f.aircraftType <> :aircraftType")
-    List<Flight> findFlightsWithinPeriodExcludingOneType(@Param("startTime") LocalDateTime startTime,
-                                                         @Param("endTime") LocalDateTime endTime,
-                                                         @Param("aircraftType") AircraftType aircraftType);
+    default List<Flight> findFlightsWithinPeriodExcludingOneType(SuggestionCriteriaDto criteria) {
+        return findFlightsWithinPeriodExcludingOneType(criteria.getStartTime(),criteria.getEndTime(),criteria.getAircraftType());
+    }
+
+    @Query("SELECT f FROM Flight f WHERE f.reportTime >= :startTime AND f.clearTime <= :clearTime AND f.aircraftType <> :aircraftType")
+    List<Flight> findFlightsWithinPeriodExcludingOneType(LocalDateTime startTime,
+                                                         LocalDateTime endTime,
+                                                         AircraftType aircraftType);
 
     //list of excluded aircraft types
     @Query("SELECT f FROM Flight f WHERE f.reportTime >= :startTime AND f.clearTime <= :endTime AND f.aircraftType NOT IN :aircraftTypes")

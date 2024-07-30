@@ -72,12 +72,11 @@ public class ReportController {
     }
 
     @GetMapping("/{id}/suggestions")
-    public ResponseEntity<List<FlightDto>> getSuggestionsForPeriod(@PathVariable Long id, @RequestBody PeriodDto period,
-                                                                   @RequestParam(required = false) Long minDurationHours,
-                                                                   @RequestParam AircraftType aircraftType) {
+    public ResponseEntity<List<FlightDto>> getSuggestionsForPeriod(@PathVariable Long id, @RequestBody SuggestionCriteriaDto criteria){
         try {
-            Duration minDuration = minDurationHours != null ? Duration.ofHours(minDurationHours) : Duration.ZERO;
-            List<FlightDto> suggestedFlights = reportService.getSuggestedFlightsForPeriods(id,period,minDuration,aircraftType);
+            //todo:domyslna wartosc Duration na ZERO
+            //Duration minDuration = criteria.getMinDuration() != null ? Duration.ofHours(criteria.getMinDuration().toHours()) : Duration.ZERO;
+            List<FlightDto> suggestedFlights = reportService.getSuggestedFlightsForPeriods(id,criteria);
             return ResponseEntity.ok(suggestedFlights);
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

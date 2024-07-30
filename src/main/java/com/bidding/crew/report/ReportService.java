@@ -84,15 +84,15 @@ public class ReportService {
         return report.generatePeriods();
     }
 
-    public List<FlightDto> getSuggestedFlightsForPeriods(Long reportId, PeriodDto period, Duration minDuration, AircraftType aircraftType) {
+    public List<FlightDto> getSuggestedFlightsForPeriods(Long reportId,SuggestionCriteriaDto criteria) {
         List<PeriodDto> commonTime  = generatePeriodsForReport(reportId).stream()
-                .map(period::getCommonPeriod)
+                .map(criteria.getPeriodDto()::getCommonPeriod)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .toList();
 
        return commonTime.stream()
-                .flatMap( periodDto -> flightService.getFlightsWithinPeriodWithMinDuration(periodDto, minDuration, aircraftType).stream())
+                .flatMap( periodDto -> flightService.getFlightsWithinPeriodWithMinDuration(criteria).stream())
                 .map(Flight::toDto)
                 .toList();
     }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 @Component
-public class Preference {
+public class Preference {//todo refactor na springa
     private int minFlightHours = 0;
     private int maxFlightHours = Integer.MAX_VALUE;
     private List<AircraftType> types = new ArrayList<>(List.of(AircraftType.A319,AircraftType.A320,AircraftType.A321,

@@ -3,6 +3,7 @@ package com.bidding.crew.flight;
 import com.bidding.crew.flight.generator.FlightGeneratorFacade;
 import com.bidding.crew.general.Preference;
 import com.bidding.crew.report.PeriodDto;
+import com.bidding.crew.report.SuggestionCriteriaDto;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -111,10 +112,10 @@ public class FlightService {
                 .collect(Collectors.toList());
     }
 
-    public List<Flight> getFlightsWithinPeriodWithMinDuration(PeriodDto period, Duration minDuration, AircraftType aircraftType) {
-        List<Flight> flights = flightRepository.findFlightsWithinPeriodExcludingOneType(period.getStartTime(),period.getEndTime(),aircraftType);
+    public List<Flight> getFlightsWithinPeriodWithMinDuration(SuggestionCriteriaDto criteria) {
+        List<Flight> flights = flightRepository.findFlightsWithinPeriodExcludingOneType(criteria);
         return flights.stream()
-                .filter(flight -> flight.getFlightDuration().compareTo(minDuration) >= 0)
+                .filter(flight -> flight.getFlightDuration().compareTo(criteria.getMinDuration()) >= 0)
                 .toList();
     }
 
