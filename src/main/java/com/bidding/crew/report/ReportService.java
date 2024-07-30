@@ -13,6 +13,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ReportService {
@@ -83,44 +84,17 @@ public class ReportService {
         return report.generatePeriods();
     }
 
-
-   /* public List<FlightDto> getSuggestedFlightsForPeriods(Long reportId, PeriodDto period) {
-        Report report = reportRepository.findById(reportId).orElseThrow();
-        //todo: test
-        List<PeriodDto> periods = generatePeriodsForReport(reportId);
-        List<PeriodDto> commonTime = new ArrayList<>();
-        for (PeriodDto periodDto : periods) {
-            period.getCommonPeriod(periodDto).ifPresent(commonTime::add);
-        }
-        System.out.println(commonTime);
-
-        List<FlightDto> suggestions = new ArrayList<>();
-        for (PeriodDto periodDto : commonTime) {
-            suggestions.addAll(flightService.getFlightsForPeriod(periodDto,true).stream()
-                    .map(Flight::toDto)
-                    .toList());
-        }
-
-        return suggestions;
-    }*/
-
     public List<FlightDto> getSuggestedFlightsForPeriods(Long reportId, PeriodDto period, Duration minDuration, AircraftType aircraftType) {
-        List<PeriodDto> periods = generatePeriodsForReport(reportId);
-        List<PeriodDto> commonTime = new ArrayList<>();
-        for (PeriodDto periodDto : periods) {
-            period.getCommonPeriod(periodDto).ifPresent(commonTime::add);
-        }
-        System.out.println(commonTime);
+        List<PeriodDto> commonTime  = generatePeriodsForReport(reportId).stream()
+                .map(period::getCommonPeriod)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toList();
 
-        List<FlightDto> suggestions = new ArrayList<>();
-        for (PeriodDto periodDto : commonTime) {
-            suggestions.addAll(flightService.getFlightsWithinPeriodWithMinDuration(periodDto, minDuration, aircraftType)
-                    .stream()
-                    .map(Flight::toDto)
-                    .toList());
-        }
-
-        return suggestions;
+       return commonTime.stream()
+                .flatMap( periodDto -> flightService.getFlightsWithinPeriodWithMinDuration(periodDto, minDuration, aircraftType).stream())
+                .map(Flight::toDto)
+                .toList();
     }
 }
 

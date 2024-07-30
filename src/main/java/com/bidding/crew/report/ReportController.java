@@ -83,6 +83,16 @@ public class ReportController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
+   /* @PostMapping("{id}/assignedFlightsInPeriod")
+    public ResponseEntity<FlightRequestDto> addFlightToReport(@PathVariable Long id, @RequestBody FlightRequestDto flightRequestDto) {
+        try {
+            FlightRequestDto flightRequest;
+            return ResponseEntity.ok(flightRequest);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }*/
 }
 
     //post reports -> tworze pusty raport
