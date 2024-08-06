@@ -21,24 +21,28 @@ public class Report {
     public Report() {
     }
 
-    public Report(List<EventRequest> requests) {
+    public Report(List<ReportEvent> requests) {
         this.requests = new ArrayList<>(requests);
     }
 
     public ReportResponse toResponse() {
-        List<EventRequestDto> eventRequests = getEventRequests().stream()
-                .map(EventRequest::toDto)
+        List<ReportEventDto> eventRequests = getEventRequests().stream()
+                .map(ReportEvent::toDto)
                 .toList();
 
-        return new ReportResponse(id, closed, eventRequests, generatePeriods());
+        List<ReportFlightResponse> flightRequests = getFlightRequest().stream()
+                .map(ReportFlight::toDto)
+                .toList();
+
+        return new ReportResponse(id, closed, eventRequests, generatePeriods(),flightRequests);
     }
 
     List<PeriodDto> generatePeriods() {
-        List<EventRequest> eventRequestList = getEventRequests();
-        List<FlightRequest> flightRequestList = getFlightRequest();
+        List<ReportEvent> reportEventList = getEventRequests();
+        List<ReportFlight> reportFlightList = getFlightRequest();
         List<Request> allRequests = new ArrayList<>();
-        allRequests.addAll(eventRequestList);
-        allRequests.addAll(flightRequestList);
+        allRequests.addAll(reportEventList);
+        allRequests.addAll(reportFlightList);
 
         allRequests.sort(Comparator.comparing(Request::startTime));
         System.out.println(allRequests);
@@ -49,7 +53,7 @@ public class Report {
         LocalDateTime endOfMonth = Time.getTime().endOfNextMonthDate();
 
         for (Request request : allRequests) {
-            currentEndTime = request.startDate().atTime(LocalTime.of(22,0,0)).minusDays(1);
+            currentEndTime = request.startDate().atTime(LocalTime.of(22, 0, 0)).minusDays(1);
             if (currentStartTime.isBefore(request.startTime())) {
                 //periods.add(new PeriodDto(currentStartTime, request.startTime()));
                 periods.add(new PeriodDto(currentStartTime, currentEndTime));
@@ -65,20 +69,36 @@ public class Report {
     }
 
     public void addRequest(Request request) {
-        requests.add(request);
+        if(canAdd(request)) {
+            requests.add(request);
+        } else {
+            throw new IllegalArgumentException("Request cannot be assigned to this period.");
+        }
     }
 
-    private List<EventRequest> getEventRequests() {
+    private boolean canAdd(Request request) {
+        List<PeriodDto> periods = generatePeriods();
+        for (PeriodDto period : periods) {
+            if ((request.startTime().isAfter(period.getStartTime()) &&
+                    request.endTime().isBefore(period.getEndTime()))) {
+                return true;
+
+            }
+        }
+        return false;
+    }
+
+    private List<ReportEvent> getEventRequests() {
         return requests.stream()
-                .filter(request -> request instanceof EventRequest)
-                .map(request -> (EventRequest) request)
+                .filter(request -> request instanceof ReportEvent)
+                .map(request -> (ReportEvent) request)
                 .toList();
     }
 
-    private List<FlightRequest> getFlightRequest() {
+    private List<ReportFlight> getFlightRequest() {
         return requests.stream()
-                .filter(r -> r instanceof FlightRequest)
-                .map(request -> (FlightRequest) request)
+                .filter(r -> r instanceof ReportFlight)
+                .map(request -> (ReportFlight) request)
                 .toList();
     }
 

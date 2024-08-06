@@ -1,7 +1,6 @@
 package com.bidding.crew.report;
 
 import com.bidding.crew.event.Event;
-import com.bidding.crew.event.EventDto;
 import com.bidding.crew.general.Time;
 
 import java.util.ArrayList;
@@ -9,14 +8,14 @@ import java.util.Comparator;
 import java.util.List;
 
 public class EventRequestFactory {
-    private List<EventRequest> requests = new ArrayList<>();
+    private List<ReportEvent> requests = new ArrayList<>();
     private Time time;
 
     public EventRequestFactory(Time time) {
         this.time = time;
     }
 
-    public List<EventRequest> createRequests(List<Event> events) {
+    public List<ReportEvent> createRequests(List<Event> events) {
         List<Event> sortedAndFilteredEvents = events.stream()
                 .filter(
                         event -> event.getStartTime().getMonth() == time.nextMonthLocalDate().getMonth()
@@ -45,7 +44,7 @@ public class EventRequestFactory {
         }
 
         for(List<Event> group : groupedEvents) {
-            requests.add(new EventRequest(group));
+            requests.add(new ReportEvent(group));
         }
         return requests;
     }

@@ -17,9 +17,10 @@ public interface FlightRepository extends JpaRepository<Flight, Integer>, JpaSpe
         return findFlightsWithinPeriodExcludingOneType(criteria.getStartTime(),criteria.getEndTime(),criteria.getAircraftType());
     }
 
+    //todo: Criteria
     @Query("SELECT f FROM Flight f WHERE f.reportTime >= :startTime AND f.clearTime <= :clearTime AND f.aircraftType <> :aircraftType")
     List<Flight> findFlightsWithinPeriodExcludingOneType(LocalDateTime startTime,
-                                                         LocalDateTime endTime,
+                                                         LocalDateTime clearTime,
                                                          AircraftType aircraftType);
 
     //list of excluded aircraft types

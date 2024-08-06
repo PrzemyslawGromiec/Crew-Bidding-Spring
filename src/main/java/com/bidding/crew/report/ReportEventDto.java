@@ -2,20 +2,20 @@ package com.bidding.crew.report;
 
 import java.time.LocalDateTime;
 
-public class EventRequestDto {
+public class ReportEventDto {
     private Long id;
     private LocalDateTime startDate;
     private LocalDateTime endTime;
     private int points;
 
-    public EventRequestDto(Long id, LocalDateTime startDate, LocalDateTime endTime, int points) {
+    public ReportEventDto(Long id, LocalDateTime startDate, LocalDateTime endTime, int points) {
         this.id = id;
         this.startDate = startDate;
         this.endTime = endTime;
         this.points = points;
     }
 
-    public EventRequestDto() {
+    public ReportEventDto() {
     }
 
     public LocalDateTime getStartDate() {

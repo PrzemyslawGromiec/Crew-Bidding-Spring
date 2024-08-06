@@ -1,7 +1,6 @@
 package com.bidding.crew.report;
 
 import com.bidding.crew.event.EventService;
-import com.bidding.crew.flight.AircraftType;
 import com.bidding.crew.flight.Flight;
 import com.bidding.crew.flight.FlightDto;
 import com.bidding.crew.flight.FlightService;
@@ -9,8 +8,6 @@ import com.bidding.crew.general.Time;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -24,18 +21,20 @@ public class ReportService {
     private PeriodFactory periodFactory = new PeriodFactory();
     private FlightService flightService;
     private List<PeriodDto> periods;
+    private RequestMapper requestMapper;
 
-    public ReportService(ReportRepository reportRepository, EventService eventService, FlightService flightService) {
+    public ReportService(ReportRepository reportRepository, EventService eventService, FlightService flightService, RequestMapper requestMapper) {
         this.reportRepository = reportRepository;
         this.eventService = eventService;
         this.flightService = flightService;
+        this.requestMapper = requestMapper;
     }
 
-    public List<FlightRequest> getFlightRequests() {
+    public List<ReportFlight> getFlightRequests() {
         return flightFactory.getRequests();
     }
 
-    private List<EventRequest> getEventRequests() {
+    private List<ReportEvent> getEventRequests() {
         return eventFactory.createRequests(eventService.getEvents());
     }
 
@@ -44,8 +43,8 @@ public class ReportService {
             throw new RuntimeException("New created report cannot be finalized.");
         }
 
-        List<EventRequest> eventRequests = getEventRequests();
-        Report report = new Report(eventRequests);
+        List<ReportEvent> reportEvents = getEventRequests();
+        Report report = new Report(reportEvents);
         reportRepository.save(report);
 
         return report.toResponse();
@@ -95,6 +94,14 @@ public class ReportService {
                 .flatMap( periodDto -> flightService.getFlightsWithinPeriodWithMinDuration(criteria).stream())
                 .map(Flight::toDto)
                 .toList();
+    }
+
+    public ReportFlightResponse saveFlight(Long id, ReportFlightRequest reportFlightRequest) {
+        Report report = reportRepository.findById(id).orElseThrow();
+        ReportFlight reportFlight = requestMapper.mapToEntity(reportFlightRequest);
+        report.addRequest(reportFlight);
+        reportRepository.save(report);
+        return reportFlight.toDto();
     }
 }
 

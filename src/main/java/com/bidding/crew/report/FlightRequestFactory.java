@@ -1,20 +1,19 @@
 package com.bidding.crew.report;
 
 import com.bidding.crew.flight.Flight;
-import com.bidding.crew.flight.FlightDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FlightRequestFactory {
-    private List<FlightRequest> requests = new ArrayList<>();
+    private List<ReportFlight> requests = new ArrayList<>();
 
     public void buildRequest(Flight chosenFlight, int priority) {
-        FlightRequest flightRequest = new FlightRequest(chosenFlight, priority);
-        requests.add(flightRequest);
+        ReportFlight reportFlight = new ReportFlight(chosenFlight, priority);
+        requests.add(reportFlight);
     }
 
-    public List<FlightRequest> getRequests() {
+    public List<ReportFlight> getRequests() {
         return requests;
     }
 }

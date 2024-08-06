@@ -75,25 +75,25 @@ class ReportTest {
                 Time.getTime().nextMonthTime().withDayOfMonth(endDay).plusHours(endHour));
     }
 
-    private EventRequest createEventRequest(int startDayOfMonth, int days, int numOfStars) {
+    private ReportEvent createEventRequest(int startDayOfMonth, int days, int numOfStars) {
         LocalDateTime startTime = Time.getTime().nextMonthLocalDate().atTime(LocalTime.MIN).withDayOfMonth(startDayOfMonth);
         // jest -1, bo jak event ma trwac 3 dni, to chce zeby byl np od 03.08 00:00 do 05.08 23:59
         LocalDateTime endTime = Time.getTime().nextMonthLocalDate().atTime(LocalTime.MAX).withDayOfMonth(startDayOfMonth).plusDays(days - 1);
         Event event = new EventDto(startTime, endTime, numOfStars, "uni", false).toEntity();
-        return new EventRequest(List.of(event));
+        return new ReportEvent(List.of(event));
 
     }
 
-    private EventRequest createEventRequest(int startDayOfMonth, int days) {
+    private ReportEvent createEventRequest(int startDayOfMonth, int days) {
         return createEventRequest(startDayOfMonth, days, 3);
     }
 
-    private FlightRequest createFlightRequest(int startDayOfMonth, int startingHour, int hoursFlight, int numOfStars) {
+    private ReportFlight createFlightRequest(int startDayOfMonth, int startingHour, int hoursFlight, int numOfStars) {
         Flight flight = createFlight(startDayOfMonth, startingHour, hoursFlight);
-        return new FlightRequest(flight, numOfStars);
+        return new ReportFlight(flight, numOfStars);
     }
 
-    private FlightRequest createFlightRequest(int startDayOfMonth, int startingHour, int hoursFlight) {
+    private ReportFlight createFlightRequest(int startDayOfMonth, int startingHour, int hoursFlight) {
         return createFlightRequest(startDayOfMonth, startingHour, hoursFlight, 3);
     }
 

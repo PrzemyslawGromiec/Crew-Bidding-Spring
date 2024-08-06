@@ -11,7 +11,7 @@ public class PeriodFactory {
 
     private Time time = Time.getTime();
 
-    public List<PeriodDto> createPeriodsBetweenRequests(List<EventRequest> requests) {
+    public List<PeriodDto> createPeriodsBetweenRequests(List<ReportEvent> requests) {
         List<PeriodDto> createdPeriods = new ArrayList<>();
 
         if (requests.isEmpty()) {
@@ -19,24 +19,24 @@ public class PeriodFactory {
             return Collections.singletonList(fullMonthPeriod);
         }
 
-        EventRequest firstRequest = requests.getFirst();
+        ReportEvent firstRequest = requests.getFirst();
         if (firstRequest.startTime().getDayOfMonth() != 1) {
             PeriodDto firstDayOfMonthPeriod = nextMonthPeriod(firstRequest.startTime());
             createdPeriods.add(firstDayOfMonthPeriod);
         }
 
-        EventRequest previousEventRequest = firstRequest;
+        ReportEvent previousReportEvent = firstRequest;
         for (int i = 1; i < requests.size(); i++) {
-            EventRequest currentEventRequest = requests.get(i);
-            PeriodDto betweenEventsPeriod = nextMonthPeriod(previousEventRequest.endTime(),currentEventRequest.startTime());
+            ReportEvent currentReportEvent = requests.get(i);
+            PeriodDto betweenEventsPeriod = nextMonthPeriod(previousReportEvent.endTime(), currentReportEvent.startTime());
             if (betweenEventsPeriod.getStartTime().isBefore(betweenEventsPeriod.getEndTime())) {
                 createdPeriods.add(betweenEventsPeriod);
             }
-            previousEventRequest = currentEventRequest;
+            previousReportEvent = currentReportEvent;
         }
 
         LocalDateTime endOfMonth = time.startOfNextMonthDate().plusMonths(1).minusMinutes(1);
-        PeriodDto lastPeriod = nextMonthPeriod(previousEventRequest.endTime(), endOfMonth);
+        PeriodDto lastPeriod = nextMonthPeriod(previousReportEvent.endTime(), endOfMonth);
         if (lastPeriod.getStartTime().isBefore(lastPeriod.getEndTime())) {
             createdPeriods.add(lastPeriod);
         }

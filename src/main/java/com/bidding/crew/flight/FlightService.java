@@ -119,8 +119,6 @@ public class FlightService {
                 .toList();
     }
 
-    //todo: sql wyszuka w bazie danych loty dla danej daty (findAll z data, lub przekazywac wszystkie daty)
-
     private  boolean preferredDuration(Preference preference, Flight flight) {
         return flight.getFlightDuration().toHours() >= preference.getMinFlightHours()
                 && flight.getFlightDuration().toHours() <= preference.getMaxFlightHours();

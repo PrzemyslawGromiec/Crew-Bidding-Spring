@@ -38,6 +38,10 @@ public class Flight {
         return Duration.between(reportTime, clearTime);
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getAirportCode() {
         return airportCode;
     }
@@ -64,8 +68,7 @@ public class Flight {
 
     public Duration calculateBuffer() {
         if (getFlightDuration().compareTo(Duration.ofHours(14)) < 0) {
-            //todo:zmienic pozniej na plus 30 min
-            return Duration.ofHours(12).plusMinutes(0);
+            return Duration.ofHours(12).plusMinutes(30);
         } else {
             return Duration.ofHours(48);
         }

@@ -1,17 +1,28 @@
 package com.bidding.crew.report;
 
 import com.bidding.crew.flight.Flight;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class FlightRequest extends Request {
+@Entity
+public class ReportFlight extends Request {
+    @OneToOne
     private Flight flight;
     private int numOfStars;
 
-    public FlightRequest(Flight flight, int numOfStars) {
+    public ReportFlight() {
+    }
+
+    public ReportFlight(Flight flight, int numOfStars) {
         this.flight = flight;
         this.numOfStars = numOfStars;
+    }
+
+    public ReportFlightResponse toDto() {
+        return new ReportFlightResponse(flight.toDto(),numOfStars);
     }
 
     @Override

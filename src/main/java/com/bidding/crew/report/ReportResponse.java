@@ -5,30 +5,19 @@ import java.util.List;
 public class ReportResponse {
     private Long id;
     private boolean closed;
-    private List<EventRequestDto> eventRequest;
+    private List<ReportEventDto> eventRequest;
     private List<PeriodDto> periods;
-    private String message;
+    private List<ReportFlightResponse> flightRequests;
 
     public ReportResponse() {
     }
 
-    public ReportResponse(String message) {
-        this.message = message;
-    }
-
-    public ReportResponse(Long id, boolean closed, List<EventRequestDto> eventRequest, List<PeriodDto> periods) {
+    public ReportResponse(Long id, boolean closed, List<ReportEventDto> eventRequest, List<PeriodDto> periods, List<ReportFlightResponse> flightRequests) {
         this.id = id;
         this.closed = closed;
         this.eventRequest = eventRequest;
         this.periods = periods;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
+        this.flightRequests = flightRequests;
     }
 
     public boolean isClosed() {
@@ -39,7 +28,7 @@ public class ReportResponse {
         return id;
     }
 
-    public List<EventRequestDto> getEventRequest() {
+    public List<ReportEventDto> getEventRequest() {
         return eventRequest;
     }
 
@@ -51,6 +40,13 @@ public class ReportResponse {
         return periods;
     }
 
+    public List<ReportFlightResponse> getFlightRequests() {
+        return flightRequests;
+    }
+
+    public void setFlightRequests(List<ReportFlightResponse> flightRequests) {
+        this.flightRequests = flightRequests;
+    }
 
     @Override
     public String toString() {

@@ -1,7 +1,6 @@
 package com.bidding.crew.report;
 
 import com.bidding.crew.event.EventService;
-import com.bidding.crew.flight.FlightDto;
 import com.bidding.crew.general.Time;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +15,11 @@ public class RequestService {
         this.eventService = eventService;
     }
 
-    public List<FlightRequest> getFlightRequests() {
+    public List<ReportFlight> getFlightRequests() {
         return flightFactory.getRequests();
     }
 
-    public List<EventRequest> getEventRequests() {
+    public List<ReportEvent> getEventRequests() {
         return eventFactory.createRequests(eventService.getEvents());
     }
 

@@ -11,21 +11,21 @@ import java.util.Comparator;
 import java.util.List;
 
 @Entity
-public class EventRequest extends Request{
+public class ReportEvent extends Request{
     @OneToMany
     private List<Event> events;
 
-    public EventRequest(List<Event> events) {
+    public ReportEvent(List<Event> events) {
         this.events = new ArrayList<>(events);
         this.events.sort(Comparator.comparing(Event::getStartTime));
     }
 
-    public EventRequest() {
+    public ReportEvent() {
 
     }
 
-    public EventRequestDto toDto() {
-        return new EventRequestDto(id, startTime(),endTime(),points);
+    public ReportEventDto toDto() {
+        return new ReportEventDto(id, startTime(),endTime(),points);
     }
 
     @Override
