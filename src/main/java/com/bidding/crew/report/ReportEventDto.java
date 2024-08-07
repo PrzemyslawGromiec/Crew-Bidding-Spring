@@ -1,5 +1,7 @@
 package com.bidding.crew.report;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.time.LocalDateTime;
 
 public class ReportEventDto {

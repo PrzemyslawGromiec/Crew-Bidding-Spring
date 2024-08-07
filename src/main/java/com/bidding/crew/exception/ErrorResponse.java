@@ -1,23 +1,19 @@
-package com.bidding.crew.general;
+package com.bidding.crew.exception;
 
-import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class ErrorResponse {
     private int status;
     private String message;
-    private long timestamp;
+    private LocalDateTime timestamp;
 //      System.currentTimeMillis();
 //		Instant.now().toEpochMilli();
     //  new Date().getTime();
 
-    public ErrorResponse(int status, String message, long timestamp) {
+    public ErrorResponse(int status, String message, LocalDateTime timestamp) {
         this.status = status;
         this.message = message;
         this.timestamp = timestamp;
-        System.out.println(System.currentTimeMillis());
-        System.out.println(Instant.now().toEpochMilli());
-        System.out.println(new Date().getTime());
     }
 
     public int getStatus() {
@@ -28,7 +24,7 @@ public class ErrorResponse {
         return message;
     }
 
-    public long getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 }

@@ -1,6 +1,8 @@
 package com.bidding.crew.report;
 
 import com.bidding.crew.event.EventService;
+import com.bidding.crew.exception.InvalidReportStateException;
+import com.bidding.crew.exception.ResourceNotFoundException;
 import com.bidding.crew.flight.Flight;
 import com.bidding.crew.flight.FlightDto;
 import com.bidding.crew.flight.FlightService;
@@ -9,7 +11,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -40,7 +41,7 @@ public class ReportService {
 
     ReportResponse createReport(ReportRequest reportRequest) {
         if (reportRequest.isClosed()) {
-            throw new RuntimeException("New created report cannot be finalized.");
+            throw new InvalidReportStateException("New created report cannot be finalized.");
         }
 
         List<ReportEvent> reportEvents = getEventRequests();
@@ -53,7 +54,7 @@ public class ReportService {
 
     ReportResponse getReport(Long id) {
         Report report = reportRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Report with id " + id + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Report with id " + id + " not found"));
 
         if (report.isClosed()) {
             calculatePoints(report);

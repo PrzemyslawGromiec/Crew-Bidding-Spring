@@ -49,7 +49,6 @@ public class ReportEvent extends Request{
         return events.getFirst().getStartTime().toLocalDate();
     }
 
-
     @Override
     public String toString() {
         return "EventRequest{" +

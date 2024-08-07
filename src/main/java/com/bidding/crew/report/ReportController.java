@@ -2,11 +2,12 @@ package com.bidding.crew.report;
 
 import com.bidding.crew.flight.FlightDto;
 import com.bidding.crew.flight.FlightService;
-import com.bidding.crew.general.ErrorResponse;
+import com.bidding.crew.exception.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -22,13 +23,9 @@ public class ReportController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createReport(@RequestBody ReportRequest reportRequest) {
-        try {
-            ReportResponse reportResponse = reportService.createReport(reportRequest);
-            return ResponseEntity.ok(reportResponse);
-        } catch (IllegalStateException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<ReportResponse> createReport(@RequestBody ReportRequest reportRequest) {
+        ReportResponse reportResponse = reportService.createReport(reportRequest);
+        return ResponseEntity.ok(reportResponse);
     }
 
     @GetMapping("/{id}")
@@ -93,6 +90,6 @@ public class ReportController {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErrorResponse> handleException(IllegalArgumentException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(HttpStatus.BAD_REQUEST.value(),
-                e.getMessage(), System.currentTimeMillis()));
+                e.getMessage(), LocalDateTime.now()));
     }
 }
