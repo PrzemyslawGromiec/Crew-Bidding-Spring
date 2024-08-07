@@ -1,7 +1,10 @@
 package com.bidding.crew.report;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ReportResponse {
     private Long id;
     private boolean closed;
