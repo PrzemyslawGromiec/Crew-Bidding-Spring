@@ -52,10 +52,18 @@ public class ReportService {
     }
 
     ReportResponse getReport(Long id) {
-        return reportRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Report with id " + id + " not found"))
-                .toResponse();
+        Report report = reportRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Report with id " + id + " not found"));
 
+        if (report.isClosed()) {
+            calculatePoints(report);
+        }
+        return report.toResponse();
+    }
+
+    private void calculatePoints(Report report) {
+        PointsCalculator calculator = new PointsCalculator();
+        calculator.interpretStarsAsPoints(report);
     }
 
     @Transactional
@@ -67,9 +75,10 @@ public class ReportService {
         }
 
         if (!reportRequest.isClosed() && report.isClosed()) {
-            throw new RuntimeException("You cannot open closed report.");
+            throw new RuntimeException("You cannot open finalized report.");
         }
 
+        calculatePoints(report);
         return report.toResponse();
     }
 
@@ -83,15 +92,15 @@ public class ReportService {
         return report.generatePeriods();
     }
 
-    public List<FlightDto> getSuggestedFlightsForPeriods(Long reportId,SuggestionCriteriaDto criteria) {
-        List<PeriodDto> commonTime  = generatePeriodsForReport(reportId).stream()
+    public List<FlightDto> getSuggestedFlightsForPeriods(Long reportId, SuggestionCriteriaDto criteria) {
+        List<PeriodDto> commonTime = generatePeriodsForReport(reportId).stream()
                 .map(criteria.getPeriodDto()::getCommonPeriod)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .toList();
 
-       return commonTime.stream()
-                .flatMap( periodDto -> flightService.getFlightsWithinPeriodWithMinDuration(criteria).stream())
+        return commonTime.stream()
+                .flatMap(periodDto -> flightService.getFlightsWithinPeriodWithMinDuration(criteria).stream())
                 .map(Flight::toDto)
                 .toList();
     }
@@ -103,8 +112,8 @@ public class ReportService {
         reportRepository.save(report);
         return reportFlight.toDto();
     }
-}
 
+}
 
 
 

@@ -25,6 +25,8 @@ public class Report {
         this.requests = new ArrayList<>(requests);
     }
 
+    //todo: po final status true, nie podaje periods
+
     public ReportResponse toResponse() {
         List<ReportEventDto> eventRequests = getEventRequests().stream()
                 .map(ReportEvent::toDto)
@@ -34,7 +36,9 @@ public class Report {
                 .map(ReportFlight::toDto)
                 .toList();
 
-        return new ReportResponse(id, closed, eventRequests, generatePeriods(),flightRequests);
+        List<PeriodDto> periods = closed ? null : generatePeriods();
+
+        return new ReportResponse(id, closed, eventRequests, periods,flightRequests);
     }
 
     List<PeriodDto> generatePeriods() {

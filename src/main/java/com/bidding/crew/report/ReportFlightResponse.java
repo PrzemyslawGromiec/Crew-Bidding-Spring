@@ -6,10 +6,12 @@ public class ReportFlightResponse {
 
     private FlightDto flightDto;
     private int numOfStars;
+    private int points;
 
-    public ReportFlightResponse(FlightDto flightDto, int numOfStars) {
+    public ReportFlightResponse(FlightDto flightDto, int numOfStars, int points) {
         this.flightDto = flightDto;
         this.numOfStars = numOfStars;
+        this.points = points;
     }
 
     public ReportFlightResponse() {
@@ -21,5 +23,9 @@ public class ReportFlightResponse {
 
     public int getNumOfStars() {
         return numOfStars;
+    }
+
+    public int getPoints() {
+        return points;
     }
 }

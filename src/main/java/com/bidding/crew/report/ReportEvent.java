@@ -15,7 +15,8 @@ public class ReportEvent extends Request{
     @OneToMany
     private List<Event> events;
 
-    public ReportEvent(List<Event> events) {
+    public ReportEvent(List<Event> events,int starts) {
+        super(starts);
         this.events = new ArrayList<>(events);
         this.events.sort(Comparator.comparing(Event::getStartTime));
     }

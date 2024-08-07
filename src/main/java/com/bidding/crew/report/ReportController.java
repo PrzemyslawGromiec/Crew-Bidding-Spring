@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -44,8 +43,6 @@ public class ReportController {
         }
     }
 
-    //todo: wyliczanie punktow jak report zamkniety
-    //todo: punktacja dynamicznie na zapytanie, w bazie danyhc tylko gwiazdki
     @PutMapping("/{id}")
     public ResponseEntity<ReportResponse> updateStatus(@PathVariable Long id, @RequestBody ReportRequest reportRequest) {
         try {
@@ -99,19 +96,3 @@ public class ReportController {
                 e.getMessage(), System.currentTimeMillis()));
     }
 }
-
-//post reports -> tworze pusty raport
-//put reports/id  (status=finalized)
-//get reports/id/periods
-//get reports/id/periods/id/sugestions
-
-
-//get reports/id/periods/sugestions?sugested=true  -> usprawnienie zeby aplikacja sugerowala ktory kolejny
-
-//post reports/id/requests -> zaktualizuje periody, doda flight
-
-
-//put reports/id/periods/id -> status=closed -> zamyka period
-
-
-

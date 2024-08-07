@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Entity
@@ -12,8 +11,20 @@ public abstract class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    //int points = new Random().nextInt();
-    int points = generateRandomPoints();
+    @Transient
+    int points;
+    int stars;
+
+    public Request(int stars) {
+        this.stars = stars;
+    }
+
+    public Request() {
+    }
+
+    public int getStars() {
+        return stars;
+    }
 
     public abstract LocalDateTime startTime();
     public abstract LocalDateTime endTime();
@@ -21,9 +32,11 @@ public abstract class Request {
     public abstract LocalDateTime endTimeBuffered();
     public abstract LocalDate startDate();
 
-    private int generateRandomPoints() {
-        int min = 10;
-        int max = 200;
-        return ThreadLocalRandom.current().nextInt(min/10,max/10 + 1) * 10;
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public int getPoints() {
+        return points;
     }
 }

@@ -11,18 +11,17 @@ import java.time.LocalDateTime;
 public class ReportFlight extends Request {
     @OneToOne
     private Flight flight;
-    private int numOfStars;
 
     public ReportFlight() {
     }
 
-    public ReportFlight(Flight flight, int numOfStars) {
+    public ReportFlight(Flight flight, int stars) {
+        super(stars);
         this.flight = flight;
-        this.numOfStars = numOfStars;
     }
 
     public ReportFlightResponse toDto() {
-        return new ReportFlightResponse(flight.toDto(),numOfStars);
+        return new ReportFlightResponse(flight.toDto(),getStars(),getPoints());
     }
 
     @Override
@@ -45,9 +44,6 @@ public class ReportFlight extends Request {
         return flight.getReportTime().toLocalDate();
     }
 
-    public int getNumOfStars() {
-        return numOfStars;
-    }
 
     public Flight getFlight() {
         return flight;
@@ -57,7 +53,6 @@ public class ReportFlight extends Request {
     public String toString() {
         return "FlightRequest{" +
                 "flight=" + flight +
-                ", numOfStars=" + numOfStars +
                 '}';
     }
 }
