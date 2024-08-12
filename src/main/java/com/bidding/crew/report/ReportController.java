@@ -2,6 +2,7 @@ package com.bidding.crew.report;
 
 import com.bidding.crew.flight.FlightDto;
 import com.bidding.crew.flight.FlightService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class ReportController {
     }
 
     @PostMapping
-    public ResponseEntity<ReportResponse> createReport(@RequestBody ReportRequest reportRequest) {
+    public ResponseEntity<ReportResponse> createReport(@Valid @RequestBody ReportRequest reportRequest) {
         ReportResponse reportResponse = reportService.createReport(reportRequest);
         return ResponseEntity.ok(reportResponse);
     }

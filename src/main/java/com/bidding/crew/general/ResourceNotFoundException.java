@@ -1,4 +1,4 @@
-package com.bidding.crew.exception;
+package com.bidding.crew.general;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String message) {

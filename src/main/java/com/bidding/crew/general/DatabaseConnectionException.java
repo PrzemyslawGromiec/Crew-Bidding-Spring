@@ -1,4 +1,4 @@
-package com.bidding.crew.exception;
+package com.bidding.crew.general;
 
 public class DatabaseConnectionException extends RuntimeException {
     public DatabaseConnectionException(String message) {

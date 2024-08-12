@@ -1,4 +1,4 @@
-package com.bidding.crew.exception;
+package com.bidding.crew.report;
 
 public class InvalidReportStateException extends RuntimeException {
     public InvalidReportStateException(String message) {

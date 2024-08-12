@@ -1,4 +1,4 @@
-package com.bidding.crew.exception;
+package com.bidding.crew.general;
 
 public class InvalidFlightDataException extends RuntimeException {
     public InvalidFlightDataException(String message) {
@@ -9,3 +9,4 @@ public class InvalidFlightDataException extends RuntimeException {
         super(message, cause);
     }
 }
+

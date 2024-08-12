@@ -119,7 +119,15 @@ public class FlightService {
                 .toList();
     }
 
-    private  boolean preferredDuration(Preference preference, Flight flight) {
+    /*public List<FlightDto> getSuggestedFlightsWithSpecification(SuggestionCriteriaDto criteria) {
+       Specification<Flight> specification = flightSpecificationBuilder.getSuggestedFlightsWithSpecification(criteria);
+       return flightRepository.findAll(specification)
+               .stream()
+               .map(Flight::toDto)
+               .toList();
+    }*/
+
+    private boolean preferredDuration(Preference preference, Flight flight) {
         return flight.getFlightDuration().toHours() >= preference.getMinFlightHours()
                 && flight.getFlightDuration().toHours() <= preference.getMaxFlightHours();
     }

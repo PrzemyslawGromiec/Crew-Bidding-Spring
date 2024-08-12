@@ -1,4 +1,4 @@
-package com.bidding.crew.exception;
+package com.bidding.crew.report;
 
 public class InvalidPeriodException extends RuntimeException {
     public InvalidPeriodException(String message){

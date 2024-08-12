@@ -1,15 +1,16 @@
 package com.bidding.crew.report;
 
 import com.bidding.crew.event.EventService;
-import com.bidding.crew.exception.*;
+import com.bidding.crew.flight.AircraftType;
 import com.bidding.crew.flight.Flight;
 import com.bidding.crew.flight.FlightDto;
 import com.bidding.crew.flight.FlightService;
-import com.bidding.crew.general.Time;
+import com.bidding.crew.general.*;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -95,12 +96,12 @@ public class ReportService {
     }
 
     public List<PeriodDto> generatePeriodsForReport(Long reportId) {
-        Report report = reportRepository.findById(reportId).orElseThrow();
+        Report report = reportRepository.findById(reportId).orElseThrow(() -> new ResourceNotFoundException("Report with id" + reportId +" not found"));
         return report.generatePeriods();
     }
 
     public List<FlightDto> getSuggestedFlightsForPeriods(Long reportId, SuggestionCriteriaDto criteria) {
-        if (criteria.getStartTime().isAfter(criteria.getEndTime())) {
+        if (criteria.getReportTime().isAfter(criteria.getClearTime())) {
             throw new InvalidPeriodException("Start time cannot be after end time.");
         }
 
@@ -114,6 +115,11 @@ public class ReportService {
                 .flatMap(periodDto -> flightService.getFlightsWithinPeriodWithMinDuration(criteria).stream())
                 .map(Flight::toDto)
                 .toList();
+
+        /*List<FlightDto> suggestedFlights = commonTime.stream()
+                .flatMap(periodDto -> flightService.getSuggestedFlightsWithSpecification(criteria).stream())
+                .toList();*/
+
 
         if (suggestedFlights.isEmpty()) {
             throw new NoFlightSuggestionsException("No flight suggestions found for the given criteria.");
