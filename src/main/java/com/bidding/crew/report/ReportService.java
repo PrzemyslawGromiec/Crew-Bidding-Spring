@@ -1,7 +1,6 @@
 package com.bidding.crew.report;
 
 import com.bidding.crew.event.EventService;
-import com.bidding.crew.flight.AircraftType;
 import com.bidding.crew.flight.Flight;
 import com.bidding.crew.flight.FlightDto;
 import com.bidding.crew.flight.FlightService;
@@ -10,7 +9,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service

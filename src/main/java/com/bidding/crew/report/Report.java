@@ -25,8 +25,6 @@ public class Report {
         this.requests = new ArrayList<>(requests);
     }
 
-    //todo: po final status true, nie podaje periods
-
     public ReportResponse toResponse() {
         List<ReportEventDto> eventRequests = getEventRequests().stream()
                 .map(ReportEvent::toDto)

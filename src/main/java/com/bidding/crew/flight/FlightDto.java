@@ -1,7 +1,7 @@
 package com.bidding.crew.flight;
 
 import java.time.LocalDateTime;
-
+//todo: lombok w dtos
 public class FlightDto {
     private int id;
     private String airportCode;
