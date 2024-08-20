@@ -89,8 +89,6 @@ Make sure you have the following software installed:
 <details>
   <summary><h2 style="margin-top: 10px;">Usage</h2></summary>
 
-## Usage
-
 This application is designed to generate a comprehensive report for the upcoming month, allowing cabin crew members to plan their schedules efficiently. Users can request specific days off by submitting their preferences through the application.
 
 ### How It Works
@@ -130,6 +128,33 @@ This process ensures that cabin crew members can effectively manage their schedu
 4. **Finalizing the Schedule:**
    - Once all flights are assigned, finalize the report to complete your schedule. The final report will display your day off requests and the assigned flights, prioritized accordingly.
    
+</details>
+
+<!-- Usage section -->
+<details>
+  <summary><h2 style="margin-top: 10px;">Roadmap</h2></summary>
+
+## Roadmap
+
+Here’s a look at the future development plans for the Cabin Crew Scheduling System:
+
+### Upcoming Features
+
+- **Employer Decision Integration**:
+   - Develop a system where employers can input dates for scheduled training sessions for employees, ensuring that training periods are taken into account during schedule generation.
+
+- **Alternative Planning Modes**:
+   - Expand the application to accommodate alternative scheduling needs, such as those for flight crew or other types of users, ensuring that the system is flexible and meets the diverse requirements of different user groups.
+
+- **User Feedback System**:
+   - Implement a feature that allows users to provide feedback on the application directly. This feedback will be used to make continuous improvements and prioritize new features.
+
+- **Frontend Development**:
+   - Create a user-friendly frontend for the application, enabling it to function as a web-based platform. This will allow users to access the system through a web browser, improving accessibility and ease of use.
+
+### Contributing to the Roadmap
+
+If you have ideas or features you'd like to see in future versions, feel free to open an issue or submit a pull request. We welcome contributions that help make this project better for everyone!
 </details>
 
 <p align="left"> 
