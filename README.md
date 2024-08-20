@@ -2,7 +2,7 @@
    <h1>Cabin Crew Scheduling System</h1>
 </div>
 
-## About the project 
+## About the project
 
 <p style="font-size:18px;">
 This is a Java and Spring Boot application I developed to simplify and streamline the monthly scheduling process for cabin crew members, including myself. Recognizing the need for a more efficient and faster way to manage flight requests and days off, I meticulously analyzed and designed this tool. The application takes into account crucial factors like flight timings, mandatory rest periods, flight time limitations, and aircraft certifications, making the scheduling process both faster and more effective. After nearly 1.5 years of dedicated work, evolving from a console-based tool to a robust Spring Boot REST API, the project now includes 80 classes, more than 3,400 lines of code, and comprehensive tests. This complete and reviewed solution meets my initial needs, and I’m eager to continue expanding its capabilities.
@@ -15,14 +15,8 @@ This is a Java and Spring Boot application I developed to simplify and streamlin
     <li>
       <a href="#about-the-project">About The Project</a>
     </li>
-    <li>
-      <details>
-        <summary><a href="#installation">Installation</a></summary>
-        <ul>
-          <li><a href="#prerequisites">Prerequisites</a></li>
-          <li><a href="#installation-steps">Installation Steps</a></li>
-        </ul>
-      </details>
+   <li>
+      <a href="#installation">Installation</a>
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
@@ -98,7 +92,8 @@ Make sure you have the following software installed:
 </p>
 
 - 🔭 I’m currently working on [Airline Crew Scheduling App](https://github.com/PrzemyslawGromiec/Crew-Bidding-Spring)
-- 👨‍💻 All of my projects are available at [https://github.com/PrzemyslawGromiec?tab=repositories](https://github.com/PrzemyslawGromiec?tab=repositories)
+- 👨‍💻 All of my projects are available
+  at [https://github.com/PrzemyslawGromiec?tab=repositories](https://github.com/PrzemyslawGromiec?tab=repositories)
 - 📫 How to reach me **pgromiec@gmail.com**
 
 <h3 align="left">Connect with me:</h3>
