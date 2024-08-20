@@ -20,8 +20,6 @@ This is a Java and Spring Boot application I developed to simplify and streamlin
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
 
@@ -85,6 +83,53 @@ Make sure you have the following software installed:
    http://localhost:8080
    ```
 
+</details>
+
+<!-- Usage section -->
+<details>
+  <summary><h2 style="margin-top: 10px;">Usage</h2></summary>
+
+## Usage
+
+This application is designed to generate a comprehensive report for the upcoming month, allowing cabin crew members to plan their schedules efficiently. Users can request specific days off by submitting their preferences through the application.
+
+### How It Works
+
+1. **Submitting Day Off Requests:**
+   - Users can submit their day off requests via the application. These requests are processed through a controller that accepts a DTO (Data Transfer Object). The DTO allows users to specify the start date, end date, priority, and a description for each day off request.
+   - The submitted data is then stored in an H2 database for further processing.
+
+2. **Available Flights Data:**
+   - The H2 database also stores information about all available flights for the entire month. This data includes details such as flight duration and aircraft type.
+
+3. **Generating the Report:**
+   - Based on the day off requests, the application generates periods that adhere to aviation regulations regarding mandatory rest times for cabin crew members.
+   - Within these periods, users can assign available flights that fit their schedule.
+
+4. **Filtering and Assigning Flights:**
+   - Users can filter available flights based on their duration and the type of aircraft.
+   - Once the flights have been selected, they can be assigned to the appropriate periods between rest times.
+
+5. **Finalizing the Report:**
+   - After all flights have been assigned, users can finalize the report by using the appropriate endpoint.
+   - The final report will include both the requested days off and the selected flights, organized according to their priority.
+
+This process ensures that cabin crew members can effectively manage their schedules while complying with aviation regulations, making the scheduling process both streamlined and compliant.
+
+### Example Usage
+
+1. **Requesting Days Off:**
+   - Submit a request with the desired start date, end date, priority level, and a brief description of the reason for the request.
+
+2. **Filtering Flights:**
+   - Filter available flights by duration or aircraft type to find the most suitable options for your schedule.
+
+3. **Assigning Flights:**
+   - Assign flights to the generated periods between rest times to build out your schedule for the month.
+
+4. **Finalizing the Schedule:**
+   - Once all flights are assigned, finalize the report to complete your schedule. The final report will display your day off requests and the assigned flights, prioritized accordingly.
+   
 </details>
 
 <p align="left"> 
