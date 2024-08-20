@@ -26,6 +26,25 @@ This is a Java and Spring Boot application I developed to simplify and streamlin
   </ol>
 </details>
 
+## Installation
+
+To get a local copy up and running, follow these simple steps.
+
+### Prerequisites
+
+Make sure you have the following software installed:
+
+- **Java 17** or newer: [Download Java](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)
+- **Maven**: [Download Maven](https://maven.apache.org/download.cgi)
+- **Git**: [Download Git](https://git-scm.com/downloads)
+
+### Installation Steps
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/PrzemyslawGromiec/Crew-Bidding-Spring.git
+
 <p align="left"> 
    <img src="https://komarev.com/ghpvc/?username=pgromiec&label=Profile%20views&color=0e75b6&style=flat" alt="pgromiec" /> 
 </p>
