@@ -16,10 +16,13 @@ This is a Java and Spring Boot application I developed to simplify and streamlin
       <a href="#about-the-project">About The Project</a>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
+      <details>
+        <summary><a href="#installation">Installation</a></summary>
+        <ul>
+          <li><a href="#prerequisites">Prerequisites</a></li>
+          <li><a href="#installation-steps">Installation Steps</a></li>
+        </ul>
+      </details>
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
@@ -29,8 +32,6 @@ This is a Java and Spring Boot application I developed to simplify and streamlin
 </details>
 
 ## Installation
-
-To get a local copy up and running, follow these simple steps.
 
 ### Prerequisites
 
@@ -51,6 +52,18 @@ Make sure you have the following software installed:
    ```bash
    cd Crew-Bidding-Spring
    
+3. **Build the project using Maven:**
+    ```bash
+   mvn clean install
+   
+4. **Run the application:**
+   ```bash
+   mvn spring-boot:run
+   
+5. **Access the application:**
+   ```bash
+   http://localhost:8080
+
 
 <p align="left"> 
    <img src="https://komarev.com/ghpvc/?username=pgromiec&label=Profile%20views&color=0e75b6&style=flat" alt="pgromiec" /> 
