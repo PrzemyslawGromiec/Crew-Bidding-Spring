@@ -2,6 +2,8 @@
    <h1>Cabin Crew Scheduling System</h1>
 </div>
 
+## About the project 
+
 <p style="font-size:18px;">
 This is a Java and Spring Boot application I developed to simplify and streamline the monthly scheduling process for cabin crew members, including myself. Recognizing the need for a more efficient and faster way to manage flight requests and days off, I meticulously analyzed and designed this tool. The application takes into account crucial factors like flight timings, mandatory rest periods, flight time limitations, and aircraft certifications, making the scheduling process both faster and more effective. After nearly 1.5 years of dedicated work, evolving from a console-based tool to a robust Spring Boot REST API, the project now includes 80 classes, more than 3,400 lines of code, and comprehensive tests. This complete and reviewed solution meets my initial needs, and I’m eager to continue expanding its capabilities.
 </p>
@@ -26,7 +28,7 @@ This is a Java and Spring Boot application I developed to simplify and streamlin
   </ol>
 </details>
 
-## 1.Installation
+## Installation
 
 To get a local copy up and running, follow these simple steps.
 
