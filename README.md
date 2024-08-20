@@ -8,22 +8,14 @@
 This is a Java and Spring Boot application I developed to simplify and streamline the monthly scheduling process for cabin crew members, including myself. Recognizing the need for a more efficient and faster way to manage flight requests and days off, I meticulously analyzed and designed this tool. The application takes into account crucial factors like flight timings, mandatory rest periods, flight time limitations, and aircraft certifications, making the scheduling process both faster and more effective. After nearly 1.5 years of dedicated work, evolving from a console-based tool to a robust Spring Boot REST API, the project now includes 80 classes, more than 3,400 lines of code, and comprehensive tests. This complete and reviewed solution meets my initial needs, and I’m eager to continue expanding its capabilities.
 </p>
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-    </li>
-   <li>
-      <a href="#installation">Installation</a>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-  </ol>
-</details>
+## Table of Contents
+1. [About The Project](#about-the-project)
+2. [Installation](#installation)
+3. [Usage](#usage)
+4. [Roadmap](#roadmap)
 
 <!-- Installation section -->
+## Installation
 <details>
   <summary><h2 style="margin-top: 10px;">Installation</h2></summary>
 
@@ -86,6 +78,7 @@ Make sure you have the following software installed:
 </details>
 
 <!-- Usage section -->
+## Usage
 <details>
   <summary><h2 style="margin-top: 10px;">Usage</h2></summary>
 
@@ -133,8 +126,6 @@ This process ensures that cabin crew members can effectively manage their schedu
 <!-- Usage section -->
 <details>
   <summary><h2 style="margin-top: 10px;">Roadmap</h2></summary>
-
-## Roadmap
 
 Here’s a look at the future development plans for the Cabin Crew Scheduling System:
 
