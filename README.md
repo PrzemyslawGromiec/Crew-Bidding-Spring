@@ -31,7 +31,9 @@ This is a Java and Spring Boot application I developed to simplify and streamlin
   </ol>
 </details>
 
-## Installation
+<!-- Installation section -->
+<details>
+  <summary><h2>Installation</h2></summary>
 
 ### Prerequisites
 
@@ -46,24 +48,50 @@ Make sure you have the following software installed:
 1. **Clone the repository:**
 
    ```bash
-   https://github.com/PrzemyslawGromiec/Crew-Bidding-Spring.git
+   git clone https://github.com/PrzemyslawGromiec/Crew-Bidding-Spring.git
+   ```
 
 2. **Navigate to the project directory:**
+
    ```bash
    cd Crew-Bidding-Spring
-   
+   ```
+
 3. **Build the project using Maven:**
-    ```bash
+
+   Ensure that Maven is installed and properly set up on your system. Then run:
+
+   ```bash
    mvn clean install
-   
+   ```
+
 4. **Run the application:**
+
+   You can run the application directly using Maven or by running the generated JAR file:
+
+   **Option 1: Using Maven**
+
    ```bash
    mvn spring-boot:run
-   
-5. **Access the application:**
-   ```bash
-   http://localhost:8080
+   ```
 
+   **Option 2: Running the JAR file**
+
+   After building the project, a JAR file will be generated in the `target` directory. Run it with:
+
+   ```bash
+   java -jar target/Crew-Bidding-Spring-0.0.1-SNAPSHOT.jar
+   ```
+
+5. **Access the application:**
+
+   Once the application is running, you can access it by navigating to:
+
+   ```
+   http://localhost:8080
+   ```
+
+</details>
 
 <p align="left"> 
    <img src="https://komarev.com/ghpvc/?username=pgromiec&label=Profile%20views&color=0e75b6&style=flat" alt="pgromiec" /> 
