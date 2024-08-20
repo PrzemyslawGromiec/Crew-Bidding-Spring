@@ -26,7 +26,7 @@ This is a Java and Spring Boot application I developed to simplify and streamlin
   </ol>
 </details>
 
-## Installation
+## 1.Installation
 
 To get a local copy up and running, follow these simple steps.
 
