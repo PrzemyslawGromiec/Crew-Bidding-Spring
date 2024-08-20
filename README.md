@@ -27,7 +27,7 @@ This is a Java and Spring Boot application I developed to simplify and streamlin
 
 <!-- Installation section -->
 <details>
-  <summary><h2>Installation</h2></summary>
+  <summary><h2 style="margin-top: 10px;">Installation</h2></summary>
 
 ### Prerequisites
 
