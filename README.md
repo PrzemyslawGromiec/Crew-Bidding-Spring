@@ -43,7 +43,12 @@ Make sure you have the following software installed:
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/PrzemyslawGromiec/Crew-Bidding-Spring.git
+   https://github.com/PrzemyslawGromiec/Crew-Bidding-Spring.git
+
+2. **Navigate to the project directory:**
+   ```bash
+   cd Crew-Bidding-Spring
+   
 
 <p align="left"> 
    <img src="https://komarev.com/ghpvc/?username=pgromiec&label=Profile%20views&color=0e75b6&style=flat" alt="pgromiec" /> 
