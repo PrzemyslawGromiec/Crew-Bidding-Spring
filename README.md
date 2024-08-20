@@ -15,7 +15,6 @@ This is a Java and Spring Boot application I developed to simplify and streamlin
 4. [Roadmap](#roadmap)
 
 <!-- Installation section -->
-## Installation
 <details>
   <summary><h2 style="margin-top: 10px;">Installation</h2></summary>
 
@@ -78,7 +77,6 @@ Make sure you have the following software installed:
 </details>
 
 <!-- Usage section -->
-## Usage
 <details>
   <summary><h2 style="margin-top: 10px;">Usage</h2></summary>
 
