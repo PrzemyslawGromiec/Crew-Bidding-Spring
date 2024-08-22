@@ -2,6 +2,9 @@ package com.bidding.crew.report;
 
 import com.bidding.crew.flight.FlightDto;
 import com.bidding.crew.flight.FlightService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +15,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/v0/reports")
+@Tag(name = "Report")
 public class ReportController {
     private final FlightService flightService;
     private ReportService reportService;
@@ -34,6 +38,14 @@ public class ReportController {
     }
 
     @PutMapping("/{id}")
+    @Operation(
+            method = "Update status",
+            description = "Update report status",
+            responses = @ApiResponse(
+                    description = "Report status updated successfully",
+                    responseCode = "200"
+            )
+    )
     public ResponseEntity<ReportResponse> updateStatus(@PathVariable Long id, @RequestBody ReportRequest reportRequest) {
         ReportResponse updatedReport = reportService.updateStatus(id, reportRequest);
         return ResponseEntity.ok(updatedReport);

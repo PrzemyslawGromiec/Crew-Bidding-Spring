@@ -76,6 +76,16 @@ Make sure you have the following software installed:
 
 </details>
 
+<!-- todo --
+0. deploy app 
+1. opisac endpointy razem ze sciezka
+2. skrocic opis
+3. opisac jak stworzyc raport od poczatku
+4. ew opcjonalne endpointy 
+5. parsowanie lotow z pliku i generowanie ich na caly miesiac
+6. frontend wyzej
+7. przemyslec w ogole feedback 
+8. screen do swagger w Usage - link do swaggera -->
 <!-- Usage section -->
 <details>
   <summary><h2 style="margin-top: 10px;">Usage</h2></summary>

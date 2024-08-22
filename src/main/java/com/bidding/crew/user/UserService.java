@@ -30,9 +30,6 @@ public class UserService implements UserDetailsService {
 
     }
 
-    //todo:odblokowac baze danych
-    //todo: permit all na wszystko jesli cos nie dziala
-
     public List<AccountUserDto> getUsers() {
         return userRepository.findAll().stream()
                 .map(accountUser -> new AccountUserDto(

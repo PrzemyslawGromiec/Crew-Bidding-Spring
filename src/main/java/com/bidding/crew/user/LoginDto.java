@@ -4,8 +4,15 @@ public class LoginDto {
 
     private String username;
     private String password;
+    private String email;
 
     public LoginDto() {
+    }
+
+    public LoginDto(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
     }
 
     public LoginDto(String username, String password) {
@@ -27,6 +34,14 @@ public class LoginDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
