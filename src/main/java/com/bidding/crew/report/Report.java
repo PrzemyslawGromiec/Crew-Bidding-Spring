@@ -2,6 +2,7 @@ package com.bidding.crew.report;
 
 import com.bidding.crew.general.Time;
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -25,7 +26,8 @@ public class Report {
         this.requests = new ArrayList<>(requests);
     }
 
-    public ReportResponse toResponse() {
+
+    public ReportResponse.ReportResponseBuilder toResponse() {
         List<ReportEventDto> eventRequests = getEventRequests().stream()
                 .map(ReportEvent::toDto)
                 .toList();
@@ -34,9 +36,11 @@ public class Report {
                 .map(ReportFlight::toDto)
                 .toList();
 
-        List<PeriodDto> periods = closed ? null : generatePeriods();
-
-        return new ReportResponse(id, closed, eventRequests, periods,flightRequests);
+        return ReportResponse.builder()
+                .id(id)
+                .flightRequests(flightRequests)
+                .eventRequest(eventRequests)
+                .closed(closed);
     }
 
     List<PeriodDto> generatePeriods() {

@@ -28,6 +28,10 @@ public class FlightSpecificationBuilderImpl implements FlightSpecificationBuilde
             spec = spec.and(getAircraftTypeSpec(specificationInput.getAircraftType()));
         }
 
+        if (specificationInput.getReportTime() != null) {
+            spec = spec.and(getFlightStaringAfter(specificationInput.getReportTime()));
+        }
+
         if (specificationInput.getClearTime() != null) {
             spec = spec.and(getFlightEndingBefore(specificationInput.getClearTime()));
         }

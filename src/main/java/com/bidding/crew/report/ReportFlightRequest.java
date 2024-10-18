@@ -1,5 +1,8 @@
 package com.bidding.crew.report;
 
+import lombok.Getter;
+
+@Getter
 public class ReportFlightRequest {
     private int flightId;
     private int numOfStars;
@@ -18,11 +21,4 @@ public class ReportFlightRequest {
     public ReportFlightRequest() {
     }
 
-    public int getFlightId() {
-        return flightId;
-    }
-
-    public int getNumOfStars() {
-        return numOfStars;
-    }
 }

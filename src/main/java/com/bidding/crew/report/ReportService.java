@@ -8,6 +8,7 @@ import com.bidding.crew.general.*;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,37 +18,33 @@ public class ReportService {
     private EventRequestFactory eventFactory = new EventRequestFactory(Time.getTime());
     private FlightRequestFactory flightFactory = new FlightRequestFactory();
     private EventService eventService;
-    private PeriodFactory periodFactory = new PeriodFactory();
     private FlightService flightService;
-    private List<PeriodDto> periods;
     private RequestMapper requestMapper;
+    private ReportMapper reportMapper;
 
-    public ReportService(ReportRepository reportRepository, EventService eventService, FlightService flightService, RequestMapper requestMapper) {
+    public ReportService(ReportRepository reportRepository, EventService eventService,
+                         FlightService flightService, RequestMapper requestMapper, ReportMapper reportMapper) {
         this.reportRepository = reportRepository;
         this.eventService = eventService;
         this.flightService = flightService;
         this.requestMapper = requestMapper;
+        this.reportMapper = reportMapper;
     }
 
     public List<ReportFlight> getFlightRequests() {
         return flightFactory.getRequests();
     }
 
+    //todo:zaktualizowac przy implementowaniu powtarzajacych sie eventow
     private List<ReportEvent> getEventRequests() {
         return eventFactory.createRequests(eventService.getEvents());
     }
 
-    ReportResponse createReport(ReportRequest reportRequest) {
-        if (reportRequest.isClosed()) {
-            throw new InvalidReportStateException("New created report cannot be finalized.");
-        }
-
-        List<ReportEvent> reportEvents = getEventRequests();
-        Report report = new Report(reportEvents);
+    ReportResponse createReport() {
+        //List<ReportEvent> reportEvents = getEventRequests(); todo
+        Report report = new Report(new ArrayList<>());
         reportRepository.save(report);
-
-        return report.toResponse();
-        //List<Flight> flights = flightService.getFlightsForPeriod(periods.getFirst(), false);
+        return reportMapper.toResponse(report);
     }
 
     ReportResponse getReport(Long id) {
@@ -57,7 +54,7 @@ public class ReportService {
         if (report.isClosed()) {
             calculatePoints(report);
         }
-        return report.toResponse();
+        return report.toResponse().build();
     }
 
     private void calculatePoints(Report report) {
@@ -78,14 +75,14 @@ public class ReportService {
         }
 
         calculatePoints(report);
-        return report.toResponse();
+        return report.toResponse().build();
     }
 
     public List<PeriodDto> getAllPeriods(Long reportId) {
         try {
             Report report = reportRepository.findById(reportId)
                     .orElseThrow(() -> new ResourceNotFoundException("Report with id " + reportId + " not found"));
-            return report.toResponse().getPeriods();
+            return report.generatePeriods();
         } catch (ResourceNotFoundException e) {
             throw e;
         } catch (Exception e) {
@@ -114,11 +111,6 @@ public class ReportService {
                 .map(Flight::toDto)
                 .toList();
 
-        /*List<FlightDto> suggestedFlights = commonTime.stream()
-                .flatMap(periodDto -> flightService.getSuggestedFlightsWithSpecification(criteria).stream())
-                .toList();*/
-
-
         if (suggestedFlights.isEmpty()) {
             throw new NoFlightSuggestionsException("No flight suggestions found for the given criteria.");
         }
@@ -126,7 +118,7 @@ public class ReportService {
         return suggestedFlights;
     }
 
-    public ReportFlightResponse saveFlight(Long id, ReportFlightRequest reportFlightRequest) {
+    public ReportResponse saveFlight(Long id, ReportFlightRequest reportFlightRequest) {
         if (!isValidFlightData(reportFlightRequest)) {
             throw new InvalidFlightDataException("Invalid flight data provided.");
         }
@@ -135,7 +127,15 @@ public class ReportService {
         ReportFlight reportFlight = requestMapper.mapToEntity(reportFlightRequest);
         report.addRequest(reportFlight);
         reportRepository.save(report);
-        return reportFlight.toDto();
+        return reportMapper.toResponse(report);
+    }
+
+    public ReportResponse saveEvent(Long id, ReportEventDto reportEventRequest ) {
+        Report report = reportRepository.findById(id).orElseThrow();
+        ReportEvent reportEvent = requestMapper.mapToEntity(reportEventRequest);
+        report.addRequest(reportEvent);
+        reportRepository.save(report);
+        return reportMapper.toResponse(report);
     }
 
     private boolean isValidFlightData(ReportFlightRequest reportFlightRequest) {
@@ -144,7 +144,6 @@ public class ReportService {
         }
         return reportFlightRequest.getNumOfStars() >= 1 && reportFlightRequest.getNumOfStars() <= 3;
     }
-
 }
 
 

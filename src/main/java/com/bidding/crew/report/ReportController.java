@@ -1,11 +1,9 @@
 package com.bidding.crew.report;
 
 import com.bidding.crew.flight.FlightDto;
-import com.bidding.crew.flight.FlightService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,17 +15,15 @@ import java.util.NoSuchElementException;
 @RequestMapping("/api/v0/reports")
 @Tag(name = "Report")
 public class ReportController {
-    private final FlightService flightService;
     private ReportService reportService;
 
-    public ReportController(ReportService reportService, FlightService flightService) {
+    public ReportController(ReportService reportService) {
         this.reportService = reportService;
-        this.flightService = flightService;
     }
 
     @PostMapping
-    public ResponseEntity<ReportResponse> createReport(@Valid @RequestBody ReportRequest reportRequest) {
-        ReportResponse reportResponse = reportService.createReport(reportRequest);
+    public ResponseEntity<ReportResponse> createReport() {
+        ReportResponse reportResponse = reportService.createReport();
         return ResponseEntity.ok(reportResponse);
     }
 
@@ -74,9 +70,15 @@ public class ReportController {
     }
 
     @PostMapping("{id}/flights")
-    public ResponseEntity<ReportFlightResponse> addFlightToReport(@PathVariable Long id, @RequestBody ReportFlightRequest flight) {
-        ReportFlightResponse flightDto = reportService.saveFlight(id, flight);
-        return ResponseEntity.ok(flightDto);
+    public ResponseEntity<ReportResponse> addFlightToReport(@PathVariable Long id, @RequestBody ReportFlightRequest flight) {
+        ReportResponse reportResponse = reportService.saveFlight(id, flight);
+        return ResponseEntity.ok(reportResponse);
+    }
+
+    @PostMapping("{id}/events")
+    public ResponseEntity<ReportResponse> addEventToReport(@PathVariable Long id, @RequestBody ReportEventDto event) {
+        ReportResponse reportResponse = reportService.saveEvent(id, event);
+        return ResponseEntity.ok(reportResponse);
     }
 
 }

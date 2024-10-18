@@ -1,34 +1,30 @@
 package com.bidding.crew.report;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+@Getter
 public class ReportEventDto {
-    private Long id;
+    private int id;
     private LocalDateTime startDate;
     private LocalDateTime endTime;
-    private int points;
+    private int stars;
 
-    public ReportEventDto(Long id, LocalDateTime startDate, LocalDateTime endTime, int points) {
+    public ReportEventDto(int id, LocalDateTime startDate, LocalDateTime endTime, int stars) {
         this.id = id;
         this.startDate = startDate;
         this.endTime = endTime;
-        this.points = points;
+        this.stars = stars;
+    }
+
+    public ReportEventDto(LocalDateTime startDate, LocalDateTime endTime, int stars) {
+        this.startDate = startDate;
+        this.endTime = endTime;
+        this.stars = stars;
     }
 
     public ReportEventDto() {
     }
 
-    public LocalDateTime getStartDate() {
-        return startDate;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public int getPoints() {
-        return points;
-    }
 }

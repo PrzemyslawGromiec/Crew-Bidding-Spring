@@ -23,5 +23,4 @@ public class EventController {
         System.out.println("Received SpecificationInput: " + specificationInput);
         return eventService.findEventsByCriteria(specificationInput);
     }
-
 }
