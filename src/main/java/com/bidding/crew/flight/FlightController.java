@@ -1,5 +1,6 @@
 package com.bidding.crew.flight;
 
+import com.bidding.crew.report.PeriodDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,10 +29,9 @@ public class FlightController {
         return ResponseEntity.ok("File uploaded: " + file.getOriginalFilename());
     }
 
-
     @GetMapping("/api/v0/flights")
     public List<FlightDto> findFlightsByCriteria(FlightSpecificationInput specificationInput) {
-        System.out.println("Received spec input:" + specificationInput);
         return flightService.findFlightByCriteria(specificationInput);
     }
+
 }

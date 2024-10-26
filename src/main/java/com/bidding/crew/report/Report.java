@@ -15,7 +15,6 @@ public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private boolean closed;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Request> requests = new ArrayList<>();
 
@@ -25,6 +24,8 @@ public class Report {
     public Report(List<ReportEvent> requests) {
         this.requests = new ArrayList<>(requests);
     }
+
+
 
 
     public ReportResponse.ReportResponseBuilder toResponse() {
@@ -39,8 +40,7 @@ public class Report {
         return ReportResponse.builder()
                 .id(id)
                 .flightRequests(flightRequests)
-                .eventRequest(eventRequests)
-                .closed(closed);
+                .eventRequest(eventRequests);
     }
 
     List<PeriodDto> generatePeriods() {
@@ -55,8 +55,10 @@ public class Report {
 
         List<PeriodDto> periods = new ArrayList<>();
         LocalDateTime currentStartTime = Time.getTime().startOfNextMonthDate();
+        System.out.println(currentStartTime);
         LocalDateTime currentEndTime;
         LocalDateTime endOfMonth = Time.getTime().endOfNextMonthDate();
+        System.out.println(endOfMonth);
 
         for (Request request : allRequests) {
             currentEndTime = request.startDate().atTime(LocalTime.of(22, 0, 0)).minusDays(1);
@@ -70,7 +72,6 @@ public class Report {
         if (currentStartTime.isBefore(endOfMonth)) {
             periods.add(new PeriodDto(currentStartTime, endOfMonth));
         }
-
         return periods;
     }
 
@@ -80,6 +81,10 @@ public class Report {
         } else {
             throw new IllegalArgumentException("Request cannot be assigned to this period.");
         }
+    }
+
+    public void addAllRequests(List<? extends Request> requests) {
+        requests.forEach(this::addRequest);
     }
 
     private boolean canAdd(Request request) {
@@ -120,11 +125,4 @@ public class Report {
         return id;
     }
 
-    public boolean isClosed() {
-        return closed;
-    }
-
-    public void setClosed(boolean closed) {
-        this.closed = closed;
-    }
 }

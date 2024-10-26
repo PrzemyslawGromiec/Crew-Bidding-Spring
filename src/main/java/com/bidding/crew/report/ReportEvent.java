@@ -1,9 +1,7 @@
 package com.bidding.crew.report;
 
 import com.bidding.crew.event.Event;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,6 +13,7 @@ import java.util.List;
 public class ReportEvent extends Request{
     @OneToMany(cascade = CascadeType.ALL)
     private List<Event> events;
+    //daty startu i konca
 
     public ReportEvent(List<Event> events,int stars) {
         super(stars);
@@ -26,7 +25,7 @@ public class ReportEvent extends Request{
     }
 
     public ReportEventDto toDto() {
-        return new ReportEventDto(id, startTime(),endTime(),stars);
+        return new ReportEventDto(id,startTime(),endTime(),stars);
     }
 
     @Override

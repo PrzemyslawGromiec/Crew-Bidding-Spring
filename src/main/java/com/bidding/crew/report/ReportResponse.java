@@ -14,7 +14,6 @@ import java.util.List;
 @ToString
 public class ReportResponse {
     private Long id;
-    private boolean closed;
     private List<ReportEventDto> eventRequest;
     private List<ReportFlightResponse> flightRequests;
     private List<FlightDto> availableFlights;

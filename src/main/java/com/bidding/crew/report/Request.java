@@ -22,6 +22,12 @@ public abstract class Request {
     public Request() {
     }
 
+    public Request(int stars, int id) {
+        this.stars = stars;
+        this.id = id;
+    }
+
+
     public int getStars() {
         return stars;
     }

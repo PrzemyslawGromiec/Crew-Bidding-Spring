@@ -7,24 +7,23 @@ import java.time.LocalDateTime;
 @Getter
 public class ReportEventDto {
     private int id;
-    private LocalDateTime startDate;
+    private LocalDateTime startTime;
     private LocalDateTime endTime;
     private int stars;
 
-    public ReportEventDto(int id, LocalDateTime startDate, LocalDateTime endTime, int stars) {
+    public ReportEventDto(int id,LocalDateTime startTime, LocalDateTime endTime, int stars) {
         this.id = id;
-        this.startDate = startDate;
+        this.startTime = startTime;
         this.endTime = endTime;
         this.stars = stars;
     }
 
-    public ReportEventDto(LocalDateTime startDate, LocalDateTime endTime, int stars) {
-        this.startDate = startDate;
+    public ReportEventDto(LocalDateTime startTime, LocalDateTime endTime, int stars) {
+        this.startTime = startTime;
         this.endTime = endTime;
         this.stars = stars;
     }
 
     public ReportEventDto() {
     }
-
 }

@@ -1,6 +1,7 @@
 package com.bidding.crew.report;
 
 import com.bidding.crew.flight.FlightDto;
+import com.bidding.crew.flight.FlightService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,18 +15,14 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("/api/v0/reports")
 @Tag(name = "Report")
+@CrossOrigin(origins = "http://localhost:8086")
 public class ReportController {
     private ReportService reportService;
 
-    public ReportController(ReportService reportService) {
+    public ReportController(ReportService reportService, FlightService flightService) {
         this.reportService = reportService;
     }
 
-    @PostMapping
-    public ResponseEntity<ReportResponse> createReport() {
-        ReportResponse reportResponse = reportService.createReport();
-        return ResponseEntity.ok(reportResponse);
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ReportResponse> getReport(@PathVariable Long id) {
@@ -33,7 +30,9 @@ public class ReportController {
         return ResponseEntity.ok(reportResponse);
     }
 
-    @PutMapping("/{id}")
+
+    //wysyłanie gotowego raportu ale tylko zmienia status
+    @PutMapping()
     @Operation(
             method = "Update status",
             description = "Update report status",
@@ -42,9 +41,31 @@ public class ReportController {
                     responseCode = "200"
             )
     )
-    public ResponseEntity<ReportResponse> updateStatus(@PathVariable Long id, @RequestBody ReportRequest reportRequest) {
-        ReportResponse updatedReport = reportService.updateStatus(id, reportRequest);
+    public ResponseEntity<ReportResponse> finalizeReport(@RequestBody ReportRequest reportRequest) {
+        ReportResponse updatedReport = reportService.finalizeReport(reportRequest);
         return ResponseEntity.ok(updatedReport);
+    }
+
+    //nie używane na frontendzie
+
+    @PostMapping
+    public ResponseEntity<ReportResponse> createReport() {
+        ReportResponse reportResponse = reportService.createReport();
+        return ResponseEntity.ok(reportResponse);
+    }
+
+
+    @GetMapping("/{id}/suggestions")
+    public ResponseEntity<List<FlightDto>> getSuggestionsForPeriod(@PathVariable Long id, @RequestBody SuggestionCriteriaDto criteria) {
+        List<FlightDto> suggestedFlights = reportService.getSuggestedFlightsForPeriods(id, criteria);
+        return ResponseEntity.ok(suggestedFlights);
+    }
+
+
+    @PostMapping("{id}/flights")
+    public ResponseEntity<ReportResponse> addFlightToReport(@PathVariable Long id, @RequestBody ReportFlightRequest flight) {
+        ReportResponse reportResponse = reportService.saveFlight(id, flight);
+        return ResponseEntity.ok(reportResponse);
     }
 
     @GetMapping("{id}/periods")
@@ -61,18 +82,6 @@ public class ReportController {
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-    }
-
-    @GetMapping("/{id}/suggestions")
-    public ResponseEntity<List<FlightDto>> getSuggestionsForPeriod(@PathVariable Long id, @RequestBody SuggestionCriteriaDto criteria) {
-        List<FlightDto> suggestedFlights = reportService.getSuggestedFlightsForPeriods(id, criteria);
-        return ResponseEntity.ok(suggestedFlights);
-    }
-
-    @PostMapping("{id}/flights")
-    public ResponseEntity<ReportResponse> addFlightToReport(@PathVariable Long id, @RequestBody ReportFlightRequest flight) {
-        ReportResponse reportResponse = reportService.saveFlight(id, flight);
-        return ResponseEntity.ok(reportResponse);
     }
 
     @PostMapping("{id}/events")

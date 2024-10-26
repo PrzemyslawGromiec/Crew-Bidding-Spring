@@ -1,5 +1,6 @@
 package com.bidding.crew.report;
 
+import com.bidding.crew.event.Event;
 import com.bidding.crew.event.EventService;
 import com.bidding.crew.flight.Flight;
 import com.bidding.crew.flight.FlightDto;
@@ -51,10 +52,8 @@ public class ReportService {
         Report report = reportRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Report with id " + id + " not found"));
 
-        if (report.isClosed()) {
-            calculatePoints(report);
-        }
         return report.toResponse().build();
+        //return reportMapper.toResponse(report);
     }
 
     private void calculatePoints(Report report) {
@@ -63,18 +62,25 @@ public class ReportService {
     }
 
     @Transactional
-    ReportResponse updateStatus(Long id, ReportRequest reportRequest) {
-        Report report = reportRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Report with id " + id + " not found."));
+    ReportResponse finalizeReport(ReportRequest reportRequest) {
+        //todo po wywaleniu eventow z raport eventow mozna wrocic i uprościć
+        List<ReportEvent> reportEvents = reportRequest.getRequests().stream()
+                .filter(requestDto -> requestDto.type().equals(RequestType.EVENT))
+                .map(requestDto -> new ReportEvent(List.of(new Event(requestDto.startTime(), requestDto.endTime(),
+                        requestDto.stars(), "")), requestDto.stars()))
+                .toList();
 
-        if (reportRequest.isClosed()) {
-            report.setClosed(true);
-        }
+        Report report = new Report(reportEvents);
+        List<ReportFlight> flights = reportRequest.getRequests().stream()
+                .filter(requestDto -> requestDto.type().equals(RequestType.FLIGHT))
+                .map(requestDto -> new ReportFlight(
+                        flightService.getFlightById(requestDto.id()), requestDto.stars()))
+                .toList();
 
-        if (!reportRequest.isClosed() && report.isClosed()) {
-            throw new InvalidReportStateException("You cannot open finalized report.");
-        }
 
+        report.addAllRequests(flights);
         calculatePoints(report);
+        reportRepository.save(report);
         return report.toResponse().build();
     }
 
@@ -91,7 +97,7 @@ public class ReportService {
     }
 
     public List<PeriodDto> generatePeriodsForReport(Long reportId) {
-        Report report = reportRepository.findById(reportId).orElseThrow(() -> new ResourceNotFoundException("Report with id" + reportId +" not found"));
+        Report report = reportRepository.findById(reportId).orElseThrow(() -> new ResourceNotFoundException("Report with id" + reportId + " not found"));
         return report.generatePeriods();
     }
 
@@ -130,7 +136,7 @@ public class ReportService {
         return reportMapper.toResponse(report);
     }
 
-    public ReportResponse saveEvent(Long id, ReportEventDto reportEventRequest ) {
+    public ReportResponse saveEvent(Long id, ReportEventDto reportEventRequest) {
         Report report = reportRepository.findById(id).orElseThrow();
         ReportEvent reportEvent = requestMapper.mapToEntity(reportEventRequest);
         report.addRequest(reportEvent);

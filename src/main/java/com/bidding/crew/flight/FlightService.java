@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -135,4 +134,10 @@ public class FlightService {
     public Flight getFlightById(int id) {
         return flightRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Flight not found with id: " + id));
     }
+
+    public List<Flight> getFlightsById(List<Integer> ids) {
+        return flightRepository.findAllById(ids);
+    }
+
+
 }
