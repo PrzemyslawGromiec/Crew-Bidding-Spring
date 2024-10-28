@@ -30,14 +30,12 @@ public class ReportController {
         return ResponseEntity.ok(reportResponse);
     }
 
-
-    //wysyłanie gotowego raportu ale tylko zmienia status
-    @PutMapping()
+    @PostMapping
     @Operation(
-            method = "Update status",
+            method = "Finalize report",
             description = "Update report status",
             responses = @ApiResponse(
-                    description = "Report status updated successfully",
+                    description = "Report finalized successfully",
                     responseCode = "200"
             )
     )
@@ -48,7 +46,7 @@ public class ReportController {
 
     //nie używane na frontendzie
 
-    @PostMapping
+    @PostMapping("/created")
     public ResponseEntity<ReportResponse> createReport() {
         ReportResponse reportResponse = reportService.createReport();
         return ResponseEntity.ok(reportResponse);

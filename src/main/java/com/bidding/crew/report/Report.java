@@ -25,9 +25,6 @@ public class Report {
         this.requests = new ArrayList<>(requests);
     }
 
-
-
-
     public ReportResponse.ReportResponseBuilder toResponse() {
         List<ReportEventDto> eventRequests = getEventRequests().stream()
                 .map(ReportEvent::toDto)
