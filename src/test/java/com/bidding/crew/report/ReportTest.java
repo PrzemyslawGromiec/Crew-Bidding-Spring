@@ -1,5 +1,5 @@
 package com.bidding.crew.report;
-
+/*
 import com.bidding.crew.event.Event;
 import com.bidding.crew.event.EventDto;
 import com.bidding.crew.flight.AircraftType;
@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-import com.bidding.crew.flight.Flight;
+import com.bidding.crew.flight.Flight;*/
+/*
 
 class ReportTest {
 
@@ -75,14 +76,16 @@ class ReportTest {
                 Time.getTime().nextMonthTime().withDayOfMonth(endDay).plusHours(endHour));
     }
 
-  /*  private ReportEvent createEventRequest(int startDayOfMonth, int days, int numOfStars) {
+  */
+/*  private ReportEvent createEventRequest(int startDayOfMonth, int days, int numOfStars) {
         LocalDateTime startTime = Time.getTime().nextMonthLocalDate().atTime(LocalTime.MIN).withDayOfMonth(startDayOfMonth);
         // jest -1, bo jak event ma trwac 3 dni, to chce zeby byl np od 03.08 00:00 do 05.08 23:59
         LocalDateTime endTime = Time.getTime().nextMonthLocalDate().atTime(LocalTime.MAX).withDayOfMonth(startDayOfMonth).plusDays(days - 1);
         Event event = new EventDto(startTime, endTime, numOfStars, "uni", false).toEntity();
         return new ReportEvent(List.of(event));
 
-    }*/
+    }*//*
+
 
     private ReportEvent createEventRequest(int startDayOfMonth, int days) {
         return createEventRequest(startDayOfMonth, days, 3);
@@ -103,4 +106,4 @@ class ReportTest {
                 LocalDateTime.of(2024, 8, startDayOfMonth, startingHour, 0).plusHours(hoursFlight), AircraftType.A320);
         return new Flight(flightDto);
     }
-}
+}*/

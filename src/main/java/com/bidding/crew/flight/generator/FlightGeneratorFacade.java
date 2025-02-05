@@ -31,7 +31,7 @@ public class FlightGeneratorFacade {
     private List<Flight> generateCustomRecurringFlights(FlightTemplate flightTemplate) {
         List<Flight> flights = new ArrayList<>();
         LocalDate nextMonth = time.nextMonthLocalDate();
-        for (int day = 1; day <= nextMonth.getMonth().maxLength(); day++) {
+        for (int day = 1; day <= nextMonth.getMonth().maxLength()-1; day++) {
             if (!flightTemplate.flightsOn(nextMonth.withDayOfMonth(day).getDayOfWeek())) {
                 continue;
             }

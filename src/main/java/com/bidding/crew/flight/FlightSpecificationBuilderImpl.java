@@ -1,5 +1,6 @@
 package com.bidding.crew.flight;
 
+import com.bidding.crew.general.Time;
 import com.bidding.crew.report.SuggestionCriteriaDto;
 import jakarta.persistence.criteria.Expression;
 import org.springframework.data.jpa.domain.Specification;
@@ -13,6 +14,13 @@ import java.time.temporal.ChronoUnit;
 public class FlightSpecificationBuilderImpl implements FlightSpecificationBuilder {
     @Override
     public Specification<Flight> getSpecificationFor(FlightSpecificationInput specificationInput) {
+
+        if (specificationInput.getReportTime() == null) {
+            specificationInput.setReportTime(Time.getTime().startOfNextMonthDate());
+        }
+        if (specificationInput.getClearTime() == null) {
+            specificationInput.setClearTime(Time.getTime().endOfNextMonthDate());
+        }
 
         Specification<Flight> spec = Specification.where(null);
 
