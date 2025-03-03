@@ -163,7 +163,7 @@ If you have ideas or features you'd like to see in future versions, feel free to
 - 🔭 I’m currently working on [Airline Crew Scheduling App](https://github.com/PrzemyslawGromiec/Crew-Bidding-Spring)
 - 👨‍💻 All of my projects are available
   at [https://github.com/PrzemyslawGromiec?tab=repositories](https://github.com/PrzemyslawGromiec?tab=repositories)
-- 📫 How to reach me **pgromiec@gmail.com**
+- 📫 How to reach me **dev.gromiec@gmail.com**
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
