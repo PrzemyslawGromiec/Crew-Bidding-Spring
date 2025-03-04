@@ -19,7 +19,7 @@ public class FlightSpecificationBuilderImpl implements FlightSpecificationBuilde
             specificationInput.setReportTime(Time.getTime().startOfNextMonthDate());
         }
         if (specificationInput.getClearTime() == null) {
-            specificationInput.setClearTime(Time.getTime().endOfNextMonthDate());
+            specificationInput.setClearTime(Time.getTime().endOfNextMonthDate().plusDays(7));
         }
 
         Specification<Flight> spec = Specification.where(null);
