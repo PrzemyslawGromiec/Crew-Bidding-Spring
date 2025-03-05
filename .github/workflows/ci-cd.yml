@@ -1,6 +1,5 @@
 name: Crew Bidding System CI/CD
 
-#kiedy cos ma sie stać? gdy pushuje na mastera
 on:
   push:
     branches:
@@ -21,36 +20,3 @@ jobs:
           java-version: 21
           cache: maven
       - run: mvn test
-
-
-# stara wersja
-#name: Crew Bidding System CI/CD
-#
-#on:
-#  push:
-#    branches:
-#      - master
-#  pull_request:
-#    branches:
-#      - master
-#
-#jobs:
-#  build:
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Checkout Repository
-#        uses: actions/checkout@v3
-#
-#      - name: Set up JDK 21
-#        uses: actions/setup-java@v3
-#        with:
-#          distribution: 'temurin'
-#          java-version: '21'
-#          cache: maven
-#
-#      - name: Build with Maven
-#        run: mvn clean package -DskipTests
-#
-#      - name: Run Tests
-#        run: mvn test
