@@ -23,6 +23,9 @@ jobs:
       - name: Run tests
         run: mvn clean test
 
+      - name: Check Java version
+        run: java --version
+
   #Building Docker image
   build-docker:
     runs-on: ubuntu-latest
