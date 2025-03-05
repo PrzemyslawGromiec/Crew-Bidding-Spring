@@ -26,6 +26,9 @@ jobs:
       - name: Check Java version
         run: java --version
 
+      - name: Check Maven Java version
+        run: mvn -version
+
   #Building Docker image
   build-docker:
     runs-on: ubuntu-latest
@@ -36,11 +39,11 @@ jobs:
       - name: Build JAR for Docker
         run: mvn clean package -DskipTests
 
-      - name: Build Docker image
-        run: docker build -t my-spring-app:latest .
-
       - name: Verify JAR file exists
         run: ls -l target/
+
+      - name: Build Docker image
+        run: docker build -t my-spring-app:latest .
 
       - name: Log in to Docker Hub
         if: always()
