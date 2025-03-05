@@ -22,14 +22,19 @@ jobs:
           java-version: '21'
           cache: maven
 
-      - name: Run tests
-        run: mvn clean test
-
       - name: Check Java version
         run: java --version
 
       - name: Check Maven Java version
         run: mvn -version
+
+      - name: Ensure correct Java version is used
+        run: |
+          export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
+          echo "JAVA_HOME is set to $JAVA_HOME"
+
+      - name: Run tests
+        run: mvn clean test
 
   #Building Docker image
   build-docker:
@@ -45,14 +50,27 @@ jobs:
         run: ls -l target/
 
       - name: Build Docker image
-        run: docker build -t my-spring-app:latest .
+        run: |
+          if ! docker build -t my-spring-app:latest .; then
+            echo "🚨 ERROR: Docker image build failed!"
+            exit 1
+          fi
+
+#      - name: Build Docker image
+#        run: docker build -t my-spring-app:latest .
 
       - name: Log in to Docker Hub
-        if: always()
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        if: success()
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
       - name: Push Docker image
-        if: always()
+        if: success()
         run: |
             docker tag my-spring-app:latest pgromiec/my-bidding-app:latest
             docker push pgromiec/my-bidding-app:latest
+
+      - name: Deploy new Docker container
+        run: |
+          docker stop my-bidding-app || true
+          docker rm my-bidding-app || true
+          docker run -d --restart always -p 8080:8080 --name my-bidding-app pgromiec/my-bidding-app:latest
