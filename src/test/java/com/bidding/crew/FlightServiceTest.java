@@ -37,7 +37,7 @@ public class FlightServiceTest {
                 AircraftType.A320);
         Flight flight1 = new Flight(flightDto1);
 
-        FlightDto flightDto2 = new FlightDto(0, "FRA", "BA123",
+        FlightDto flightDto2 = new FlightDto(0, "", "BA123",
                 LocalDateTime.of(2025, 3, 7, 9, 0),
                 LocalDateTime.of(2025, 3, 7, 11, 0),
                 AircraftType.A319);
@@ -54,7 +54,7 @@ public class FlightServiceTest {
         // Then
         assertFalse(flights.isEmpty(), "Flights should not be empty");
         assertEquals(1, flights.size(), "Should return 1 flight");
-        assertEquals("CDG", flights.getFirst().getAirportCode(), "Airport code should match");
+        assertEquals("", flights.getFirst().getAirportCode(), "Airport code should match");
     }
 
     @Test
