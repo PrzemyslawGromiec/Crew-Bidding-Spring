@@ -1,5 +1,5 @@
 # get Java version
-FROM eclipse-temurin:21-jdk-slim
+FROM openjdk:17-jdk-slim
 # working directory
 WORKDIR /app
 # jar
