@@ -77,9 +77,6 @@ public class EventSpecificationBuilderImpl implements EventSpecificationBuilder 
         return (root, query, cb) -> cb.equal(cb.function("MONTH", Integer.class, root.get("startTime")), time.getMonthValue());
     }
 
-
-
-    //szuka eventow gdzie podana godzina i data znajduja sie pomiedzy data poczatku i konca
     private Specification<Event> getTimeSpec(LocalDateTime time) {
         return (root, query, cb) -> cb.between(cb.literal(time), root.get("startTime"), root.get("endTime"));
     }
@@ -97,26 +94,12 @@ public class EventSpecificationBuilderImpl implements EventSpecificationBuilder 
         return (root, query, cb) -> cb.equal(root.get("priority"), priority);
     }
 
-    //szuka eventow ktore koncza sie przed zadanym czasem
     private Specification<Event> getEventsEndingBeforeTime(LocalDateTime time) {
         return (root, query, cb) -> cb.lessThanOrEqualTo(root.get("endTime"), time);
     }
-
-   /* private Specification<Event> isNull(Object value) {
-       return  (root, query, cb) -> cb.isNull(cb.literal(value));
-    }*/
 
     private Specification<Event> isNull(String attributeName) {
         return (root, query, cb) -> cb.isNull(root.get(attributeName));
     }
 
 }
-
-/*
-* pakiet schedule
-* post schedule - tworzy nowy schedule -> trafiają do niego od razu eventy z danego miesiąca (jako EventRequest)
-* można dodać wybrany/ne flighty do schedule (trafiają do niego jako FlightRequest)
-* pobierz flghty pogrupowane w periody
-*
-*
-* */

@@ -1,5 +1,7 @@
 package com.bidding.crew.general;
 
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -7,6 +9,7 @@ public class ErrorResponse {
     private int status;
     private String message;
     private LocalDateTime timestamp;
+    @Setter
     private Map<String, String> errors;
 
     public ErrorResponse(int status, String message, LocalDateTime timestamp) {
@@ -31,7 +34,4 @@ public class ErrorResponse {
         return errors;
     }
 
-    public void setErrors(Map<String, String> errors) {
-        this.errors = errors;
-    }
 }

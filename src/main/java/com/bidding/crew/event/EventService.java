@@ -14,7 +14,6 @@ public class EventService {
     public EventService(EventRepository eventRepository, EventSpecificationBuilder eventSpecificationBuilder, EventSpecificationBuilderImpl eventSpecificationBuilderImpl) {
         this.eventRepository = eventRepository;
         this.eventSpecificationBuilder = eventSpecificationBuilder;
-        System.out.println("event service created");
         this.eventSpecificationBuilderImpl = eventSpecificationBuilderImpl;
     }
 
