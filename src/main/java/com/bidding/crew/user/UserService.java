@@ -41,7 +41,6 @@ public class UserService implements UserDetailsService {
 
     public List<AccountUserDto> findUsersByRole(Role role) {
         return userRepository.findByRole(role).stream()
-                .filter(accountUser -> accountUser.getRole().equals(role))
                 .map(accountUser -> new AccountUserDto(
                         accountUser.getUserId(),
                         accountUser.getUsername(),
