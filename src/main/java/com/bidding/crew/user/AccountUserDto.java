@@ -1,5 +1,8 @@
 package com.bidding.crew.user;
 
+import lombok.Getter;
+
+@Getter
 public class AccountUserDto {
     private Long id;
     private String username;
@@ -11,18 +14,6 @@ public class AccountUserDto {
         this.id = id;
         this.username = username;
         this.role = role;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public Role getRole() {
-        return role;
     }
 
     @Override

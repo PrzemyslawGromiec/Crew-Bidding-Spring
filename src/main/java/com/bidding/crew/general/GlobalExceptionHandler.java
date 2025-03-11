@@ -10,6 +10,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -78,6 +79,21 @@ public class GlobalExceptionHandler {
                 "Missing request parameter",
                 LocalDateTime.now(),
                 errors
+        ), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ErrorResponse> handleTypeMismatchException(MethodArgumentTypeMismatchException ex) {
+        String parameterName = ex.getName();
+        String providedValue = (ex.getValue() != null) ? ex.getValue().toString() : "null";
+        String expectedType = (ex.getRequiredType() != null) ? ex.getRequiredType().getSimpleName() : "unknown type";
+        String errorMessage = "Invalid value '" + providedValue + "' for parameter '" +
+                parameterName + "'. Expected type: " + expectedType;
+        return new ResponseEntity<>(new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                errorMessage,
+                LocalDateTime.now(),
+                null
         ), HttpStatus.BAD_REQUEST);
     }
 
