@@ -4,20 +4,24 @@ import com.bidding.crew.report.InvalidPeriodException;
 import com.bidding.crew.report.InvalidReportStateException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler({ResourceNotFoundException.class})
     public ResponseEntity<ErrorResponse> handleResourceNotFoundException(ResourceNotFoundException ex) {
-        return generateHandlingException(ex,HttpStatus.NOT_FOUND);
+        return generateHandlingException(ex,HttpStatus.NOT_FOUND );
     }
 
     @ExceptionHandler(InvalidReportStateException.class)
@@ -50,15 +54,43 @@ public class GlobalExceptionHandler {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
 
-        ErrorResponse errorDetails = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),
+        for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+            errors.put(error.getField(), error.getDefaultMessage());
+        }
+
+        ErrorResponse errorDetails = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
                 "Validation failed",
-                LocalDateTime.now());
-        errorDetails.setErrors(errors);
-        return new ResponseEntity<>(errorDetails,HttpStatus.BAD_REQUEST);
+                LocalDateTime.now(),
+                errors
+        );
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorDetails);
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<ErrorResponse> handleMissingParam(MissingServletRequestParameterException ex) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put(ex.getParameterName(), "Required parameter is missing");
+
+        return new ResponseEntity<>(new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                "Missing request parameter",
+                LocalDateTime.now(),
+                errors
+        ), HttpStatus.BAD_REQUEST);
     }
 
     private ResponseEntity<ErrorResponse> generateHandlingException(Exception ex, HttpStatus status) {
-        return new ResponseEntity<>(new ErrorResponse(status.value(), ex.getMessage(), LocalDateTime.now()),status);
+        return new ResponseEntity<>(new ErrorResponse(status.value(), ex.getMessage(), LocalDateTime.now(), null),status);
     }
-
 }
+
+/* Examples of exceptions that need field errors:
+* BindException
+* ConstraintViolationException
+* HttpMessageNotReadableException
+* TypeMismatchException
+* MissingServletRequestParameterException
+* MissingPathVariableException
+* */

@@ -1,37 +1,23 @@
 package com.bidding.crew.general;
 
+import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.Map;
 
+@Getter
 public class ErrorResponse {
-    private int status;
-    private String message;
-    private LocalDateTime timestamp;
-    @Setter
-    private Map<String, String> errors;
+    private final int status;
+    private final String message;
+    private final LocalDateTime timestamp;
+    private final Map<String, String> errors;
 
-    public ErrorResponse(int status, String message, LocalDateTime timestamp) {
+    public ErrorResponse(int status, String message, LocalDateTime timestamp, Map<String, String> errors) {
         this.status = status;
         this.message = message;
         this.timestamp = timestamp;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-    public Map<String, String> getErrors() {
-        return errors;
+        this.errors = errors;
     }
 
 }

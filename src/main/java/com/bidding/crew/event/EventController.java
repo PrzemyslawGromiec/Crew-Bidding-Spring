@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/v0/events")
+
 public class EventController {
 
     private EventService eventService;
@@ -14,16 +16,18 @@ public class EventController {
     }
 
     //todo: use ResponseEntity to handle request status
-    @PostMapping("/api/v0/events")
+    @PostMapping()
     public void saveEvent(@RequestBody EventDto eventDto) {
         eventService.saveEvent(eventDto);
     }
 
-    @GetMapping("/api/v0/events")
+
+    @GetMapping()
     public List<EventDto> findEventsByCriteria(@RequestBody SpecificationInput specificationInput) {
         System.out.println("Received SpecificationInput: " + specificationInput);
         return eventService.findEventsByCriteria(specificationInput);
     }
+
 
     //todo: delete request
 }
