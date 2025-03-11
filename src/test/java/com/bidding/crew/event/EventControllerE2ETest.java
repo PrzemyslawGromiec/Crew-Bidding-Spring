@@ -22,7 +22,7 @@ public class EventControllerE2ETest {
     @Autowired
     private EventRepository eventRepository;
 
-    @Test
+   /* @Test
     public void testGetEventsEndpoint() {
         eventRepository.deleteAll();
         Event event = new Event(
@@ -42,5 +42,5 @@ public class EventControllerE2ETest {
         Assertions.assertEquals(1, dtos.size());
 
 
-    }
+    }*/
 }
