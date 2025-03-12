@@ -24,7 +24,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.jwtService = jwtService;
     }
 
-
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
