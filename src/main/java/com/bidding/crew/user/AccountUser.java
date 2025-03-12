@@ -2,6 +2,7 @@ package com.bidding.crew.user;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -22,7 +23,6 @@ public class AccountUser implements UserDetails {
     private Role role;
 
     public AccountUser() {
-
     }
 
     public AccountUser(Long userId, String username, String password, Role role) {
@@ -35,7 +35,6 @@ public class AccountUser implements UserDetails {
     public Long getUserId() {
         return userId;
     }
-
 
     public void setUserId(Long userId) {
         this.userId = userId;
@@ -79,7 +78,7 @@ public class AccountUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     public String getPassword() {

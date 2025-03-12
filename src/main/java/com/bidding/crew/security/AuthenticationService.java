@@ -7,7 +7,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @Transactional
 public class AuthenticationService {
@@ -15,27 +14,28 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
-    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
     }
 
     public AccountUserDto registerUser(RegistrationDto registrationDto) {
         if (userRepository.findByUsername(registrationDto.getUsername()).isPresent()) {
             throw new IllegalArgumentException("Username already exists");
         }
+
         String encodedPassword = passwordEncoder.encode(registrationDto.getPassword());
 
         AccountUser newAccountUser = new AccountUser();
         newAccountUser.setUsername(registrationDto.getUsername());
         newAccountUser.setPassword(encodedPassword);
-        newAccountUser.setRole(Role.USER);
+        newAccountUser.setRole(Role.ADMIN);
         AccountUser accountUser = userRepository.save(newAccountUser);
-
         return new AccountUserDto(accountUser.getUserId(),accountUser.getUsername(),accountUser.getRole());
-
     }
 
     public AccountUser authenticate(LoginDto input) {
@@ -47,7 +47,5 @@ public class AuthenticationService {
         );
 
         return userRepository.findByUsername(input.getUsername()).orElseThrow();
-
     }
-
 }

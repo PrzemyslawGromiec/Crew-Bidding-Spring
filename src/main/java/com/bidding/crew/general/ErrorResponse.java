@@ -19,5 +19,4 @@ public class ErrorResponse {
         this.timestamp = timestamp;
         this.errors = errors;
     }
-
 }

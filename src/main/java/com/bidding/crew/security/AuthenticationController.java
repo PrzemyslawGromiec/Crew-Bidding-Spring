@@ -1,6 +1,7 @@
 package com.bidding.crew.security;
 
 import com.bidding.crew.user.*;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,14 +18,10 @@ public class AuthenticationController {
         this.jwtService = jwtService;
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/register")
-    public ResponseEntity<AccountUserDto> registerUser(@RequestBody RegistrationDto registrationDto) {
-        try {
-            AccountUserDto user = authenticationService.registerUser(registrationDto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(user);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
+    public AccountUserDto registerUser(@Valid @RequestBody RegistrationDto registrationDto) {
+            return authenticationService.registerUser(registrationDto);
     }
 
     @PostMapping("/login")
@@ -33,7 +30,7 @@ public class AuthenticationController {
         String jwtToken = jwtService.generateToken(authenticatedUser);
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(jwtToken);
-        System.out.println(jwtToken);
+        loginResponse.setExpiresIn(jwtService.getExpirationTime());
         return ResponseEntity.ok(loginResponse);
     }
 
