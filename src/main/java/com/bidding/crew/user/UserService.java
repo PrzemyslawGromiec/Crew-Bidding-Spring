@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
 @Service
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
@@ -21,13 +20,12 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AccountUser accountUser = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
-
+        System.out.println("User " + username + " has role: " + accountUser.getRole().name());
         return User.builder()
-                .authorities("ROLE_" + accountUser.getRole().name())
+                .roles(accountUser.getRole().name())
                 .username(username)
                 .password(accountUser.getPassword())
                 .build();
-
     }
 
     public List<AccountUserDto> getUsers() {
@@ -49,5 +47,3 @@ public class UserService implements UserDetailsService {
                 .toList();
     }
 }
-
-
