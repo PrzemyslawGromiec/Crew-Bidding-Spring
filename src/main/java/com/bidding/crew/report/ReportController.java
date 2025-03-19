@@ -67,15 +67,15 @@ public class ReportController {
     }
 
     @GetMapping("{id}/periods")
-    public ResponseEntity<List<PeriodDto>> getPeriods(@PathVariable Long id) {
-        List<PeriodDto> periods = reportService.getAllPeriods(id);
+    public ResponseEntity<List<Period>> getPeriods(@PathVariable Long id) {
+        List<Period> periods = reportService.getAllPeriods(id);
         return ResponseEntity.ok(periods);
     }
 
     @GetMapping("/{id}/generatedPeriods")
-    public ResponseEntity<List<PeriodDto>> getGeneratedPeriods(@PathVariable Long id) {
+    public ResponseEntity<List<Period>> getGeneratedPeriods(@PathVariable Long id) {
         try {
-            List<PeriodDto> periods = reportService.generatePeriodsForReport(id);
+            List<Period> periods = reportService.generatePeriodsForReport(id);
             return ResponseEntity.ok(periods);
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

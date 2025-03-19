@@ -2,7 +2,6 @@ package com.bidding.crew.report;
 
 import com.bidding.crew.general.Time;
 import jakarta.persistence.*;
-import lombok.Builder;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -40,7 +39,7 @@ public class Report {
                 .eventRequest(eventRequests);
     }
 
-    List<PeriodDto> generatePeriods() {
+    List<Period> generatePeriods() {
         List<ReportEvent> reportEventList = getEventRequests();
         List<ReportFlight> reportFlightList = getFlightRequest();
         List<Request> allRequests = new ArrayList<>();
@@ -50,7 +49,7 @@ public class Report {
         allRequests.sort(Comparator.comparing(Request::startTime));
         System.out.println(allRequests);
 
-        List<PeriodDto> periods = new ArrayList<>();
+        List<Period> periods = new ArrayList<>();
         LocalDateTime currentStartTime = Time.getTime().startOfNextMonthDate();
         System.out.println(currentStartTime);
         LocalDateTime currentEndTime;
@@ -61,13 +60,13 @@ public class Report {
             currentEndTime = request.startDate().atTime(LocalTime.of(22, 0, 0)).minusDays(1);
             if (currentStartTime.isBefore(request.startTime())) {
                 //periods.add(new PeriodDto(currentStartTime, request.startTime()));
-                periods.add(new PeriodDto(currentStartTime, currentEndTime));
+                periods.add(new Period(currentStartTime, currentEndTime));
             }
             currentStartTime = request.endTimeBuffered();
         }
 
         if (currentStartTime.isBefore(endOfMonth)) {
-            periods.add(new PeriodDto(currentStartTime, endOfMonth));
+            periods.add(new Period(currentStartTime, endOfMonth));
         }
         return periods;
     }
@@ -85,8 +84,8 @@ public class Report {
     }
 
     private boolean canAdd(Request request) {
-        List<PeriodDto> periods = generatePeriods();
-        for (PeriodDto period : periods) {
+        List<Period> periods = generatePeriods();
+        for (Period period : periods) {
             if ((request.startTime().isAfter(period.getStartTime()) &&
                     request.endTime().isBefore(period.getEndTime()))) {
                 return true;

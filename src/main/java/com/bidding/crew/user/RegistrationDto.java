@@ -3,9 +3,13 @@ package com.bidding.crew.user;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class RegistrationDto {
 
     @NotBlank(message = "Username cannot be empty")
@@ -19,20 +23,4 @@ public class RegistrationDto {
             message = "Password must contain at least one uppercase letter, one lowercase letter, and one number"
     )
     private String password;
-
-    public RegistrationDto(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    public RegistrationDto() {
-    }
-
-    @Override
-    public String toString() {
-        return "RegistrationDto{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }

@@ -6,9 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BiddingCrewApplication {
 
-	public static void main(String[] args)
-	{
-		System.out.println("Starting app.");
+	public static void main(String[] args) {
 		SpringApplication.run(BiddingCrewApplication.class, args);
 	}
 }

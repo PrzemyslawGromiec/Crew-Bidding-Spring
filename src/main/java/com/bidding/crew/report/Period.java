@@ -3,24 +3,24 @@ package com.bidding.crew.report;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-public class PeriodDto {
+public class Period {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
-    public PeriodDto(LocalDateTime startTime, LocalDateTime endTime) {
+    public Period(LocalDateTime startTime, LocalDateTime endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
-    public PeriodDto() {
+    public Period() {
     }
 
-    public Optional<PeriodDto> getCommonPeriod(PeriodDto userPeriod) {
+    public Optional<Period> getCommonPeriod(Period userPeriod) {
         LocalDateTime commonStartTime = this.startTime.isAfter(userPeriod.getStartTime()) ? this.startTime : userPeriod.getStartTime();
         LocalDateTime commonEndTime = this.endTime.isBefore(userPeriod.getEndTime()) ? this.endTime : userPeriod.getEndTime();
 
         if (commonStartTime.isBefore(commonEndTime) || commonStartTime.isEqual(commonEndTime)) {
-            return Optional.of(new PeriodDto(commonStartTime, commonEndTime));
+            return Optional.of(new Period(commonStartTime, commonEndTime));
         }
 
         return Optional.empty();

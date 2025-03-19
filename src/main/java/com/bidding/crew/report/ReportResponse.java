@@ -2,16 +2,15 @@ package com.bidding.crew.report;
 
 import com.bidding.crew.flight.FlightDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
 @Builder
-@Getter
-@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class ReportResponse {
     private Long id;
     private List<ReportEventDto> eventRequest;

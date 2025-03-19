@@ -2,7 +2,7 @@ package com.bidding.crew.flight;
 
 import com.bidding.crew.flight.generator.FlightGeneratorFacade;
 import com.bidding.crew.general.Preference;
-import com.bidding.crew.report.PeriodDto;
+import com.bidding.crew.report.Period;
 import com.bidding.crew.report.SuggestionCriteriaDto;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -102,7 +102,7 @@ public class FlightService {
                 .toList();
     }
 
-    public List<Flight> getFlightsForPeriod(PeriodDto period, boolean allDurations) {
+    public List<Flight> getFlightsForPeriod(Period period, boolean allDurations) {
         return flightRepository.findAll().stream()
                 .filter(flight -> allDurations || preferredDuration(preference, flight))
                 .filter(flight -> preference.containsAircraftType(flight.getAircraftType()))

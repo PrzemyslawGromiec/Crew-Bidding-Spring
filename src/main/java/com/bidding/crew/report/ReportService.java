@@ -84,7 +84,7 @@ public class ReportService {
         return report.toResponse().build();
     }
 
-    public List<PeriodDto> getAllPeriods(Long reportId) {
+    public List<Period> getAllPeriods(Long reportId) {
         try {
             Report report = reportRepository.findById(reportId)
                     .orElseThrow(() -> new ResourceNotFoundException("Report with id " + reportId + " not found"));
@@ -96,7 +96,7 @@ public class ReportService {
         }
     }
 
-    public List<PeriodDto> generatePeriodsForReport(Long reportId) {
+    public List<Period> generatePeriodsForReport(Long reportId) {
         Report report = reportRepository.findById(reportId).orElseThrow(() -> new ResourceNotFoundException("Report with id" + reportId + " not found"));
         return report.generatePeriods();
     }
@@ -106,7 +106,7 @@ public class ReportService {
             throw new InvalidPeriodException("Start time cannot be after end time.");
         }
 
-        List<PeriodDto> commonTime = generatePeriodsForReport(reportId).stream()
+        List<Period> commonTime = generatePeriodsForReport(reportId).stream()
                 .map(criteria.getPeriodDto()::getCommonPeriod)
                 .filter(Optional::isPresent)
                 .map(Optional::get)

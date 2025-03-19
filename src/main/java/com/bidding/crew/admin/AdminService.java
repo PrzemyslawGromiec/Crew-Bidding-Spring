@@ -7,6 +7,7 @@ import com.bidding.crew.user.Role;
 import com.bidding.crew.user.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -21,7 +22,7 @@ public class AdminService {
     public AdminResponseDto assignRole(Long userId, Role role) {
         AccountUser user = userRepository.findById(userId)
                 .orElseThrow(()-> new ResourceNotFoundException("User not found with ID: " + userId ));
-        Role previousRole = user.getRole(); // ✅ Store previous role
+        Role previousRole = user.getRole();
         user.setRole(role);
         userRepository.save(user);
 
@@ -29,7 +30,8 @@ public class AdminService {
                 user.getUserId(),
                 user.getUsername(),
                 "Role Assigned",
-                "Role changed from " + (previousRole != null ? previousRole.name() : "NONE") + " to " + role.name()
+                "Role changed from " + (previousRole != null ? previousRole.name() : "NONE") + " to " + role.name(),
+                LocalDateTime.now()
         );
     }
 
@@ -44,7 +46,8 @@ public class AdminService {
                 user.getUserId(),
                 user.getUsername(),
                 "Role Removed",
-                "Role " + previousRole + " successfully removed from user"
+                "Role " + previousRole + " successfully removed from user",
+                LocalDateTime.now()
         );
     }
 
