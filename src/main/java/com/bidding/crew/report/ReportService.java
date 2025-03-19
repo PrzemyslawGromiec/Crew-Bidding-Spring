@@ -36,13 +36,7 @@ public class ReportService {
         return flightFactory.getRequests();
     }
 
-    //todo:zaktualizowac przy implementowaniu powtarzajacych sie eventow
-    private List<ReportEvent> getEventRequests() {
-        return eventFactory.createRequests(eventService.getEvents());
-    }
-
     ReportResponse createReport() {
-        //List<ReportEvent> reportEvents = getEventRequests(); todo
         Report report = new Report(new ArrayList<>());
         reportRepository.save(report);
         return reportMapper.toResponse(report);
@@ -63,7 +57,6 @@ public class ReportService {
 
     @Transactional
     ReportResponse finalizeReport(ReportRequest reportRequest) {
-        //todo po wywaleniu eventow z raport eventow mozna wrocic i uprościć
         List<ReportEvent> reportEvents = reportRequest.getRequests().stream()
                 .filter(requestDto -> requestDto.type().equals(RequestType.EVENT))
                 .map(requestDto -> new ReportEvent(List.of(new Event(requestDto.startTime(), requestDto.endTime(),

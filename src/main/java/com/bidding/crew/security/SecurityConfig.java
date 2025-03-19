@@ -35,12 +35,13 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**",
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**").permitAll()
-                        .requestMatchers("/api/v0/**").hasRole("USER")
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .anyRequest().authenticated()
+                                .requestMatchers("/auth/**",
+                                        "/swagger-ui/**",
+                                        "/v3/api-docs/**").permitAll()
+//                        .requestMatchers("/api/v0/**").hasRole("USER")
+//                        .requestMatchers("/admin/**").hasRole("ADMIN")
+//                        .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 )
                 //.httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

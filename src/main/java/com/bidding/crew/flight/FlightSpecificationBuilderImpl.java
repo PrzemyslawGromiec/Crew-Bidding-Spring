@@ -92,7 +92,6 @@ public class FlightSpecificationBuilderImpl implements FlightSpecificationBuilde
         return (root, query, cb) -> cb.greaterThanOrEqualTo(root.get("reportTime"), date);
     }
 
-    //todo: baza danych H2 ma problem z funkcja sql timestampdiff
     private Specification<Flight> getFlightDuration(Duration minDuration) {
         return (root, query, cb) -> {
             Expression<Long> durationInSeconds = cb.function(

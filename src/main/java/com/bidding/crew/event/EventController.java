@@ -15,7 +15,6 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    //todo: use ResponseEntity to handle request status
     @PostMapping()
     public void saveEvent(@RequestBody EventDto eventDto) {
         eventService.saveEvent(eventDto);
@@ -27,7 +26,4 @@ public class EventController {
         System.out.println("Received SpecificationInput: " + specificationInput);
         return eventService.findEventsByCriteria(specificationInput);
     }
-
-
-    //todo: delete request
 }

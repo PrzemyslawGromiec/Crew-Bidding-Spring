@@ -42,8 +42,6 @@ public class EventRequestFactory {
             newGroup.add(event);
             groupedEvents.add(newGroup);
         }
-
-        //todo: wrocic do gwiazdek
         for(List<Event> group : groupedEvents) {
             requests.add(new ReportEvent(group,3));
         }
