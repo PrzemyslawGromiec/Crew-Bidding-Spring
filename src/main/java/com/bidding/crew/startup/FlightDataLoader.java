@@ -19,10 +19,10 @@ public class FlightDataLoader {
         this.flightService = flightService;
     }
 
-    @PostConstruct
+    //todo enables auto loading flights from file:
+    //@PostConstruct
     public void loadFlightsOnStartup() {
         ClassPathResource resource = new ClassPathResource("Flights.txt");
-
         try (InputStream inputStream = resource.getInputStream()) {
             MultipartFile file = new MockMultipartFile(
                     "file",

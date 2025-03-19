@@ -47,7 +47,6 @@ public class ReportService {
                 .orElseThrow(() -> new ResourceNotFoundException("Report with id " + id + " not found"));
 
         return report.toResponse().build();
-        //return reportMapper.toResponse(report);
     }
 
     private void calculatePoints(Report report) {

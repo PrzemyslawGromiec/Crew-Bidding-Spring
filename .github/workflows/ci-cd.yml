@@ -59,7 +59,7 @@ jobs:
       - name: Build Docker image
         run: |
           if ! docker build -t my-spring-app:latest .; then
-            echo "🚨 ERROR: Docker image build failed!"
+            echo "ERROR: Docker image build failed!"
             exit 1
           fi
 

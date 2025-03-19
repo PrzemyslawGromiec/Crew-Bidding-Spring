@@ -19,8 +19,6 @@ public class FlightSpecificationInput {
     private LocalDateTime clearTime;
     private AircraftType aircraftType;
 
-
-
     @Override
     public String toString() {
         return "FlightSpecificationInput{" +

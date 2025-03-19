@@ -28,15 +28,11 @@ public class FlightService {
     private FlightGeneratorFacade flightGeneratorFacade;
     private FlightSpecificationBuilderImpl flightSpecificationBuilder;
 
-
     public FlightService(FlightRepository flightRepository, FlightGeneratorFacade flightGeneratorFacade, FlightSpecificationBuilderImpl flightSpecificationBuilderImpl) {
         this.flightRepository = flightRepository;
-        System.out.println("flight service");
-        //  flightRepository.saveAll(flightGeneratorFacade.generateFlights());
         this.flightGeneratorFacade = flightGeneratorFacade;
         this.flightSpecificationBuilder = flightSpecificationBuilderImpl;
     }
-
 
     public void flightFileUpload(MultipartFile multipartFile) throws IOException {
         if (multipartFile.isEmpty()) {
@@ -44,8 +40,9 @@ public class FlightService {
             return;
         }
 
-        String uploadDir = "C:\\Users\\pgrom\\OneDrive\\Desktop\\JAVA_all_projects\\Bidding-Crew";
-        Path uploadPath = Paths.get(uploadDir);
+        String uploadDir = "flights";
+        Path uploadPath = Paths.get(System.getProperty("user.home"), uploadDir);
+        System.out.println(uploadPath);
 
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
