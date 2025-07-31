@@ -47,8 +47,6 @@ public class JwtService {
         extraClaims.put("roles", roles);
         logger.debug("Roles: {}", roles);
         logger.debug("Extra claims: {}", extraClaims);
-
-
         return generateToken(extraClaims, userDetails);
     }
 
@@ -96,16 +94,6 @@ public class JwtService {
                 .parseSignedClaims(token)
                 .getPayload();
     }
-
-    /*private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        return Keys.hmacShaKeyFor(keyBytes);
-    }
-
-    private SecretKey getPrivateKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        return Keys.hmacShaKeyFor(keyBytes);
-    }*/
 
     private Key getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
