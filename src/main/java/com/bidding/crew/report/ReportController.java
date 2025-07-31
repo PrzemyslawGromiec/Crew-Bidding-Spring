@@ -23,7 +23,6 @@ public class ReportController {
         this.reportService = reportService;
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<ReportResponse> getReport(@PathVariable Long id) {
         ReportResponse reportResponse = reportService.getReport(id);
@@ -44,21 +43,17 @@ public class ReportController {
         return ResponseEntity.ok(updatedReport);
     }
 
-    //nie używane na frontendzie
-
     @PostMapping("/created")
     public ResponseEntity<ReportResponse> createReport() {
         ReportResponse reportResponse = reportService.createReport();
         return ResponseEntity.ok(reportResponse);
     }
 
-
     @GetMapping("/{id}/suggestions")
     public ResponseEntity<List<FlightDto>> getSuggestionsForPeriod(@PathVariable Long id, @RequestBody SuggestionCriteriaDto criteria) {
         List<FlightDto> suggestedFlights = reportService.getSuggestedFlightsForPeriods(id, criteria);
         return ResponseEntity.ok(suggestedFlights);
     }
-
 
     @PostMapping("{id}/flights")
     public ResponseEntity<ReportResponse> addFlightToReport(@PathVariable Long id, @RequestBody ReportFlightRequest flight) {

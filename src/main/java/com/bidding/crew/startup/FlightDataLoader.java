@@ -20,7 +20,7 @@ public class FlightDataLoader {
     }
 
     //todo enables auto loading flights from file:
-    //@PostConstruct
+    @PostConstruct
     public void loadFlightsOnStartup() {
         ClassPathResource resource = new ClassPathResource("Flights.txt");
         try (InputStream inputStream = resource.getInputStream()) {

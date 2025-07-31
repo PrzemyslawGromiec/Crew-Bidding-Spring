@@ -1,10 +1,8 @@
 package com.bidding.crew.security;
 
-import com.bidding.crew.user.AccountUser;
-import com.bidding.crew.user.AccountUserDto;
-import com.bidding.crew.user.Role;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import io.jsonwebtoken.Claims;
@@ -28,6 +26,8 @@ public class JwtService {
     @Value("${security.jwt.expiration-time}")
     private long jwtExpiration;
 
+    private static final Logger logger = LoggerFactory.getLogger(JwtService.class);
+
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -39,13 +39,15 @@ public class JwtService {
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> extraClaims = new HashMap<>();
-        System.out.println("user details before processing " + userDetails);
+        logger.debug("User details before processing: {}", userDetails);
         List<String> roles = userDetails.getAuthorities().stream()
-                .peek(authority -> System.out.println("Raw Authority: " + authority.getAuthority()))
+                .peek(authority -> logger.debug("Raw Authority: {}", authority.getAuthority()))
                 .map(authority -> authority.getAuthority().replace("ROLE_", ""))
                 .toList();
         extraClaims.put("roles", roles);
-        System.out.println(extraClaims);
+        logger.debug("Roles: {}", roles);
+        logger.debug("Extra claims: {}", extraClaims);
+
 
         return generateToken(extraClaims, userDetails);
     }
@@ -69,7 +71,7 @@ public class JwtService {
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(getSignInKey())
+                .signWith(getSigningKey())
                 .compact();
     }
 
@@ -89,13 +91,13 @@ public class JwtService {
     private Claims extractAllClaims(String token) {
         return Jwts
                 .parser()
-                .verifyWith(getPrivateKey())
+                .verifyWith((SecretKey) getSigningKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
     }
 
-    private Key getSignInKey() {
+    /*private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
@@ -103,5 +105,11 @@ public class JwtService {
     private SecretKey getPrivateKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
+    }*/
+
+    private Key getSigningKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
+
 }
