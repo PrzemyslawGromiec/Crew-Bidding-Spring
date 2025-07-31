@@ -30,5 +30,4 @@
             <pattern>%d{HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
-
 </configuration>
