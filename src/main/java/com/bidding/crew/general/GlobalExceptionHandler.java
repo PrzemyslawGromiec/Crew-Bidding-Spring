@@ -97,16 +97,12 @@ public class GlobalExceptionHandler {
         ), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException ex) {
+        return generateHandlingException(ex, HttpStatus.UNAUTHORIZED);
+    }
+
     private ResponseEntity<ErrorResponse> generateHandlingException(Exception ex, HttpStatus status) {
         return new ResponseEntity<>(new ErrorResponse(status.value(), ex.getMessage(), LocalDateTime.now(), null),status);
     }
 }
-
-/* Examples of exceptions that need field errors:
-* BindException
-* ConstraintViolationException
-* HttpMessageNotReadableException
-* TypeMismatchException
-* MissingServletRequestParameterException
-* MissingPathVariableException
-* */

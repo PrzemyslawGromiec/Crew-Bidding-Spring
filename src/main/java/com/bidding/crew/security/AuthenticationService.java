@@ -1,5 +1,6 @@
 package com.bidding.crew.security;
 
+import com.bidding.crew.general.AuthenticationException;
 import com.bidding.crew.user.*;
 import jakarta.transaction.Transactional;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,17 +35,33 @@ public class AuthenticationService {
         newAccountUser.setPassword(encodedPassword);
         newAccountUser.setRole(Role.ADMIN);
         AccountUser accountUser = userRepository.save(newAccountUser);
-        return new AccountUserDto(accountUser.getUserId(),accountUser.getUsername(),accountUser.getRole());
+        return new AccountUserDto(accountUser.getUserId(), accountUser.getUsername(), accountUser.getRole());
     }
 
     public AccountUser authenticate(LoginDto input) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        input.getUsername(),
-                        input.getPassword()
-                )
-        );
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            input.getUsername(),
+                            input.getPassword()
+                    )
+            );
+        } catch (Exception e) {
+            throw new AuthenticationException("Invalid username or password");
+        }
 
-        return userRepository.findByUsername(input.getUsername()).orElseThrow();
+        return userRepository.findByUsername(input.getUsername())
+                .orElseThrow(()-> new AuthenticationException("User not found"));
     }
+
+    public LoginResponse signIn(LoginDto loginDto, JwtService jwtService) {
+        AccountUser authenticatedUser = authenticate(loginDto);
+        String jwtToken = jwtService.generateToken(authenticatedUser);
+
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setToken(jwtToken);
+        loginResponse.setExpiresIn(jwtService.getExpirationTime());
+        return loginResponse;
+    }
+
 }

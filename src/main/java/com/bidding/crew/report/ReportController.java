@@ -14,7 +14,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/v0/reports")
-@Tag(name = "Report")
+@Tag(name = "Report Controller" , description = "Endpoints related to final report operations")
 @CrossOrigin(origins = "http://localhost:8086")
 public class ReportController {
     private ReportService reportService;
@@ -31,7 +31,7 @@ public class ReportController {
 
     @PostMapping
     @Operation(
-            method = "Finalize report",
+            summary = "Finalize report",
             description = "Update report status",
             responses = @ApiResponse(
                     description = "Report finalized successfully",
