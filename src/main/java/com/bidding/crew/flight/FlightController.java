@@ -1,5 +1,7 @@
 package com.bidding.crew.flight;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -8,6 +10,9 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/v0/flights")
+@Tag(name = "4. Flights",
+        description = "Endpoints for managing and querying flights")
 @CrossOrigin(origins = "http://localhost:8086")
 public class FlightController {
     private FlightService flightService;
@@ -16,19 +21,27 @@ public class FlightController {
         this.flightService = flightService;
     }
 
-    @PostMapping(value = "/api/v0/flights", consumes = "application/json")
+    @PostMapping(consumes = "application/json")
     public ResponseEntity<?> addFlights(@RequestBody List<FlightDto> flightDtos) {
         flightService.addFlights(flightDtos);
         return ResponseEntity.ok("Flights added");
     }
 
-    @PostMapping(value = "/api/v0/flights", consumes = "multipart/form-data")
+    @PostMapping(consumes = "multipart/form-data")
+    @Operation(
+            summary = "Upload a flight file",
+            description = "Accepts a multipart/form-data file with flights and stores them"
+    )
     public ResponseEntity<?> handleFileUpload(@RequestPart("file") MultipartFile file) throws IOException {
         flightService.flightFileUpload(file);
         return ResponseEntity.ok("File uploaded: " + file.getOriginalFilename());
     }
 
-    @GetMapping("/api/v0/flights")
+    @GetMapping()
+    @Operation(
+            summary = "Search flights by criteria",
+            description = "Returns flights matching specific search criteria"
+    )
     public List<FlightDto> findFlightsByCriteria(FlightSpecificationInput specificationInput) {
         return flightService.findFlightByCriteria(specificationInput);
     }

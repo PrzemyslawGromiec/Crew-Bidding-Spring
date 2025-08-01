@@ -14,7 +14,8 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/v0/reports")
-@Tag(name = "Report Controller" , description = "Endpoints related to final report operations")
+@Tag(name = "5. Report" ,
+        description = "Endpoints related to final report operations")
 @CrossOrigin(origins = "http://localhost:8086")
 public class ReportController {
     private ReportService reportService;
@@ -24,6 +25,10 @@ public class ReportController {
     }
 
     @GetMapping("/{id}")
+    @Operation(
+            summary = "Get report by ID",
+            description = "Fetches a complete report with associated data"
+    )
     public ResponseEntity<ReportResponse> getReport(@PathVariable Long id) {
         ReportResponse reportResponse = reportService.getReport(id);
         return ResponseEntity.ok(reportResponse);
