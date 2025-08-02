@@ -13,6 +13,12 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedOrigins("*")
                 .allowedMethods("*")
                 .allowedHeaders("*");
+
+        // Explicitly allow CORS for Swagger docs if needed
+        registry.addMapping("/v3/api-docs/**")
+                .allowedOrigins("*")
+                .allowedMethods("GET")
+                .allowedHeaders("*");
     }
 
 }
