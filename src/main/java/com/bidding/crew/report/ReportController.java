@@ -16,7 +16,6 @@ import java.util.NoSuchElementException;
 @RequestMapping("/api/v0/reports")
 @Tag(name = "5. Report" ,
         description = "Endpoints related to final report operations")
-@CrossOrigin(origins = "http://localhost:8086")
 public class ReportController {
     private ReportService reportService;
 
