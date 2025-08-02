@@ -13,7 +13,6 @@ import java.util.List;
 @RequestMapping("/api/v0/flights")
 @Tag(name = "4. Flights",
         description = "Endpoints for managing and querying flights")
-@CrossOrigin(origins = "http://localhost:8086")
 public class FlightController {
     private FlightService flightService;
 
