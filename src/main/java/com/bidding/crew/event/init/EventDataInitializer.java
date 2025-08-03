@@ -21,8 +21,3 @@ public class EventDataInitializer implements CommandLineRunner {
         eventService.saveAllEvents(testEventSource.createEvents());
     }
 }
-
-//Dostarcza nam liste eventów
-//przez propertisy zmieniamy źródło
-//mamy 2 zrodla, klase robiącą to losowo i na sztywno
-//zmieniamy regulując parametr testEventsSource

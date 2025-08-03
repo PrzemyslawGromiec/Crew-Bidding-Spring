@@ -24,7 +24,6 @@ public class EventController {
         eventService.saveEvent(eventDto);
     }
 
-
     @GetMapping()
     @Operation(
             summary = "Find events by criteria",
