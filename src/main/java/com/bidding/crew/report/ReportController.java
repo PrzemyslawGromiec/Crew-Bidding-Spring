@@ -33,6 +33,7 @@ public class ReportController {
         return ResponseEntity.ok(reportResponse);
     }
 
+    //TODO: check this how it is saved
     @PostMapping
     @Operation(
             summary = "Finalize report",

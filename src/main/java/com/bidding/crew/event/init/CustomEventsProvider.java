@@ -20,7 +20,7 @@ public class CustomEventsProvider implements TestEventSource {
         EventDto eventDto1 = new EventDto(startOfEvent1, endOfEvent1, 2, "event 1", true);
         EventDto eventDto2 = new EventDto(endOfEvent1.plusDays(3), endOfEvent1.plusDays(4), 1, "event 2", true);
         EventDto eventDto3 = new EventDto(endOfEvent1.plusDays(7), endOfEvent1.plusDays(10), 3, "event 3", false);
-        EventDto eventDto4 = new EventDto(endOfEvent1.plusDays(15), endOfEvent1.plusDays(16), 3, "event4", false);
+        EventDto eventDto4 = new EventDto(endOfEvent1.plusDays(15), endOfEvent1.plusDays(16), 3, "event 4", false);
         EventDto eventDto5 = new EventDto(endOfEvent1.plusDays(21), endOfEvent1.plusDays(23), 1, "event 5", false);
         return List.of(eventDto1, eventDto2, eventDto3, eventDto4, eventDto5);
     }

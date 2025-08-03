@@ -143,7 +143,3 @@ public class ReportService {
         return reportFlightRequest.getNumOfStars() >= 1 && reportFlightRequest.getNumOfStars() <= 3;
     }
 }
-
-
-
-
