@@ -37,12 +37,12 @@ public class FlightController {
         return ResponseEntity.ok("File uploaded: " + file.getOriginalFilename());
     }
 
-    @GetMapping()
+    @PostMapping("/search")
     @Operation(
             summary = "Search flights by criteria",
             description = "Returns flights matching specific search criteria"
     )
-    public List<FlightDto> findFlightsByCriteria(FlightSpecificationInput specificationInput) {
+    public List<FlightDto> findFlightsByCriteria(@RequestBody FlightSpecificationInput specificationInput) {
         return flightService.findFlightByCriteria(specificationInput);
     }
 

@@ -33,6 +33,7 @@ public class FlightSpecificationBuilderImpl implements FlightSpecificationBuilde
         }
 
         if (specificationInput.getAircraftType() != null) {
+            System.out.println("FILTER BY AIRCRAFT TYPE: " + specificationInput.getAircraftType());
             spec = spec.and(getAircraftTypeSpec(specificationInput.getAircraftType()));
         }
 

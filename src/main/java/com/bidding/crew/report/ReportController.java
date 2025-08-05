@@ -54,6 +54,7 @@ public class ReportController {
         return ResponseEntity.ok(reportResponse);
     }
 
+    //TODO: to correct
     @GetMapping("/{id}/suggestions")
     public ResponseEntity<List<FlightDto>> getSuggestionsForPeriod(@PathVariable Long id, @RequestBody SuggestionCriteriaDto criteria) {
         List<FlightDto> suggestedFlights = reportService.getSuggestedFlightsForPeriods(id, criteria);
