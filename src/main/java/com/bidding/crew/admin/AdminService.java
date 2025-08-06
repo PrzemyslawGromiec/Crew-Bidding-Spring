@@ -29,7 +29,7 @@ public class AdminService {
         return new AdminResponseDto(
                 user.getUserId(),
                 user.getUsername(),
-                "Role Assigned",
+                "Role assigned",
                 "Role changed from " + (previousRole != null ? previousRole.name() : "NONE") + " to " + role.name(),
                 LocalDateTime.now()
         );

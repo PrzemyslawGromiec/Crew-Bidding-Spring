@@ -1,5 +1,6 @@
-package com.bidding.crew.event;
+package com.bidding.crew;
 
+import com.bidding.crew.event.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
