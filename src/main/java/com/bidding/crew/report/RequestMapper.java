@@ -18,11 +18,6 @@ public class RequestMapper {
         this.eventRepository = eventRepository;
     }
 
-    /*
-    * ReportFlight jest entity ktore posiada Flight
-    * ReportFlightRequest - to ma id i gwiazdki czyli to co wybieram z listy
-    * to co sobie wybralem zamieniam na entity
-    * */
     public ReportFlight mapToEntity(ReportFlightRequest reportFlightRequest) {
         int id = reportFlightRequest.getFlightId();
         return new ReportFlight(flightRepository.findById(id).orElseThrow(), reportFlightRequest.getNumOfStars());
