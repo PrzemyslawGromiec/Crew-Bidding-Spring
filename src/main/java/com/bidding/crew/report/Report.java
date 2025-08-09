@@ -58,6 +58,9 @@ public class Report {
 
         for (Request request : allRequests) {
             currentEndTime = request.startDate().atTime(LocalTime.of(22, 0, 0)).minusDays(1);
+            if(currentEndTime.isBefore(currentStartTime)) {
+                currentEndTime = request.startDate().atTime(LocalTime.of(22, 0, 0));
+            }
             if (currentStartTime.isBefore(request.startTime())) {
                 //periods.add(new PeriodDto(currentStartTime, request.startTime()));
                 periods.add(new Period(currentStartTime, currentEndTime));

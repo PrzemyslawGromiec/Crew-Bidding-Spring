@@ -129,6 +129,10 @@ public class ReportService {
     }
 
     public ReportResponse saveEvent(Long id, ReportEventDto reportEventRequest) {
+        if (reportEventRequest.getStartTime() == null || reportEventRequest.getEndTime() == null
+                || !reportEventRequest.getEndTime().isAfter(reportEventRequest.getStartTime())) {
+            throw new InvalidPeriodException("endTime must be after startTime");
+        }
         Report report = reportRepository.findById(id).orElseThrow();
         ReportEvent reportEvent = requestMapper.mapToEntity(reportEventRequest);
         report.addRequest(reportEvent);

@@ -22,7 +22,6 @@ public class AuthenticationController {
         this.jwtService = jwtService;
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/register")
     @Operation(
             summary = "Register new user",
@@ -39,7 +38,7 @@ public class AuthenticationController {
             description = "Authenticates user and returns JWT token")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginDto loginDto) {
         LoginResponse loginResponse = authenticationService.signIn(loginDto, jwtService);
-        return ResponseEntity.ok(loginResponse);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(loginResponse);
     }
 
 }
