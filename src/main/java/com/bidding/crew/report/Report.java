@@ -71,7 +71,7 @@ public class Report {
             if (r.startTime().isAfter(windowEnd)) {
                 break;
             }
-            // 4c) Free time ends the day BEFORE the request starts, at DAY_END (e.g. 23:59:59)
+            // 4c) Free time ends the day BEFORE the request starts, at DAY_END (23:59:59)
             LocalDate prevDay = r.startTime().toLocalDate().minusDays(1);
             LocalDateTime freeEnd = atDayEnd(prevDay);
 
@@ -83,7 +83,7 @@ public class Report {
                 periods.add(new Period(cursor, freeEnd));
             }
 
-            // 4f) Move 'cursor' to the day AFTER the request ends, at DAY_START (e.g. 06:00)
+            // 4f) Move 'cursor' to the day AFTER the request ends, at DAY_START (06:00)
             LocalDate nextDay = r.endTime().toLocalDate().plusDays(1);
             cursor = max(cursor, atDayStart(nextDay));
 

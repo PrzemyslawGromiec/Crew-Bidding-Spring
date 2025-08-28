@@ -35,5 +35,4 @@ public class Time {
         return LocalDate.now().plusMonths(MONTHS_OFFSET);
     }
 
-
 }
