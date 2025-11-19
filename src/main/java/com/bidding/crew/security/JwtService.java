@@ -11,6 +11,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -96,7 +97,7 @@ public class JwtService {
     }
 
     private Key getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
