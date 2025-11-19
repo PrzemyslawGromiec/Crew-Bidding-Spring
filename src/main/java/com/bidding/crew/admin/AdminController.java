@@ -22,7 +22,7 @@ public class AdminController {
         this.adminService = adminService;
     }
 
-    @PutMapping("/users/{userId}/role")
+    @PatchMapping("/users/{userId}/role")
     @Operation(
             summary = "Assign role to user",
             description = "Grants a specific role (e.g., ADMIN or USER) to a user by ID"
