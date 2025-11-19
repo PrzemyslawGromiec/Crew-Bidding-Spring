@@ -15,7 +15,10 @@ public class AdminUserSeeder {
     CommandLineRunner seedAdminUser(UserRepository userRepository,
                                     PasswordEncoder passwordEncoder) {
         return args -> {
-            String adminUsername = System.getenv().getOrDefault("ADMIN_USERNAME", "admin");
+            String adminUsernameEnv = System.getenv("ADMIN_USERNAME");
+            System.out.println("DEBUG ADMIN_USERNAME from env = " + adminUsernameEnv);
+            String adminUsername = adminUsernameEnv != null ? adminUsernameEnv : "admin";
+            System.out.println("Using admin username = " + adminUsername);
             String adminPassword = System.getenv().getOrDefault("ADMIN_PASSWORD", "changeme123");
             boolean adminExists = userRepository.findByUsername(adminUsername).isPresent();
 
