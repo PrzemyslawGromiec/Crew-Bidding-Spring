@@ -46,12 +46,15 @@ public class AuthenticationService {
                             input.getPassword()
                     )
             );
+            System.out.println("Login attempt for user: " + input.getUsername());
+
         } catch (Exception e) {
+            System.out.println("Auth failed for user: " + input.getUsername() + " -> " + e.getMessage());
             throw new AuthenticationException("Invalid username or password");
         }
 
         return userRepository.findByUsername(input.getUsername())
-                .orElseThrow(()-> new AuthenticationException("User not found"));
+                .orElseThrow(() -> new AuthenticationException("User not found"));
     }
 
     public LoginResponse signIn(LoginDto loginDto, JwtService jwtService) {
