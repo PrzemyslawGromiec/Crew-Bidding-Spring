@@ -33,7 +33,7 @@ public class AuthenticationService {
         AccountUser newAccountUser = new AccountUser();
         newAccountUser.setUsername(registrationDto.getUsername());
         newAccountUser.setPassword(encodedPassword);
-        newAccountUser.setRole(Role.ADMIN);
+        newAccountUser.setRole(Role.USER);
         AccountUser accountUser = userRepository.save(newAccountUser);
         return new AccountUserDto(accountUser.getUserId(), accountUser.getUsername(), accountUser.getRole());
     }
