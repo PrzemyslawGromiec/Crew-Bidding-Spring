@@ -1,160 +1,69 @@
 <div align="center">
    <h1>Cabin Crew Scheduling System</h1>
+   <h3>Java • Spring Boot • REST API • Airline Scheduling Logic</h3>
 </div>
 
-## About the project
+---
 
-<p style="font-size:18px;">
-This is a Java and Spring Boot application I developed to simplify and streamline the monthly scheduling process for cabin crew members, including myself. Recognizing the need for a more efficient and faster way to manage flight requests and days off, I meticulously analyzed and designed this tool. The application takes into account crucial factors like flight timings, mandatory rest periods, flight time limitations, and aircraft certifications, making the scheduling process both faster and more effective. After nearly 1.5 years of dedicated work, evolving from a console-based tool to a robust Spring Boot REST API, the project now includes 80 classes, more than 3,400 lines of code, and comprehensive tests. This complete and reviewed solution meets my initial needs, and I’m eager to continue expanding its capabilities.
-</p>
+## ✈️ About the Project
 
-## Table of Contents
-1. [About The Project](#about-the-project)
-2. [Installation](#installation)
-3. [Usage](#usage)
-4. [Roadmap](#roadmap)
+I built this system to simplify and speed up the monthly bidding process for cabin crew members.  
+As crew myself, I know how time-consuming it can be to request days off, plan flights, and follow strict aviation rest rules.
 
-<!-- Installation section -->
-<details>
-  <summary><h2 style="margin-top: 10px;">Installation</h2></summary>
+Over the last 1.5 years, this project evolved from a small console tool into a full Spring Boot REST API with:
 
-### Prerequisites
+- 80+ classes
+- 3,400+ lines of code
+- Full test coverage
+- Scheduling logic based on aviation regulations
+- JWT authentication & role-based access
+- Admin tools
+- Dynamic flight parsing for an entire month
 
-Make sure you have the following software installed:
+Now anyone can explore the API via Swagger, deployed on Railway.
 
-- **Java 17** or newer: [Download Java](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)
-- **Maven**: [Download Maven](https://maven.apache.org/download.cgi)
-- **Git**: [Download Git](https://git-scm.com/downloads)
+---
 
-### Installation Steps
+## 🚀 Live Demo
 
-1. **Clone the repository:**
+### **🔗 Try the API in Swagger (Deployed on Railway)**
+👉 https://crew-bidding-spring-production.up.railway.app/swagger-ui/index.html
 
-   ```bash
-   git clone https://github.com/PrzemyslawGromiec/Crew-Bidding-Spring.git
-   ```
+No setup needed.  
+You can register, log in, submit requests, assign flights, and generate your full crew report directly in the browser.
 
-2. **Navigate to the project directory:**
+---
 
-   ```bash
-   cd Crew-Bidding-Spring
-   ```
+## 🛠️ Features
 
-3. **Build the project using Maven:**
+### Crew Scheduling Logic
+- Submit requests for days off (start date, end date, priority, description)
+- Process mandatory rest periods according to aviation rules
+- Assign flights between rest periods
+- Filter flights by aircraft type or flight duration
+- Generate a complete monthly report
 
-   Ensure that Maven is installed and properly set up on your system. Then run:
+### Authentication & Roles
+- Register and log in via JWT
+- User & Admin roles
+- Admin endpoints for managing roles
+- Secure REST endpoints with fine-grained access rules
 
-   ```bash
-   mvn clean install
-   ```
+### Flight Parsing
+- Import flights from a file
+- Generate database records for the entire month
+- Assign flights to user periods
 
-4. **Run the application:**
+---
 
-   You can run the application directly using Maven or by running the generated JAR file:
+### Requirements
+- Java 17+
+- Maven
+- Git
 
-   **Option 1: Using Maven**
+### Clone the repo
 
-   ```bash
-   mvn spring-boot:run
-   ```
-
-   **Option 2: Running the JAR file**
-
-   After building the project, a JAR file will be generated in the `target` directory. Run it with:
-
-   ```bash
-   java -jar target/Crew-Bidding-Spring-0.0.1-SNAPSHOT.jar
-   ```
-
-5. **Access the application:**
-
-   Once the application is running, you can access it by navigating to:
-
-   ```
-   http://localhost:8080
-   ```
-
-</details>
-
-<!-- todo --
-0. deploy app 
-1. opisac endpointy razem ze sciezka
-2. skrocic opis
-3. opisac jak stworzyc raport od poczatku
-4. ew opcjonalne endpointy 
-5. parsowanie lotow z pliku i generowanie ich na caly miesiac
-6. frontend wyzej
-7. przemyslec w ogole feedback 
-8. screen do swagger w Usage - link do swaggera -->
-<!-- Usage section -->
-<details>
-  <summary><h2 style="margin-top: 10px;">Usage</h2></summary>
-
-This application is designed to generate a comprehensive report for the upcoming month, allowing cabin crew members to plan their schedules efficiently. Users can request specific days off by submitting their preferences through the application.
-
-### How It Works
-
-1. **Submitting Day Off Requests:**
-   - Users can submit their day off requests via the application. These requests are processed through a controller that accepts a DTO (Data Transfer Object). The DTO allows users to specify the start date, end date, priority, and a description for each day off request.
-   - The submitted data is then stored in an H2 database for further processing.
-
-2. **Available Flights Data:**
-   - The H2 database also stores information about all available flights for the entire month. This data includes details such as flight duration and aircraft type.
-
-3. **Generating the Report:**
-   - Based on the day off requests, the application generates periods that adhere to aviation regulations regarding mandatory rest times for cabin crew members.
-   - Within these periods, users can assign available flights that fit their schedule.
-
-4. **Filtering and Assigning Flights:**
-   - Users can filter available flights based on their duration and the type of aircraft.
-   - Once the flights have been selected, they can be assigned to the appropriate periods between rest times.
-
-5. **Finalizing the Report:**
-   - After all flights have been assigned, users can finalize the report by using the appropriate endpoint.
-   - The final report will include both the requested days off and the selected flights, organized according to their priority.
-
-This process ensures that cabin crew members can effectively manage their schedules while complying with aviation regulations, making the scheduling process both streamlined and compliant.
-
-### Example Usage
-
-1. **Requesting Days Off:**
-   - Submit a request with the desired start date, end date, priority level, and a brief description of the reason for the request.
-
-2. **Filtering Flights:**
-   - Filter available flights by duration or aircraft type to find the most suitable options for your schedule.
-
-3. **Assigning Flights:**
-   - Assign flights to the generated periods between rest times to build out your schedule for the month.
-
-4. **Finalizing the Schedule:**
-   - Once all flights are assigned, finalize the report to complete your schedule. The final report will display your day off requests and the assigned flights, prioritized accordingly.
-   
-</details>
-
-<!-- Usage section -->
-<details>
-  <summary><h2 style="margin-top: 10px;">Roadmap</h2></summary>
-
-Here’s a look at the future development plans for the Cabin Crew Scheduling System:
-
-### Upcoming Features
-
-- **Employer Decision Integration**:
-   - Develop a system where employers can input dates for scheduled training sessions for employees, ensuring that training periods are taken into account during schedule generation.
-
-- **Alternative Planning Modes**:
-   - Expand the application to accommodate alternative scheduling needs, such as those for flight crew or other types of users, ensuring that the system is flexible and meets the diverse requirements of different user groups.
-
-- **User Feedback System**:
-   - Implement a feature that allows users to provide feedback on the application directly. This feedback will be used to make continuous improvements and prioritize new features.
-
-- **Frontend Development**:
-   - Create a user-friendly frontend for the application, enabling it to function as a web-based platform. This will allow users to access the system through a web browser, improving accessibility and ease of use.
-
-### Contributing to the Roadmap
-
-If you have ideas or features you'd like to see in future versions, feel free to open an issue or submit a pull request. We welcome contributions that help make this project better for everyone!
-</details>
+git clone https://github.com/PrzemyslawGromiec/Crew-Bidding-Spring.git
 
 <p align="left"> 
    <img src="https://komarev.com/ghpvc/?username=pgromiec&label=Profile%20views&color=0e75b6&style=flat" alt="pgromiec" /> 
