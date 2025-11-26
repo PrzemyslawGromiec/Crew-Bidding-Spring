@@ -29,9 +29,14 @@ Now anyone can explore the API via Swagger, deployed on Railway.
 ### **🔗 Try the API in Swagger (Deployed on Railway)**
 👉 https://crew-bidding-spring-production.up.railway.app/swagger-ui/index.html
 
-No setup needed.  
-You can register, log in, submit requests, assign flights, and generate your full crew report directly in the browser.
+#### The API is fully interactive and ready to use.  
+You can:
 
+- Register a new user
+- Log in to receive a JWT token
+- Authorise Swagger using the token
+- Access protected user and scheduling endpoints
+- Use admin-only features when logged in as an admin
 ---
 
 ## 🛠️ Features
